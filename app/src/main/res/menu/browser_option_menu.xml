@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    &lt;!&ndash; to enable overflow menu with icons we have to do like below &ndash;&gt;-->
+<!--    <item-->
+<!--        android:id="@+id/action_more"-->
+<!--        android:icon="@drawable/ic_more_vert_black_24dp"-->
+<!--        android:title=""-->
+<!--        app:showAsAction="always">-->
+
+<!--        <menu>-->
+
+    <group  android:id="@+id/grp1" android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_1"
+            android:title="back" />
+
+        <item
+            android:title="@string/exit"
+            />
+    </group>
+    <item
+        android:id="@+id/incognito"
+        android:title="@string/incognito" />
+            <item
+                android:id="@+id/bookmarks"
+                android:title="@string/bookmarks"
+                android:icon="@drawable/bookmark"/>
+            <item
+                android:id="@+id/history"
+                android:title="@string/history" />
+            <item
+                android:id="@+id/downloads"
+                android:title="@string/downloads" />
+            <item
+                android:id="@+id/exit"
+                android:title="@string/exit" />
+<!--        </menu>-->
+<!--    </item>-->
+</menu>

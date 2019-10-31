@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/bookmark_image_view"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/bookmark"/>
+
+    <TextView
+        android:id="@+id/tv_bookmark_name"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/bookmark_image_view"
+        app:layout_constraintLeft_toRightOf="@id/bookmark_image_view"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        />
+
+    <TextView
+        android:id="@+id/tv_bookmarks"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_bookmark_name"
+        app:layout_constraintLeft_toRightOf="@id/bookmark_image_view"
+        android:textColor="#AFAFAF"
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginStart="@dimen/_28sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_14sdp"/>
+
+    <Button
+        android:id="@+id/btn_remove"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:background="@android:drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bookmarks"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

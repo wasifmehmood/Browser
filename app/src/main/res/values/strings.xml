@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">PrivateBrowser</string>
+    <string name="vpn">Vpn</string>
+
+    <string name="bookmarks">Bookmarks</string>
+    <string name="downloads">Downloads</string>
+    <string name="search_or_type_web_address">Search or type web address</string>
+    <string name="search">Search</string>
+    <string name="bookmark_this_page">Bookmark this page</string>
+    <string name="action_forward">Action Forward</string>
+    <string name="action_back">Action Back</string>
+
+    <string name="log_in">LOGIN</string>
+    <string name="log_out">LOGOUT</string>
+
+    <string name="logged_in">Logged in</string>
+    <string name="logged_out">Logged out</string>
+
+
+    <string name="vpn_process_name" translatable="false">:my.custom.vpn.process.name</string>
+    <string name="vpn_provider_authorities" translatable="false">com.anchorfree.hydrasdk.app.demo</string>
+
+
+    <string name="optimal_server">OPTIMAL SERVER</string>
+    <string name="unknown">UNKNOWN</string>
+
+
+    <string name="traffic_stats">UL: %1$s, DL: %2$s </string>
+    <string name="traffic_limit">%1$s of %2$s available</string>
+    <string name="traffic_unlimited">UNLIMITED</string>
+
+    <string name="current_server">CURRENT_SERVER</string>
+    <string name="connecting">Connecting</string>
+    <string name="paused">Paused</string>
+    <string name="exit">Exit</string>
+    <string name="browser">Browser</string>
+    <string name="private_browser">Private Browser</string>
+    <string name="add">Add</string>
+    <string name="ul_0_kb_dl_0_kb">UL: 0 Kb, DL: 0 Kb</string>
+    <string name="_0_mb_of_0_mb_available">0 Mb of 0 Mb available</string>
+    <string name="name">Name:</string>
+    <string name="type">Type:</string>
+    <string name="add_to_bookmarks">Add To Bookmarks</string>
+
+    <string name="default_region">DEFAULT REGION</string>
+    <string name="www_google_com">www.google.com</string>
+    <string name="incognito">Incognito</string>
+    <string name="history">History</string>
+
+</resources>

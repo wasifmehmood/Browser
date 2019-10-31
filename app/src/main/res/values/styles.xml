@@ -1,0 +1,94 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#141932</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:textColorSecondary">#ffffff</item>
+<!--        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>-->
+    </style>
+
+<!--    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">-->
+<!--        <item name="android:src">@drawable/ic_more_vert_black_24dp</item>-->
+<!--        <item name="android:background">?android:attr/actionBarItemBackground</item>-->
+<!--        <item name="android:contentDescription">"Lala"</item>-->
+<!--    </style>-->
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="BookmarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="StartTheme" parent="android:Theme.Material.NoActionBar.Fullscreen">
+        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#141932</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Define color properties as desired -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColorHighlight">@android:color/white</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@android:color/white</item>
+    </style>
+
+    <style name="AppAlertTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="android:textColorHighlight">@color/colorPrimary</item>
+    </style>
+
+    <style name="ButtonLayout" parent="android:Theme">
+        <item name="android:paddingLeft">@dimen/default_padding</item>
+        <item name="android:paddingRight">@dimen/default_padding</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="DefaultBtn" parent="@android:style/TextAppearance">
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+        <item name="android:background">@drawable/btn_bkg</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="StateText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/default_padding</item>
+        <item name="android:paddingRight">@dimen/default_padding</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:alpha">0.7</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+</resources>

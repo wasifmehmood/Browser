@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    android:layout_gravity="center"
+    android:alpha="0.9"
+    tools:context=".IncognitoActivities.StartActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/private_browser"
+        android:textColor="#FFFFFF"
+        android:layout_marginStart="@dimen/_36sdp"
+        android:layout_marginTop="@dimen/_65sdp"
+        android:fontFamily=""
+        android:textSize="@dimen/_22sdp"/>
+
+    <ImageButton
+        android:id="@+id/btn_start_browsing"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/shape_btn"
+        android:gravity="center"
+        android:src="@drawable/browser_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_start_browsing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/browser"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@id/btn_start_browsing"
+        app:layout_constraintStart_toStartOf="@id/btn_start_browsing"
+        app:layout_constraintEnd_toEndOf="@id/btn_start_browsing"/>
+
+    <ImageButton
+        android:id="@+id/btn_vpn"
+        android:layout_width="@dimen/_70sdp"
+        android:layout_height="@dimen/_70sdp"
+        android:background="@drawable/shape_btn"
+        android:src="@drawable/vpn_icon"
+        android:layout_marginTop="@dimen/_24sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_start_browsing"
+        app:layout_constraintStart_toStartOf="@+id/tv_start_browsing"
+        app:layout_constraintEnd_toEndOf="@+id/tv_start_browsing" />
+
+    <TextView
+        android:id="@+id/tv_vpn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="@string/vpn"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_vpn"
+        app:layout_constraintStart_toStartOf="@+id/btn_vpn"
+        app:layout_constraintTop_toBottomOf="@+id/btn_vpn"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
