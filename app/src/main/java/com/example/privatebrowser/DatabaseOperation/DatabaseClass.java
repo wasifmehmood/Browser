@@ -9,8 +9,11 @@ public class DatabaseClass {
     private final String bookmarkDBName = "Bookmarks.db";
     private final String TABLE_NAME_BOOKMARK = "bookmarks";
     private final String downloadsDBName = "Downloads.db";
-    private final int DB_VERSION = 1;
     private final String TABLE_NAME = "downloads";
+    private final String historyDBName = "History.db";
+    private final String TABLE_NAME_HISTORY = "history";
+    private final int DB_VERSION = 1;
+
 
     private final Context context;
 
@@ -72,6 +75,40 @@ public class DatabaseClass {
 
     public void updateBookmarkRecord(String url, String fileName, Boolean bool) {
         UpdateClass updateClass = new UpdateClass(context, bookmarkDBName, DB_VERSION, TABLE_NAME_BOOKMARK);
+        updateClass.updateBookmarkRecord(url, fileName, bool);
+    }
+
+    /**
+     * CRUD operations for History Table
+     */
+    public void deleteHistoryRecord() {
+        DeleteClass deleteClass = new DeleteClass(context, historyDBName, DB_VERSION, TABLE_NAME_HISTORY);
+        deleteClass.deleteAll();
+    }
+
+    public void insertHistoryRecord(String url, String bookmark, Boolean bool) {
+        InsertClass insertClass = new InsertClass(context, historyDBName, DB_VERSION, TABLE_NAME_HISTORY);
+        insertClass.saveRecord(url, bookmark, bool);
+    }
+
+//    void readBookmarkRecord() {
+//        SearchAllClass searchAllClass = new SearchAllClass(context, bookmarkDBName, DB_VERSION, TABLE_NAME_BOOKMARK);
+//        searchAllClass.searchAllRecord();
+//    }
+
+    public String searchHistoryRecord(String bookmark) {
+        SearchClass searchClass = new SearchClass(context, historyDBName, DB_VERSION, TABLE_NAME_HISTORY);
+        return searchClass.searchBookmarkFileName(bookmark);
+    }
+
+    public void readAllHistoryRecord() {
+
+        SearchAllClass searchAllClass = new SearchAllClass(context, historyDBName, DB_VERSION, TABLE_NAME_HISTORY);
+        searchAllClass.searchAllBookmarkRecord();
+    }
+
+    public void updateHistoryRecord(String url, String fileName, Boolean bool) {
+        UpdateClass updateClass = new UpdateClass(context, historyDBName, DB_VERSION, TABLE_NAME_HISTORY);
         updateClass.updateBookmarkRecord(url, fileName, bool);
     }
 

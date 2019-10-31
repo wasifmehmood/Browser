@@ -28,6 +28,7 @@ import android.webkit.WebView;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.privatebrowser.Classes.BrowserWebViewClass;
@@ -80,18 +81,6 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         myRegisterReciever();
         webView.setDownloadListener(this);
         listFilesForFolder(folder);
-
-//        WebBackForwardList currentList = webView.copyBackForwardList();
-//        int currentSize = currentList.getSize();
-//
-//        Toast.makeText(this, ""+currentSize, Toast.LENGTH_SHORT).show();
-//        for (int i=0; i<currentSize; ++i)
-//        {
-//            WebHistoryItem item = currentList.getItemAtIndex(i);
-//            String url2 = item.getUrl();
-//            Log.d("url", "The URL at index: " + i + " is " + url2 );
-//            Toast.makeText(this, "url", Toast.LENGTH_SHORT).show();
-//        }
 
     }
 
@@ -153,8 +142,10 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         webView = findViewById(R.id.webkit);
         webViewClass = new WebViewClass();
         browserWebViewClass = new BrowserWebViewClass();
+        progressBar = findViewById(R.id.progress_bar);
     }
 
+    ProgressBar progressBar;
     /**
      * Here toolbar is set as an actionbar
      */
@@ -174,8 +165,8 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
 
         if (url != null && browser.equals("main")) {
 
-            browserWebViewClass.startBrowserWebView(url, webView, MainActivity.this, this);
-            Toast.makeText(this, "main", Toast.LENGTH_SHORT).show();
+            browserWebViewClass.startBrowserWebView(url, webView, MainActivity.this, this, progressBar);
+//            Toast.makeText(this, "main", Toast.LENGTH_SHORT).show();
 
         } else if (url != null && browser.equals("incognito")) {
             webViewClass.startWebView(url, webView, MainActivity.this);
@@ -309,6 +300,7 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
                 webView.clearCache(true);
             }
             webView.goBack();
+            Toast.makeText(this, "GOBACK", Toast.LENGTH_SHORT).show();
 
         } else {
             super.onBackPressed();
@@ -332,8 +324,8 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
             webView.clearHistory();
             webView.clearCache(true);
         }
-            unregisterReceiver(onDownloadComplete);
-            super.onDestroy();
+        unregisterReceiver(onDownloadComplete);
+        super.onDestroy();
     }
 
     @Override

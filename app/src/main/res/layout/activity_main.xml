@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".IncognitoActivities.MainActivity"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/custom_action_bar"
@@ -11,19 +12,42 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/private_browser"
-            android:textSize="@dimen/_18sdp"
-            android:fontFamily="@font/roboto_medium"
-            android:textColor="#ffffff"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/private_browser"-->
+<!--            android:textSize="@dimen/_18sdp"-->
+<!--            android:fontFamily="@font/roboto_medium"-->
+<!--            android:textColor="#ffffff"/>-->
+
+
+        <EditText
+            android:id="@+id/toolbar_et"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@drawable/shape_tv"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:inputType="textWebEditText"
+            />
+
 
     </androidx.appcompat.widget.Toolbar>
 
+    <ProgressBar android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/_2sdp">
+    </ProgressBar>
+
+    <ImageView
+        android:id="@+id/bitmap"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp" />
     <WebView
         android:id="@+id/webkit"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
 </LinearLayout>
