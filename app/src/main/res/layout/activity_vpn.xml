@@ -1,168 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_root_layout"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@drawable/snd_bg"
-    tools:context=".Vpn.VpnActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_browser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/shape_tv_one"
-            android:paddingStart="@dimen/_35sdp"
-            android:paddingEnd="@dimen/_35sdp"
-            android:paddingBottom="@dimen/_2sdp"
-            android:text="@string/vpn"
-            android:textColor="#F45F61"
-            android:textSize="@dimen/_22sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/custom_action_bar" />
-
-    </androidx.appcompat.widget.Toolbar>
-
-<!--    <LinearLayout-->
-<!--        style="@style/ButtonLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/linear_layout_id"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:gravity="center_vertical">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/login_btn"-->
-<!--            style="@style/DefaultBtn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:minWidth="150dp"-->
-<!--            android:text="@string/log_in"/>-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/login_state"-->
-<!--            style="@style/StateText"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:textColor="#ffffff"-->
-<!--            android:text="@string/logged_out"/>-->
-
-<!--        <ProgressBar-->
-<!--            android:id="@+id/login_progress"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:visibility="gone"-->
-<!--            tools:visibility="visible"/>-->
-<!--    </LinearLayout>-->
+    android:background="#ffffff">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/ButtonLayout"
-        android:id="@+id/linear_layout_id"
+        android:id="@+id/main_root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center">
+        android:background="#ffffff"
+        android:orientation="vertical"
+        tools:context=".Vpn.VpnActivity">
 
-        <Button
-            android:id="@+id/connect_btn"
-            android:layout_width="@dimen/_200sdp"
-            android:layout_height="@dimen/_200sdp"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/conncet" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ProgressBar
-            android:id="@+id/connection_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/_20sdp"
-            app:layout_constraintStart_toEndOf="@id/connect_btn"
-            app:layout_constraintTop_toTopOf="@id/connect_btn"
-            app:layout_constraintBottom_toBottomOf="@id/connect_btn"
+            <ImageView
+                android:id="@+id/image_view_back"
+                android:layout_width="@dimen/_28sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/tv_browser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/roboto_medium"
+                android:paddingStart="@dimen/_25sdp"
+                android:paddingEnd="@dimen/_35sdp"
+                android:paddingBottom="@dimen/_2sdp"
+                android:textAllCaps="true"
+                android:text="@string/vpn"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/_22sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/custom_action_bar" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <!--    <LinearLayout-->
+        <!--        style="@style/ButtonLayout"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        app:layout_constraintBottom_toTopOf="@id/linear_layout_id"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        android:gravity="center_vertical">-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/login_btn"-->
+        <!--            style="@style/DefaultBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:minWidth="150dp"-->
+        <!--            android:text="@string/log_in"/>-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/login_state"-->
+        <!--            style="@style/StateText"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:textColor="#ffffff"-->
+        <!--            android:text="@string/logged_out"/>-->
+
+        <!--        <ProgressBar-->
+        <!--            android:id="@+id/login_progress"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_weight="1"-->
+        <!--            android:visibility="gone"-->
+        <!--            tools:visibility="visible"/>-->
+        <!--    </LinearLayout>-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linear_layout_id"
+            style="@style/ButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:animateLayoutChanges="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/optimal_server_btn"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_toolbar">
+
+            <Button
+                android:id="@+id/connect_btn"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/button_effect"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/connection_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/connect_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/connect_btn"
+                app:layout_constraintTop_toTopOf="@id/connect_btn"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/text_view_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="@string/connect"
+                android:textColor="#000000"
+                android:textSize="@dimen/_18sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/connect_btn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/optimal_server_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="@string/optimal_server"
+            android:textColor="#000000"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintBottom_toTopOf="@+id/traffic_limit"
+            app:layout_constraintEnd_toEndOf="@+id/linear_layout_id"
+            app:layout_constraintStart_toStartOf="@+id/linear_layout_id"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_id" />
+
+        <TextView
+            android:id="@+id/selected_server"
+            style="@style/StateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"
+            android:textColor="#323639"
+            app:layout_constraintEnd_toEndOf="@id/optimal_server_btn"
+            app:layout_constraintStart_toStartOf="@+id/optimal_server_btn"
+            app:layout_constraintTop_toBottomOf="@+id/optimal_server_btn" />
+
+        <TextView
+            android:id="@+id/traffic_stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ul_0_kb_dl_0_kb"
+            android:textColor="#323639"
+            android:textSize="@dimen/default_text_size"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/traffic_limit"
+            app:layout_constraintStart_toStartOf="@id/traffic_limit"
+            app:layout_constraintTop_toBottomOf="@id/traffic_limit"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/traffic_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:alpha="0.7"
+            android:text="@string/_0_mb_of_0_mb_available"
+            android:textColor="#323639"
+            android:textSize="@dimen/default_text_size"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/selected_server"
+            app:layout_constraintStart_toStartOf="@+id/selected_server"
+            app:layout_constraintTop_toBottomOf="@+id/selected_server"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/optimal_server_btn"
-        style="@style/DefaultBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp"
-        android:text="@string/optimal_server"
-        app:layout_constraintBottom_toTopOf="@+id/traffic_limit"
-        app:layout_constraintStart_toStartOf="@+id/linear_layout_id"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layout_id"
-        app:layout_constraintEnd_toEndOf="@+id/linear_layout_id"/>
-
-    <TextView
-        android:id="@+id/selected_server"
-        style="@style/StateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/optimal_server_btn"
-        app:layout_constraintTop_toBottomOf="@+id/optimal_server_btn"
-        app:layout_constraintEnd_toEndOf="@id/optimal_server_btn"
-        android:text="@string/unknown"
-        android:textColor="#ffffff"/>
-
-    <TextView
-        android:id="@+id/traffic_stats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ul_0_kb_dl_0_kb"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/traffic_limit"
-        app:layout_constraintEnd_toEndOf="@+id/traffic_limit"
-        app:layout_constraintTop_toBottomOf="@id/traffic_limit"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/default_text_size"
-        android:visibility="invisible"
-        tools:visibility="visible"/>
-
-    <TextView
-        android:id="@+id/traffic_limit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginTop="8dp"
-        android:alpha="0.7"
-        android:text="@string/_0_mb_of_0_mb_available"
-        app:layout_constraintTop_toBottomOf="@+id/selected_server"
-        app:layout_constraintStart_toStartOf="@+id/selected_server"
-        app:layout_constraintEnd_toEndOf="@+id/selected_server"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/default_text_size"
-        android:visibility="invisible"
-        tools:visibility="visible"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+</ScrollView>

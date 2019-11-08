@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,11 +26,13 @@ import android.widget.Toast;
 
 
 import com.example.privatebrowser.Adapters.SearchBookmarksAdapter;
+import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.CustomWidgets.CustomEditText;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
 import com.example.privatebrowser.Interfaces.DrawableClickListener;
 import com.example.privatebrowser.Interfaces.FeaturesInterface;
 import com.example.privatebrowser.R;
+import com.example.privatebrowser.Vpn.VpnActivity;
 import com.example.privatebrowser.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -41,16 +44,17 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private Toolbar toolbar;
     private CustomEditText editText;
-    private SearchBookmarksAdapter searchBookmarksAdapter;
+    //    private SearchBookmarksAdapter searchBookmarksAdapter;
     private ArrayList<String> bookmarkName;
     private ArrayList<String> bookmarkUrlName;
-    private FloatingActionButton addBookmarkBtn;
-    RecyclerView mRecyclerView;
+    //    private FloatingActionButton addBookmarkBtn;
+//    RecyclerView mRecyclerView;
     private DatabaseClass databaseClass;
     private EditText bookmarkNameEt;
     private EditText bookmarkUrlEt;
     private String bookmarkNameStr;
     private String bookmarkUrlStr;
+    ChangeLanguage changeLanguage;
 
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -62,7 +66,12 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeLanguage = new ChangeLanguage(this);
+        changeLanguage.loadLocale();
         setContentView(R.layout.activity_search);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         databaseClass = new DatabaseClass(this);
 
@@ -81,7 +90,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         getBookmarksFromSQLite();
 
-        setRecyclerView();
+//        setRecyclerView();
 
         searchEditTextClickListener();
     }
@@ -113,20 +122,20 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void setRecyclerView() {
+//    private void setRecyclerView() {
+//
+//        mRecyclerView.setHasFixedSize(true);
+//
+//        mRecyclerView.setAdapter(searchBookmarksAdapter);
+//
+//        setListsInRecyclerAdapter();
+//
+//    }
 
-        mRecyclerView.setHasFixedSize(true);
-
-        mRecyclerView.setAdapter(searchBookmarksAdapter);
-
-        setListsInRecyclerAdapter();
-
-    }
-
-    void setListsInRecyclerAdapter() {
-        searchBookmarksAdapter.setSearchBookmarksUrlList(bookmarkUrlName);
-        searchBookmarksAdapter.setSearchBookmarksNameList(bookmarkName);
-    }
+//    void setListsInRecyclerAdapter() {
+//        searchBookmarksAdapter.setSearchBookmarksUrlList(bookmarkUrlName);
+//        searchBookmarksAdapter.setSearchBookmarksNameList(bookmarkName);
+//    }
 
 
     /**
@@ -160,7 +169,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         editText.setOnKeyListener(this);
         editText.setOnClickListener(this);
-        addBookmarkBtn.setOnClickListener(this);
+//        addBookmarkBtn.setOnClickListener(this);
     }
 
     /**
@@ -178,11 +187,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
      */
     private void inItUI() {
 
-        mRecyclerView = findViewById(R.id.search_recycler_view);
-        searchBookmarksAdapter = new SearchBookmarksAdapter(this, this);
+//        mRecyclerView = findViewById(R.id.search_recycler_view);
+//        searchBookmarksAdapter = new SearchBookmarksAdapter(this, this);
         toolbar = findViewById(R.id.custom_action_bar);
         editText = findViewById(R.id.et_search);
-        addBookmarkBtn = findViewById(R.id.add_bookmark_btn);
+//        addBookmarkBtn = findViewById(R.id.add_bookmark_btn);
     }
 
     /**
@@ -210,12 +219,21 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.downloads:
                 showDownloads();
                 return true;
+            case R.id.menu_vpn:
+                startVpn();
+                return true;
             case R.id.exit:
-                System.exit(0);
+                finishAffinity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void startVpn() {
+
+        Intent intent = new Intent(this, VpnActivity.class);
+        startActivity(intent);
     }
 
 
@@ -227,62 +245,62 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
 
         if (v.getId() == R.id.add_bookmark_btn) {
-            addBookmark();
+//            addBookmark();
         }
     }
 
-    private void addBookmark() {
-
-        customDialog();
-    }
-
-    private void customDialog() {
-
-        // custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.custom_dialog);
-        dialog.setTitle("Title...");
-
-
-        // set the custom dialog components - text, image and button
-        bookmarkNameEt = dialog.findViewById(R.id.bookmarkNameEt);
-        bookmarkUrlEt = dialog.findViewById(R.id.bookmarkUrlEt);
-
-
-        Button addBookmarkBtn = dialog.findViewById(R.id.addBookmarkBtn);
-
-        addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                bookmarkNameStr = bookmarkNameEt.getText().toString();
-                bookmarkUrlStr = bookmarkUrlEt.getText().toString();
-
-
-                if (databaseClass.searchBookmarkRecord(bookmarkUrlStr).equals("Empty")) {
-
-                    if (!(bookmarkNameStr.equals("") && bookmarkUrlStr.equals(""))) {
-
-                        if (bookmarkUrlStr.contains("https://")) {
-                            databaseClass.insertBookmarkRecord(bookmarkUrlStr, bookmarkNameStr, true);
-                        } else if (!bookmarkUrlStr.contains("https://")) {
-                            databaseClass.insertBookmarkRecord("https://" + bookmarkUrlStr, bookmarkNameStr, true);
-                        }
-
-                    } else {
-                        Toast.makeText(SearchActivity.this, "Enter the fields", Toast.LENGTH_SHORT).show();
-                    }
-                    getBookmarksFromSQLite();
-                    setListsInRecyclerAdapter();
-                    searchBookmarksAdapter.notifyDataSetChanged();
-                }
-
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
+//    private void addBookmark() {
+//
+//        customDialog();
+//    }
+//
+//    private void customDialog() {
+//
+//        // custom dialog
+//        final Dialog dialog = new Dialog(this);
+//        dialog.setContentView(R.layout.custom_dialog);
+//        dialog.setTitle("Title...");
+//
+//
+//        // set the custom dialog components - text, image and button
+//        bookmarkNameEt = dialog.findViewById(R.id.bookmarkNameEt);
+//        bookmarkUrlEt = dialog.findViewById(R.id.bookmarkUrlEt);
+//
+//
+//        Button addBookmarkBtn = dialog.findViewById(R.id.addBookmarkBtn);
+//
+//        addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                bookmarkNameStr = bookmarkNameEt.getText().toString();
+//                bookmarkUrlStr = bookmarkUrlEt.getText().toString();
+//
+//
+//                if (databaseClass.searchBookmarkRecord(bookmarkUrlStr).equals("Empty")) {
+//
+//                    if (!(bookmarkNameStr.equals("") && bookmarkUrlStr.equals(""))) {
+//
+//                        if (bookmarkUrlStr.contains("https://")) {
+//                            databaseClass.insertBookmarkRecord(bookmarkUrlStr, bookmarkNameStr, true);
+//                        } else if (!bookmarkUrlStr.contains("https://")) {
+//                            databaseClass.insertBookmarkRecord("https://" + bookmarkUrlStr, bookmarkNameStr, true);
+//                        }
+//
+//                    } else {
+//                        Toast.makeText(SearchActivity.this, "Enter the fields", Toast.LENGTH_SHORT).show();
+//                    }
+//                    getBookmarksFromSQLite();
+////                    setListsInRecyclerAdapter();
+////                    searchBookmarksAdapter.notifyDataSetChanged();
+//                }
+//
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        dialog.show();
+//    }
 
     /**
      * Override method for what happens when user touches on the screen
@@ -332,7 +350,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 Intent intent = new Intent(SearchActivity.this, MainActivity.class);
                 String url = "https://www.google.com/#q=" + editText.getText().toString();
                 intent.putExtra("url", url);
-                intent.putExtra("browser","incognito");
+                intent.putExtra("browser", "incognito");
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Internet Not Connected", Toast.LENGTH_SHORT).show();
@@ -347,6 +365,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     public void showBookmarks() {
 
         Intent intent = new Intent(this, BookmarksActivity.class);
+        intent.putExtra("browser", "incognito");
         startActivity(intent);
     }
 

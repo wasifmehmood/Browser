@@ -5,43 +5,45 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/snd_bg"
+    android:background="#323639"
+    android:focusableInTouchMode="true"
     tools:context=".IncognitoActivities.SearchActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/custom_action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <!--    <androidx.appcompat.widget.Toolbar-->
+    <!--        android:id="@+id/custom_action_bar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@color/colorPrimary"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent">-->
 
 
-        <TextView
-            android:id="@+id/tv_browser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/shape_tv_one"
-            android:fontFamily="@font/roboto_medium"
-            android:paddingStart="@dimen/_35sdp"
-            android:paddingEnd="@dimen/_35sdp"
-            android:paddingBottom="@dimen/_2sdp"
-            android:text="@string/browser"
-            android:textColor="#F45F61"
-            android:textSize="@dimen/_22sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
-    </androidx.appcompat.widget.Toolbar>
+    <!--        <TextView-->
+    <!--            android:id="@+id/tv_browser"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="@dimen/_10sdp"-->
+    <!--            android:background="@drawable/shape_tv_one"-->
+    <!--            android:fontFamily="@font/roboto_medium"-->
+    <!--            android:paddingStart="@dimen/_35sdp"-->
+    <!--            android:paddingEnd="@dimen/_35sdp"-->
+    <!--            android:paddingBottom="@dimen/_2sdp"-->
+    <!--            android:text="@string/browser"-->
+    <!--            android:textColor="#F45F61"-->
+    <!--            android:textSize="@dimen/_22sdp"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="parent" />-->
+    <!--    </androidx.appcompat.widget.Toolbar>-->
+
 
     <com.example.privatebrowser.CustomWidgets.CustomEditText
         android:id="@+id/et_search"
-        android:layout_width="@dimen/_280sdp"
+        android:layout_width="@dimen/_260sdp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_170sdp"
-        android:background="@drawable/shape_tv"
-        android:drawableRight="@drawable/ic_search_black_34dp"
+        android:background="@drawable/shape_tv_three"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:drawableRight="@drawable/insearch"
         android:fontFamily="@font/roboto_medium"
         android:hint="@string/search_or_type_web_address"
         android:imeOptions="actionGo"
@@ -50,15 +52,66 @@
         android:paddingTop="@dimen/_5sdp"
         android:paddingEnd="@dimen/_10sdp"
         android:paddingBottom="@dimen/_5sdp"
-        android:textColor="#000000"
-        android:textColorHint="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#323639"
+        android:textColorHint="#323639"
+        android:textSize="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/custom_action_bar" />
 
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!--    <EditText-->
+    <ScrollView
+        android:id="@+id/scroll_view_incognito"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_35sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/custom_action_bar"
+        app:layout_constraintTop_toBottomOf="@id/et_search">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_search">
+
+        <ImageView
+            android:id="@+id/image_view_incognito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/incognito_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/text_view_incognito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:text="@string/you_ve_gone_incognito"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_incognito" />
+
+        <TextView
+            android:id="@+id/text_view_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:gravity="center"
+            android:text="@string/now_you_can_browse_privately_and_other_people_who_use_this_device_won_t_see_your_activity_however_downloads_and_bookmarks_will_be_saved_learn_more_n_n_browser_won_t_save_the_following_information_n_your_browsing_history_n_cookies_and_site_data_n_information_entered_in_forms_n"
+            android:textColor="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_incognito" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView><!--    <EditText-->
     <!--        android:id="@+id/et_search"-->
     <!--        android:layout_width="@dimen/_280sdp"-->
     <!--        android:layout_height="wrap_content"-->
@@ -92,72 +145,82 @@
     <!--        app:layout_constraintStart_toStartOf="parent"-->
     <!--        app:layout_constraintTop_toBottomOf="@id/et_search" />-->
 
-    <LinearLayout
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/linear_layout_recycler"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/_24sdp"-->
+    <!--        android:layout_marginTop="@dimen/_50sdp"-->
+    <!--        android:layout_marginEnd="@dimen/_50sdp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:weightSum="3"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/et_search"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/et_search"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/et_search">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/text_bookmark"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:fontFamily="@font/roboto_medium"-->
+    <!--            android:text="@string/bookmarks"-->
+    <!--            android:textColor="#ffffff"-->
+    <!--            android:textSize="@dimen/_14sdp" />-->
+
+    <!--        <ScrollView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="@dimen/_140sdp"-->
+    <!--            android:layout_marginStart="@dimen/_8sdp"-->
+    <!--            android:layout_marginTop="@dimen/_10sdp"-->
+    <!--            android:fillViewport="true"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/custom_action_bar">-->
+
+    <!--            &lt;!&ndash;            <LinearLayout&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_height="@dimen/_200sdp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_marginStart="@dimen/_8sdp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_marginTop="@dimen/_10sdp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:orientation="horizontal">&ndash;&gt;-->
+
+    <!--            <androidx.recyclerview.widget.RecyclerView-->
+    <!--                android:id="@+id/search_recycler_view"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
+    <!--                app:layout_constraintEnd_toEndOf="@id/et_search"-->
+    <!--                app:layout_constraintStart_toStartOf="@id/et_search"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/et_search"-->
+    <!--                app:spanCount="4" />-->
+
+
+    <!--            &lt;!&ndash;            </LinearLayout>&ndash;&gt;-->
+    <!--        </ScrollView>-->
+    <!--    </LinearLayout>-->
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/add_bookmark_btn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:layout_weight="1"-->
+    <!--        android:backgroundTint="#282A38"-->
+    <!--        android:clickable="true"-->
+    <!--        android:focusable="true"-->
+    <!--        android:src="@drawable/ic_add_box_black_32dp"-->
+    <!--        android:text="@string/add"-->
+    <!--        app:backgroundTint="#FFFFFF"-->
+    <!--        app:fabSize="auto"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/custom_action_bar"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/custom_action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_marginEnd="@dimen/_50sdp"
-        android:orientation="vertical"
-        android:weightSum="3"
-        app:layout_constraintEnd_toEndOf="@id/et_search"
-        app:layout_constraintStart_toStartOf="@id/et_search"
-        app:layout_constraintTop_toBottomOf="@id/et_search">
-
-        <TextView
-            android:id="@+id/text_bookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:text="@string/bookmarks"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/_14sdp" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_205sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:fillViewport="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/custom_action_bar">
-
-            <!--            <LinearLayout-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="@dimen/_200sdp"-->
-            <!--                android:layout_marginStart="@dimen/_8sdp"-->
-            <!--                android:layout_marginTop="@dimen/_10sdp"-->
-            <!--                android:orientation="horizontal">-->
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/search_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintEnd_toEndOf="@id/et_search"
-                app:layout_constraintStart_toStartOf="@id/et_search"
-                app:layout_constraintTop_toBottomOf="@id/et_search"
-                app:spanCount="4" />
-
-
-            <!--            </LinearLayout>-->
-        </ScrollView>
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_bookmark_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:backgroundTint="#282A38"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_add_box_black_32dp"
-        android:text="@string/add"
-        app:backgroundTint="#FFFFFF"
-        app:fabSize="auto"
+        android:background="#323639"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/my_options_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

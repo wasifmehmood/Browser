@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Частный браузер</string>
+    <string name="vpn">Vpn</string>
+
+    <string name="bookmarks">закладки</string>
+    <string name="downloads">Загрузки</string>
+    <string name="search_or_type_web_address">Поиск или введите веб-адрес</string>
+    <string name="search">Поиск</string>
+    <string name="bookmark_this_page">Добавить эту страницу в закладки</string>
+    <string name="action_forward">Действие Вперед</string>
+    <string name="action_back">Действие Назад</string>
+
+    <string name="log_in">АВТОРИЗОВАТЬСЯ</string>
+    <string name="log_out">ВЫЙТИ</string>
+
+    <string name="logged_in">Войти в систему</string>
+    <string name="logged_out">Вышли из</string>
+
+
+    <string name="vpn_process_name" translatable="false">:my.custom.vpn.process.name</string>
+    <string name="vpn_provider_authorities" translatable="false">com.anchorfree.hydrasdk.app.demo</string>
+
+
+    <string name="optimal_server">ОПТИМАЛЬНЫЙ СЕРВЕР</string>
+    <string name="unknown">НЕИЗВЕСТНЫЙ</string>
+
+
+    <string name="traffic_stats">UL: %1$s, DL: %2$s </string>
+    <string name="traffic_limit">%1$s of %2$s доступный</string>
+    <string name="traffic_unlimited">НЕОГРАНИЧЕННЫЙ</string>
+
+    <string name="current_server">ТЕКУЩИЙ_СЕРВЕР</string>
+    <string name="connecting">соединительный</string>
+    <string name="paused">Приостановлена</string>
+    <string name="exit">Выход</string>
+    <string name="browser">Browser</string>
+    <string name="private_browser">Частный браузер</string>
+    <string name="add">Добавлять</string>
+    <string name="ul_0_kb_dl_0_kb">UL: 0 Kb, DL: 0 Kb</string>
+    <string name="_0_mb_of_0_mb_available">0 Mb of 0 Mb доступный</string>
+    <string name="name">имя:</string>
+    <string name="type">Тип:</string>
+    <string name="add_to_bookmarks">Добавить в закладки</string>
+
+    <string name="default_region">РЕГИОН ПО УМОЛЧАНИЮ</string>
+    <string name="www_google_com">www.google.com</string>
+    <string name="incognito">Инкогнито</string>
+    <string name="history">история</string>
+    <string name="clear_browsing_data">Очистить данные просмотра</string>
+    <string name="clear_downloads">Очистить загрузки</string>
+    <string name="clear_bookmarks">Очистить закладки</string>
+    <string name="normal_nbrowser">Обычный\nбраузер</string>
+    <string name="private_nbrowser">Частный\nбраузер</string>
+    <string name="dual_nbrowser">Двойной\nбраузер</string>
+    <string name="browser_n">браузер\n</string>
+
+    <string name="select_language">Select Language</string>
+    <string name="en">en</string>
+    <string name="fr">fr</string>
+    <string name="ru">ru</string>
+    <string name="select">Select</string>
+    <string name="select_a_language">Select a Language</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="russian">Russian</string>
+    <string name="spanish">Spanish</string>
+    <string name="es">es</string>
+    <string name="url">Url:</string>
+
+    <string name="you_ve_gone_incognito">Вы ушли в инкогнито</string>
+    <string name="connect">Connect</string>
+    <string name="connected">Связано</string>
+
+    <string name="language_prompt">Выбрать язык</string>
+
+    <string name="now_you_can_browse_privately_and_other_people_who_use_this_device_won_t_see_your_activity_however_downloads_and_bookmarks_will_be_saved_learn_more_n_n_browser_won_t_save_the_following_information_n_your_browsing_history_n_cookies_and_site_data_n_information_entered_in_forms_n">Теперь вы можете просматривать в частном порядке, и другие люди, которые используют это устройство, не увидят вашу активность. Тем не менее, загрузки и закладки будут сохранены.\n\n Подробнее Браузер не сохранит следующую информацию: \nВаша история просмотра Файлы \ncookie и данные сайта \nИнформация, введенная в формы</string>
+</resources>

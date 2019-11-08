@@ -1,33 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/bookmarks"
-        android:title="@string/bookmarks"/>
-    <item android:id="@+id/downloads"
-        android:title="@string/downloads"/>
-    <item android:id="@+id/exit"
-        android:title="@string/exit"/>
-
-<!--    <item-->
-<!--        android:id="@+id/action_bookmark"-->
-<!--        android:icon="@drawable/ic_bookmark_border_black_24dp"-->
-<!--        android:orderInCategory="100"-->
-<!--        android:title="@string/action_bookmark"-->
-<!--        app:showAsAction="always" />-->
-
-<!--    <item-->
-<!--        android:id="@+id/action_back"-->
-<!--        android:icon="@drawable/ic_arrow_back_black_24dp"-->
-<!--        android:orderInCategory="101"-->
-<!--        android:title="@string/action_back"-->
-<!--        app:showAsAction="always" />-->
+    <!--    <item-->
+    <!--        android:id="@+id/incognito"-->
+    <!--        android:title="@string/incognito" />-->
+    <!--    <item-->
+    <!--        android:id="@+id/bookmarkThis"-->
+    <!--        android:title="@string/bookmark_this_page" />-->
 
 
-<!--    <item-->
-<!--        android:id="@+id/action_forward"-->
-<!--        android:icon="@drawable/ic_arrow_forward_black_24dp"-->
-<!--        android:orderInCategory="102"-->
-<!--        android:title="@string/action_forward"-->
-<!--        app:showAsAction="always" />-->
+    <item
+        android:id="@+id/bookmarks"
+        android:icon="@drawable/menu_bookmark"
+        android:title="@string/bookmarks"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/c"
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="always" />
+    <!--    <item-->
+    <!--        android:id="@+id/history"-->
+    <!--        android:title="@string/history" />-->
+    <item
+        android:id="@+id/downloads"
+        android:icon="@drawable/menu_download"
+        android:title="@string/downloads"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/o"
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_vpn"
+        android:icon="@drawable/menu_vpn"
+        android:title="@string/vpn"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/d"
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/setting_icon"
+        android:title=""
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/exit"
+                android:title="@string/exit" />
+
+        </menu>
+    </item>
+    <!--    <item-->
+    <!--        android:id="@+id/action_back"-->
+    <!--        android:icon="@drawable/ic_arrow_back_white_24dp"-->
+    <!--        android:orderInCategory="101"-->
+    <!--        android:title="@string/action_back"-->
+    <!--        app:showAsAction="always" />-->
+
+
+    <!--    <item-->
+    <!--        android:id="@+id/action_forward"-->
+    <!--        android:icon="@drawable/ic_arrow_forward_white_24dp"-->
+    <!--        android:orderInCategory="102"-->
+    <!--        android:title="@string/action_forward"-->
+    <!--        app:showAsAction="always" />-->
+    <!--    <item-->
+    <!--        android:id="@+id/action_bookmark"-->
+    <!--        android:icon="@drawable/ic_bookmark_border_black_24dp"-->
+    <!--        android:orderInCategory="100"-->
+    <!--        android:title="@string/action_bookmark"-->
+    <!--        app:showAsAction="always" />-->
+
+    <!--    <item-->
+    <!--        android:id="@+id/action_back"-->
+    <!--        android:icon="@drawable/ic_arrow_back_white_24dp"-->
+    <!--        android:orderInCategory="101"-->
+    <!--        android:title="@string/action_back"-->
+    <!--        app:showAsAction="always" />-->
+
+
+    <!--    <item-->
+    <!--        android:id="@+id/action_forward"-->
+    <!--        android:icon="@drawable/ic_arrow_forward_white_24dp"-->
+    <!--        android:orderInCategory="102"-->
+    <!--        android:title="@string/action_forward"-->
+    <!--        app:showAsAction="always" />-->
 
 </menu>

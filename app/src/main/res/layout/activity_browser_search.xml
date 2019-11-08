@@ -4,36 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/snd_bg"
+    android:background="#CFCFCE"
+    android:focusableInTouchMode="true"
     tools:context=".BrowserActivities.BrowserSearchActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/custom_action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/browser_option_menu">
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/custom_action_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:menu="@menu/browser_option_menu">-->
 
 
-        <TextView
-            android:id="@+id/tv_browser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/shape_tv_one"
-            android:fontFamily="@font/roboto_medium"
-            android:paddingStart="@dimen/_35sdp"
-            android:paddingEnd="@dimen/_35sdp"
-            android:paddingBottom="@dimen/_2sdp"
-            android:text="@string/browser"
-            android:textColor="#F45F61"
-            android:textSize="@dimen/_22sdp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
-    </androidx.appcompat.widget.Toolbar>
+<!--        <TextView-->
+<!--            android:id="@+id/tv_browser"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_10sdp"-->
+<!--            android:background="@drawable/shape_tv_one"-->
+<!--            android:fontFamily="@font/roboto_medium"-->
+<!--            android:paddingStart="@dimen/_35sdp"-->
+<!--            android:paddingEnd="@dimen/_35sdp"-->
+<!--            android:paddingBottom="@dimen/_2sdp"-->
+<!--            android:text="@string/browser"-->
+<!--            android:textColor="#F45F61"-->
+<!--            android:textSize="@dimen/_22sdp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="parent" />-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
 
 
     <com.example.privatebrowser.CustomWidgets.CustomEditText
@@ -42,20 +43,105 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_170sdp"
         android:background="@drawable/shape_tv"
-        android:drawableRight="@drawable/ic_search_black_34dp"
+        android:drawableRight="@drawable/searchh"
         android:fontFamily="@font/roboto_medium"
         android:hint="@string/search_or_type_web_address"
         android:imeOptions="actionGo"
         android:inputType="textWebEditText"
         android:paddingStart="@dimen/_10sdp"
-        android:paddingTop="@dimen/_5sdp"
+        android:paddingTop="@dimen/_6sdp"
         android:paddingEnd="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        android:textColor="#000000"
-        android:textColorHint="#000000"
+        android:paddingBottom="@dimen/_6sdp"
+        android:textColor="#323639"
+        android:textColorHint="#323639"
+        android:textSize="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/custom_action_bar" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/recycler_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_marginEnd="@dimen/_50sdp"
+        android:orientation="vertical"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="@id/et_browser_search"
+        app:layout_constraintStart_toStartOf="@id/et_browser_search"
+        app:layout_constraintTop_toBottomOf="@id/et_browser_search">
+
+        <TextView
+            android:id="@+id/text_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/bookmarks"
+            android:textColor="#323639"
+            android:textSize="@dimen/_14sdp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_140sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fillViewport="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/custom_action_bar">
+
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="@dimen/_200sdp"-->
+            <!--                android:layout_marginStart="@dimen/_8sdp"-->
+            <!--                android:layout_marginTop="@dimen/_10sdp"-->
+            <!--                android:orientation="horizontal">-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/et_search"
+                app:layout_constraintStart_toStartOf="@id/et_search"
+                app:layout_constraintTop_toBottomOf="@id/et_search"
+                app:spanCount="4" />
+
+
+            <!--            </LinearLayout>-->
+        </ScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_bookmark_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:elevation="@dimen/_4sdp"
+        android:backgroundTint="#CFCFCE"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add_box_green_32dp"
+        android:text="@string/add"
+        app:backgroundTint="#FFFFFF"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toTopOf="@+id/custom_action_bar"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/custom_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f6f6f6"
+        android:elevation="@dimen/_6sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/browser_option_menu"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

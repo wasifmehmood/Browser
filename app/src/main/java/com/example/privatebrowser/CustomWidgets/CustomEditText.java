@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.widget.EditText;
 
 import com.example.privatebrowser.Interfaces.DrawableClickListener;
+import com.example.privatebrowser.R;
 
 public class CustomEditText extends EditText {
     public CustomEditText(Context context) {

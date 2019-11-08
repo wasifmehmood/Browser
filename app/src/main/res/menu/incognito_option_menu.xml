@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!-- to enable overflow menu with icons we have to do like below -->
+
+    <item
+        android:id="@+id/action_back"
+        android:icon="@drawable/ic_arrow_back_green_24dp"
+        android:title="@string/action_back"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/l"
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_forward"
+        android:icon="@drawable/ic_arrow_forward_green_24dp"
+        android:title="@string/action_forward"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/j"
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bookmarks"
+        android:icon="@drawable/menu_bookmark"
+        android:title="@string/bookmarks"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/k"
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/setting_icon"
+        android:title=""
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/bookmarkThis"
+                android:title="@string/bookmark_this_page"
+                android:icon="@drawable/menu_addbookmrk"/>
+
+            <item
+                android:id="@+id/downloads"
+                android:icon="@drawable/menu_download"
+                android:title="@string/downloads" />
+
+
+            <item
+                android:id="@+id/exit"
+                android:title="@string/exit" />
+
+
+        </menu>
+    </item>
+
+</menu>

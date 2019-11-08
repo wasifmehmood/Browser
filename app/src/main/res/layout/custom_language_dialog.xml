@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_300sdp"
+    android:background="#CFCFCE"
+    android:orientation="vertical">
+
+    <!--    <Spinner-->
+    <!--        android:id="@+id/language_spinner"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:popupBackground="@drawable/shape_tv_two"-->
+    <!--        android:layout_marginLeft="@dimen/_20sdp"-->
+    <!--        android:layout_marginTop="@dimen/_30sdp"-->
+    <!--        android:layout_marginRight="@dimen/_20sdp"-->
+    <!--        android:entries="@array/language_arrays"-->
+    <!--        android:prompt="@string/language_prompt" />-->
+
+    <TextView
+        android:id="@+id/tv_select_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/select_a_language"
+        android:textColor="#323639"
+        android:textSize="@dimen/_18sdp"
+        app:layout_constraintEnd_toEndOf="@+id/button_french"
+        app:layout_constraintStart_toStartOf="@id/button_english"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_dialog"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="#ffffff"
+        app:layout_constraintEnd_toEndOf="@+id/button_french"
+        app:layout_constraintStart_toStartOf="@+id/button_english"
+        app:layout_constraintTop_toBottomOf="@+id/tv_select_language" />
+
+    <Button
+        android:id="@+id/button_english"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/shape_btn_four"
+        android:text="@string/en"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toStartOf="@+id/button_french"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_dialog" />
+
+    <TextView
+        android:id="@+id/tv_english"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/english"
+        android:textColor="#323639"
+        app:layout_constraintEnd_toEndOf="@id/button_english"
+        app:layout_constraintStart_toStartOf="@id/button_english"
+        app:layout_constraintTop_toBottomOf="@id/button_english" />
+
+    <Button
+        android:id="@+id/button_french"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/shape_btn_four"
+        android:text="@string/fr"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_english"
+        app:layout_constraintTop_toBottomOf="@id/view_dialog" />
+
+    <TextView
+        android:id="@+id/tv_french"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/french"
+        android:textColor="#323639"
+        app:layout_constraintEnd_toEndOf="@id/button_french"
+        app:layout_constraintStart_toStartOf="@id/button_french"
+        app:layout_constraintTop_toBottomOf="@id/button_french" />
+
+    <Button
+        android:id="@+id/button_russian"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/shape_btn_four"
+        android:text="@string/ru"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/button_english"
+        app:layout_constraintTop_toBottomOf="@+id/button_english" />
+
+
+    <TextView
+        android:id="@+id/tv_russian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/russian"
+        android:textColor="#323639"
+        app:layout_constraintEnd_toEndOf="@id/button_russian"
+        app:layout_constraintStart_toStartOf="@id/button_russian"
+        app:layout_constraintTop_toBottomOf="@id/button_russian" />
+
+    <Button
+        android:id="@+id/button_spanish"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:background="@drawable/shape_btn_four"
+        android:text="@string/es"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/button_french"
+        app:layout_constraintTop_toBottomOf="@+id/button_french" />
+
+
+    <TextView
+        android:id="@+id/tv_spanish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/spanish"
+        android:textColor="#323639"
+        app:layout_constraintEnd_toEndOf="@id/button_spanish"
+        app:layout_constraintStart_toStartOf="@id/button_spanish"
+        app:layout_constraintTop_toBottomOf="@id/button_spanish" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

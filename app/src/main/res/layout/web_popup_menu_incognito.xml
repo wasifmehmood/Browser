@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/add_to_book_incognito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/menu_addbookmrk"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="@string/add_to_bookmarks"
+            android:textColor="#323639"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tv_show_bookmark_incognito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/menu_bookmark"
+            android:drawablePadding="@dimen/_11sdp"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="@string/bookmarks"
+            android:textColor="#323639"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/downloads_dual_incognito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/menu_download"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingStart="@dimen/_4sdp"
+            android:text="@string/downloads"
+            android:textColor="#323639"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/exit_btn_incognito"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:drawableStart="@drawable/ic_clear_green_24dp"
+            android:drawablePadding="@dimen/_10sdp"
+            android:text="@string/exit"
+            android:textColor="#323639"
+            android:textSize="18dp" />
+
+    </LinearLayout>
+</LinearLayout>

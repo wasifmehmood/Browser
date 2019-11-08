@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Navigateur privé</string>
+    <string name="vpn">Vpn</string>
+
+    <string name="bookmarks">Signets</string>
+    <string name="downloads">Téléchargements</string>
+    <string name="search_or_type_web_address">Rechercher ou taper une adresse Web</string>
+    <string name="search">Chercher</string>
+    <string name="bookmark_this_page">Marquer cette page</string>
+    <string name="action_forward">Action à venir</string>
+    <string name="action_back">Action Retour</string>
+
+    <string name="log_in">S\'\IDENTIFIER</string>
+    <string name="log_out">SE DÉCONNECTER</string>
+
+    <string name="logged_in">Connecté</string>
+    <string name="logged_out">Déconnecté</string>
+
+    <string name="vpn_process_name" translatable="false">:my.custom.vpn.process.name</string>
+    <string name="vpn_provider_authorities" translatable="false">com.anchorfree.hydrasdk.app.demo</string>
+
+    <string name="optimal_server">SERVEUR OPTIMAL</string>
+    <string name="unknown">INCONNU</string>
+
+    <string name="traffic_stats">UL: %1$s, DL: %2$s </string>
+    <string name="traffic_limit">%1$s of %2$s available</string>
+    <string name="traffic_unlimited">ILLIMITÉ</string>
+
+    <string name="current_server">SERVEUR_ACTUEL</string>
+    <string name="connecting">De liaison</string>
+    <string name="paused">En pause</string>
+    <string name="exit">Sortie</string>
+    <string name="browser">Browser</string>
+    <string name="private_browser">Navigateur privé</string>
+    <string name="add">Ajouter</string>
+    <string name="ul_0_kb_dl_0_kb">UL: 0 Kb, DL: 0 Kb</string>
+    <string name="_0_mb_of_0_mb_available">0 Mb of 0 Mb disponible</string>
+    <string name="name">Nom:</string>
+    <string name="type">Type:</string>
+    <string name="add_to_bookmarks">Ajouter aux favoris</string>
+
+    <string name="default_region">RÉGION PAR DÉFAUT</string>
+    <string name="www_google_com">www.google.com</string>
+    <string name="incognito">Incognito</string>
+    <string name="history">Histoire</string>
+    <string name="clear_browsing_data">Effacer les données de navigation</string>
+    <string name="clear_downloads">Effacer les téléchargements</string>
+    <string name="clear_bookmarks">Effacer les signets</string>
+    <string name="normal_nbrowser">Navigateur\nnormal</string>
+    <string name="private_nbrowser">Navigateur\nprivé</string>
+    <string name="dual_nbrowser">Double\nnavigateur</string>
+    <string name="browser_n">Navigateur\n</string>
+
+    <string name="select_language">Choisir la langue</string>
+    <string name="en">en</string>
+    <string name="fr">fr</string>
+    <string name="ru">ru</string>
+    <string name="select">Sélectionner</string>
+    <string name="select_a_language">Sélectionnez une langue</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="russian">Russian</string>
+    <string name="spanish">Spanish</string>
+    <string name="es">es</string>
+    <string name="url">Url:</string>
+
+    <string name="you_ve_gone_incognito">Vous êtes allé incognito</string>
+    <string name="connect">Relier</string>
+    <string name="connected">Lié</string>
+
+    <string name="language_prompt">adasdasf</string>
+
+    <string name="now_you_can_browse_privately_and_other_people_who_use_this_device_won_t_see_your_activity_however_downloads_and_bookmarks_will_be_saved_learn_more_n_n_browser_won_t_save_the_following_information_n_your_browsing_history_n_cookies_and_site_data_n_information_entered_in_forms_n">Vous pouvez maintenant naviguer en privé et les autres utilisateurs de cet appareil ne verront pas votre activité. Cependant, les téléchargements et les favoris seront enregistrés.\n\n En savoir plus Le navigateur n\'\enregistre pas les informations suivantes: \nVotre historique de navigation \nCookies et données de site \nInformations saisies dans des formulaires</string>
+</resources>

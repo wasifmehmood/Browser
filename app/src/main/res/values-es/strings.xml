@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Navegador privado</string>
+    <string name="vpn">Vpn</string>
+
+    <string name="bookmarks">Marcadores</string>
+    <string name="downloads">Descargas</string>
+    <string name="search_or_type_web_address">Buscar o escribir la dirección web</string>
+    <string name="search">Buscar</string>
+    <string name="bookmark_this_page">Marca esta pagina</string>
+    <string name="action_forward">Acción hacia adelante</string>
+    <string name="action_back">Acción de regreso</string>
+
+    <string name="log_in">INICIAR SESIÓN</string>
+    <string name="log_out">CERRAR SESIÓN</string>
+
+    <string name="logged_in">Conectado</string>
+    <string name="logged_out">Desconectado</string>
+
+
+    <string name="vpn_process_name" translatable="false">:my.custom.vpn.process.name</string>
+    <string name="vpn_provider_authorities" translatable="false">com.anchorfree.hydrasdk.app.demo</string>
+
+
+    <string name="optimal_server">SERVIDOR ÓPTIMO</string>
+    <string name="unknown">DESCONOCIDO</string>
+
+
+    <string name="traffic_stats">UL: %1$s, DL: %2$s </string>
+    <string name="traffic_limit">%1$s of %2$s disponible</string>
+    <string name="traffic_unlimited">ILIMITADO</string>
+
+    <string name="current_server">SERVIDOR_ACTUAL</string>
+    <string name="connecting">Conectando</string>
+    <string name="paused">Pausado</string>
+    <string name="exit">Salida</string>
+    <string name="browser">Navegador</string>
+    <string name="private_browser">Navegador privado</string>
+    <string name="add">Añadir</string>
+    <string name="ul_0_kb_dl_0_kb">UL: 0 Kb, DL: 0 Kb</string>
+    <string name="_0_mb_of_0_mb_available">0 Mb of 0 Mb disponible</string>
+    <string name="name">Nombre:</string>
+    <string name="type">Tipo:</string>
+    <string name="add_to_bookmarks">Añadir a marcadores</string>
+
+    <string name="default_region">REGIÓN POR DEFECTO</string>
+    <string name="www_google_com">www.google.com</string>
+    <string name="incognito">Incógnito</string>
+    <string name="history">Historia</string>
+    <string name="clear_browsing_data">Eliminar datos de navegación</string>
+    <string name="clear_downloads">Descargas claras</string>
+    <string name="clear_bookmarks">Borrar marcadores</string>
+    <string name="normal_nbrowser">Navegador\nnormal</string>
+    <string name="private_nbrowser">Navegador\nprivado</string>
+    <string name="dual_nbrowser">Navegador\ndual</string>
+    <string name="browser_n">Navegador\n</string>
+
+    <string name="language_prompt">Elige un idioma</string>
+    <string name="select_language">Seleccione el idioma</string>
+    <string name="en">en</string>
+    <string name="fr">fr</string>
+    <string name="ru">ru</string>
+    <string name="select">Seleccionar</string>
+    <string name="select_a_language">v</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="russian">Russian</string>
+    <string name="spanish">Spanish</string>
+    <string name="es">es</string>
+    <string name="url">Url:</string>
+
+    <string name="you_ve_gone_incognito">Te has ido de incógnito</string>
+    <string name="connect">Conectar</string>
+    <string name="connected">Conectado</string>
+
+    <string-array name="language_arrays">
+        <item>en</item>
+        <item>fr</item>
+        <item>ru</item>
+    </string-array>
+
+    <string name="now_you_can_browse_privately_and_other_people_who_use_this_device_won_t_see_your_activity_however_downloads_and_bookmarks_will_be_saved_learn_more_n_n_browser_won_t_save_the_following_information_n_your_browsing_history_n_cookies_and_site_data_n_information_entered_in_forms_n">Ahora puede navegar en privado, y otras personas que usan este dispositivo no verán su actividad. Sin embargo, se guardarán las descargas y los marcadores.\n\n Más información El navegador no guardará la siguiente información: \nSu historial de navegación \nCookies y datos del sitio \nInformación ingresada en formularios</string>
+</resources>

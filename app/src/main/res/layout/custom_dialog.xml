@@ -3,19 +3,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#282A38">
+    android:background="#CFCFCE">
 
     <TextView
         android:id="@+id/bookmarkNameTv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:textColor="#ffffff"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:text="@string/name"
+        android:textColor="#323639"
         android:textSize="20sp" />
 
     <EditText
@@ -23,15 +23,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:layout_toEndOf="@+id/bookmarkNameTv1"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:textColor="#ffffff" />
+        android:textColor="#323639"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/bookmarkUrlTv1"
@@ -39,14 +39,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/bookmarkNameTv1"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:paddingEnd="10dp"
-        android:text="Url:    "
-        android:textSize="20sp"
-        android:textColor="#ffffff" />
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_25sdp"
+        android:text="@string/url"
+        android:textColor="#323639"
+        android:textSize="20sp" />
 
 
     <EditText
@@ -55,15 +55,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bookmarkNameEt"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
         android:layout_toEndOf="@+id/bookmarkUrlTv1"
         android:inputType="text"
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:textColor="#ffffff" />
+        android:textColor="#323639"
+        android:textSize="18sp" />
 
 
     <Button
@@ -73,8 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/bookmarkUrlEt"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="121dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginStart="@dimen/_121sdp"
+        android:layout_marginTop="@dimen/_34sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/shape_btn_two"
         android:text="@string/add_to_bookmarks" />

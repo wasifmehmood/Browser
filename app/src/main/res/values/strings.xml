@@ -46,5 +46,36 @@
     <string name="www_google_com">www.google.com</string>
     <string name="incognito">Incognito</string>
     <string name="history">History</string>
+    <string name="clear_browsing_data">Clear Browsing Data</string>
+    <string name="clear_downloads">Clear Downloads</string>
+    <string name="clear_bookmarks">Clear Bookmarks</string>
+    <string name="normal_nbrowser">Normal\nBrowser</string>
+    <string name="private_nbrowser">Private\nBrowser</string>
+    <string name="dual_nbrowser">Dual\nBrowser</string>
+    <string name="browser_n">Browser\n</string>
+
+    <string name="language_prompt">Choose a language</string>
+    <string name="select_language">Select Language</string>
+    <string name="en">en</string>
+    <string name="fr">fr</string>
+    <string name="ru">ru</string>
+    <string name="select">Select</string>
+    <string name="select_a_language">Select a Language</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="russian">Russian</string>
+    <string name="spanish">Spanish</string>
+    <string name="es">es</string>
+    <string name="url">Url:</string>
+    <string name="now_you_can_browse_privately_and_other_people_who_use_this_device_won_t_see_your_activity_however_downloads_and_bookmarks_will_be_saved_learn_more_n_n_browser_won_t_save_the_following_information_n_your_browsing_history_n_cookies_and_site_data_n_information_entered_in_forms_n">Now you can browse privately, and other people who use this device won’t see your activity. However, downloads and bookmarks will be saved.\n\n  Browser won’t save the following information:  \nYour browsing history  \nCookies and site data  \nInformation entered in forms</string>
+    <string name="you_ve_gone_incognito">You’ve gone incognito</string>
+    <string name="connect">Connect</string>
+    <string name="connected">Connected</string>
+
+    <string-array name="language_arrays">
+        <item>en</item>
+        <item>fr</item>
+        <item>ru</item>
+    </string-array>
 
 </resources>

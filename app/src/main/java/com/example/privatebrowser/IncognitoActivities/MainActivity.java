@@ -1,6 +1,7 @@
 package com.example.privatebrowser.IncognitoActivities;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -28,16 +29,21 @@ import android.webkit.WebView;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.privatebrowser.BrowserActivities.HistoryActivity;
 import com.example.privatebrowser.Classes.BrowserWebViewClass;
+import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
 
 import com.example.privatebrowser.Interfaces.FeaturesInterface;
 import com.example.privatebrowser.R;
 import com.example.privatebrowser.Classes.WebViewClass;
 import com.example.privatebrowser.Reciever.DownloadCompleteReciever;
+import com.example.privatebrowser.Vpn.VpnActivity;
 import com.example.privatebrowser.utils.Utils;
 
 import java.io.File;
@@ -45,7 +51,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements FeaturesInterface, DownloadListener {
+public class MainActivity extends AppCompatActivity implements FeaturesInterface, DownloadListener, View.OnClickListener {
 
     private WebView webView;
     private WebViewClass webViewClass;
@@ -54,11 +60,20 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     private long downloadID;
     private final File folder = new File(Environment.getExternalStorageDirectory() + "/PrivateBrowser");
     private DatabaseClass databaseClass;
-    String browser;
+    private String browser;
+    private EditText bookmarkNameEt;
+    private EditText bookmarkUrlEt;
+    private String bookmarkNameStr;
+    private String bookmarkUrlStr;
+    private ImageButton vpnButton;
+    private ChangeLanguage changeLanguage;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeLanguage = new ChangeLanguage(this);
+        changeLanguage.loadLocale();
         setContentView(R.layout.activity_main);
 
         databaseClass = new DatabaseClass(this);
@@ -72,16 +87,32 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
 
         if (browser.equals("main")) {
 
+            browserWebViewClass.setBrowserWebView(webView);
 
         } else if (browser.equals("incognito")) {
             webViewClass.setWebView(webView);
-            Toast.makeText(this, "Damn", Toast.LENGTH_SHORT).show();
         }
         urlCheck();
         myRegisterReciever();
-        webView.setDownloadListener(this);
+        registerListeners();
         listFilesForFolder(folder);
 
+        if (savedInstanceState != null) {
+            webView.restoreState(savedInstanceState);
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        webView.saveState(outState);
+    }
+
+    private void registerListeners() {
+        webView.setDownloadListener(this);
+        vpnButton.setOnClickListener(this);
     }
 
     /**
@@ -141,11 +172,12 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         toolbar = findViewById(R.id.custom_action_bar);
         webView = findViewById(R.id.webkit);
         webViewClass = new WebViewClass();
-        browserWebViewClass = new BrowserWebViewClass();
+        browserWebViewClass = new BrowserWebViewClass(this);
         progressBar = findViewById(R.id.progress_bar);
+        vpnButton = findViewById(R.id.button_vpn);
     }
 
-    ProgressBar progressBar;
+
     /**
      * Here toolbar is set as an actionbar
      */
@@ -169,8 +201,8 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
 //            Toast.makeText(this, "main", Toast.LENGTH_SHORT).show();
 
         } else if (url != null && browser.equals("incognito")) {
-            webViewClass.startWebView(url, webView, MainActivity.this);
-            Toast.makeText(this, "incognito", Toast.LENGTH_SHORT).show();
+            webViewClass.startWebView(url, webView, MainActivity.this, this, progressBar);
+
         }
     }
 
@@ -182,8 +214,11 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.my_web_option_menu, menu);
-
+        if (browser.equals("main")) {
+            inflater.inflate(R.menu.my_web_option_menu, menu);
+        } else if (browser.equals("incognito")) {
+            inflater.inflate(R.menu.incognito_option_menu, menu);
+        }
         return true;
     }
 
@@ -214,9 +249,12 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
             case R.id.bookmarkThis:
                 addToBookmarks();
                 return true;
+            case R.id.history:
+                showHistory();
+                return true;
             case R.id.exit:
-                finish();
-                moveTaskToBack(true);
+                finishAffinity();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -228,10 +266,11 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
 
     }
 
-    private EditText bookmarkNameEt;
-    private EditText bookmarkUrlEt;
-    private String bookmarkNameStr;
-    private String bookmarkUrlStr;
+    private void showHistory() {
+        Intent intent = new Intent(this, HistoryActivity.class);
+        startActivity(intent);
+    }
+
 
     //DIALOG
     private void customDialog(String url) {
@@ -240,7 +279,6 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_dialog);
         dialog.setTitle("Title...");
-
 
         // set the custom dialog components - text, image and button
         bookmarkNameEt = dialog.findViewById(R.id.bookmarkNameEt);
@@ -279,7 +317,6 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
                     e.printStackTrace();
                 }
 
-
                 dialog.dismiss();
             }
         });
@@ -300,9 +337,12 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
                 webView.clearCache(true);
             }
             webView.goBack();
-            Toast.makeText(this, "GOBACK", Toast.LENGTH_SHORT).show();
 
         } else {
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().removeSessionCookies(null);
+            webView.clearHistory();
+            webView.clearCache(true);
             super.onBackPressed();
         }
     }
@@ -332,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     public void showBookmarks() {
 
         Intent intent = new Intent(this, BookmarksActivity.class);
+        intent.putExtra("browser", browser);
         startActivity(intent);
     }
 
@@ -365,4 +406,14 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.button_vpn:
+                Intent intent = new Intent(this, VpnActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
 }

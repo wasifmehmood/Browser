@@ -39,7 +39,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.Book
         mClickHandler = handler;
         this.onClickListener = listener;
         databaseClass = new DatabaseClass(context);
-
     }
 
     @NonNull
@@ -70,7 +69,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.Book
             } else {
                 holder.mBookmarksNameTextView.setText(url.getHost());
             }
-
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

@@ -137,7 +137,7 @@ public class VpnActivity extends UIActivity implements TrafficListener, VpnState
     protected void connectToVpn() {
 
         if (HydraSdk.isLoggedIn()) {
-            showConnectProgress();
+//            showConnectProgress();
             List<String> bypassDomains = new LinkedList<>();
             bypassDomains.add("*facebook.com");
             bypassDomains.add("*wtfismyip.com");
@@ -168,7 +168,7 @@ public class VpnActivity extends UIActivity implements TrafficListener, VpnState
 
     @Override
     protected void disconnectFromVpn() {
-        showConnectProgress();
+//        showConnectProgress();
         HydraSdk.stopVPN(TrackingConstants.GprReasons.M_UI, new CompletableCallback() {
             @Override
             public void complete() {

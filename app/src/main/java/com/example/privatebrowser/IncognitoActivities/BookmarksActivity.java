@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.privatebrowser.Adapters.BookmarksAdapter;
+import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
 
 import com.example.privatebrowser.R;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 import static com.example.privatebrowser.Adapters.BookmarksAdapter.bookmarksList;
 import static com.example.privatebrowser.Adapters.BookmarksAdapter.bookmarksUrlList;
 
-public class BookmarksActivity extends AppCompatActivity implements
+public class BookmarksActivity extends AppCompatActivity implements View.OnClickListener,
         BookmarksAdapter.BookmarksAdapterOnClickHandler, BookmarksAdapter.AdapterListener {
 
     private BookmarksAdapter bookmarkAdapter;
@@ -27,26 +29,44 @@ public class BookmarksActivity extends AppCompatActivity implements
     private ArrayList<String> bookmarkUrlName;
     private RecyclerView mRecyclerView;
     private DatabaseClass databaseClass;
+    private Button clearBookmarks;
+    ChangeLanguage changeLanguage;
+    String browser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeLanguage = new ChangeLanguage(this);
+        changeLanguage.loadLocale();
         setContentView(R.layout.activity_bookmarks);
 
         databaseClass = new DatabaseClass(this);
         getBookmarksFromSQLite();
 
+        browser = getIntent().getStringExtra("browser");
+
         inItUi();
 
         setRecyclerView();
 
+        registerListeners();
 
+        if(bookmarkName.isEmpty())
+        {
+            clearBookmarks.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void registerListeners() {
+
+        clearBookmarks.setOnClickListener(this);
     }
 
 
     private void inItUi() {
 
         mRecyclerView = findViewById(R.id.recycler_view_bookmarks);
+        clearBookmarks = findViewById(R.id.button_clear_bookmarks);
     }
 
     private void setRecyclerView() {
@@ -99,6 +119,7 @@ public class BookmarksActivity extends AppCompatActivity implements
     public void onClick(String bookmarksStr) {
 
         Intent intent = new Intent(BookmarksActivity.this, MainActivity.class);
+        intent.putExtra("browser", browser);
         intent.putExtra("url", bookmarksStr);
         startActivity(intent);
     }
@@ -120,5 +141,18 @@ public class BookmarksActivity extends AppCompatActivity implements
 
         bookmarkAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if(v.getId() == R.id.button_clear_bookmarks)
+        {
+            databaseClass.deleteBookmarkRecord();
+            bookmarksList.clear();
+            bookmarksUrlList.clear();
+            bookmarkAdapter.notifyDataSetChanged();
+            clearBookmarks.setVisibility(View.INVISIBLE);
+        }
     }
 }

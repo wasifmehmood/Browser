@@ -15,16 +15,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".BrowserActivities.HistoryActivity"></activity>
-        <activity android:name=".BrowserActivities.BrowserSearchActivity">
+        <activity
+            android:name=".DualBrowserActivities.DualBrowserActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".HomeActivity"
+            android:theme="@style/StartTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Vpn.VpnActivity" />
+        <activity android:name=".BrowserActivities.HistoryActivity" />
+        <activity android:name=".BrowserActivities.BrowserSearchActivity" />
+        <activity
+            android:name=".Vpn.VpnActivity"
+            android:theme="@style/AppTheme" />
 
         <receiver
             android:name=".Reciever.DownloadCompleteReciever"
@@ -53,8 +63,10 @@
         <activity android:name=".IncognitoActivities.SearchActivity" />
         <activity
             android:name=".IncognitoActivities.StartActivity"
-            android:theme="@style/StartTheme"></activity>
-        <activity android:name=".IncognitoActivities.MainActivity" />
+            android:theme="@style/StartTheme" />
+        <activity android:name=".IncognitoActivities.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            />
     </application>
 
 </manifest>

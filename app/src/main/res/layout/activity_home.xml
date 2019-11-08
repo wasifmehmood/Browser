@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CfCFCE">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".HomeActivity">
+
+        <ImageView
+            android:id="@+id/image_view_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_40sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/browser"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_28sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_view_header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_start_normal_browsing"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/shape_btn"
+            android:gravity="center"
+            android:src="@drawable/browser"
+            app:layout_constraintEnd_toStartOf="@id/btn_start_private_browsing"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_header" />
+
+        <TextView
+            android:id="@+id/tv_start_normal_browsing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/browser_n"
+            android:textColor="#323639"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="@id/btn_start_normal_browsing"
+            app:layout_constraintStart_toStartOf="@id/btn_start_normal_browsing"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_normal_browsing" />
+
+
+        <ImageButton
+            android:id="@+id/btn_start_private_browsing"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/shape_btn"
+            android:gravity="center"
+            android:src="@drawable/browser_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_start_normal_browsing"
+            app:layout_constraintTop_toBottomOf="@+id/image_view_header" />
+
+        <TextView
+            android:id="@+id/tv_start_private_browsing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/private_nbrowser"
+            android:textColor="#323639"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="@id/btn_start_private_browsing"
+            app:layout_constraintStart_toStartOf="@id/btn_start_private_browsing"
+            app:layout_constraintTop_toBottomOf="@id/btn_start_private_browsing" />
+
+
+        <ImageButton
+            android:id="@+id/btn_dual_browser"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:background="@drawable/shape_btn"
+            android:src="@drawable/dual"
+            app:layout_constraintEnd_toEndOf="@+id/btn_start_normal_browsing"
+            app:layout_constraintStart_toStartOf="@id/btn_start_normal_browsing"
+            app:layout_constraintTop_toBottomOf="@+id/tv_start_normal_browsing" />
+
+        <TextView
+            android:id="@+id/tv_dual_browser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="@string/dual_nbrowser"
+            android:textColor="#323639"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="@+id/btn_dual_browser"
+            app:layout_constraintStart_toStartOf="@+id/btn_dual_browser"
+            app:layout_constraintTop_toBottomOf="@+id/btn_dual_browser" />
+
+        <ImageButton
+            android:id="@+id/btn_vpn"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:background="@drawable/shape_btn"
+            android:src="@drawable/vpn_icon"
+            app:layout_constraintEnd_toEndOf="@+id/tv_start_private_browsing"
+            app:layout_constraintStart_toStartOf="@id/tv_start_private_browsing"
+            app:layout_constraintTop_toBottomOf="@+id/tv_start_private_browsing" />
+
+        <TextView
+            android:id="@+id/tv_vpn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:text="@string/vpn"
+            android:textColor="#323639"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="@+id/btn_vpn"
+            app:layout_constraintStart_toStartOf="@+id/btn_vpn"
+            app:layout_constraintTop_toBottomOf="@+id/btn_vpn" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

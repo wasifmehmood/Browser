@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.R;
 import com.example.privatebrowser.Vpn.VpnActivity;
 
@@ -19,10 +20,13 @@ import androidx.core.app.ActivityCompat;
 public class StartActivity extends Activity implements View.OnClickListener {
 
     private ImageButton startBrowsing, startVpn;
+    ChangeLanguage changeLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeLanguage = new ChangeLanguage(this);
+        changeLanguage.loadLocale();
         setContentView(R.layout.activity_start);
 
         inItUi();

@@ -3,8 +3,10 @@ package com.example.privatebrowser.Vpn;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.anchorfree.hydrasdk.api.response.RemainingTraffic;
 import com.anchorfree.hydrasdk.callbacks.Callback;
 import com.anchorfree.hydrasdk.exceptions.HydraException;
 import com.anchorfree.hydrasdk.vpnservice.VPNState;
+import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.R;
 
 import com.example.privatebrowser.utils.Converter;
@@ -30,6 +33,7 @@ import java.util.Objects;
 public abstract class UIActivity extends AppCompatActivity {
 
     static final String TAG = VpnActivity.class.getSimpleName();
+    private ChangeLanguage changeLanguage;
 
     @BindView(R.id.main_toolbar)
     protected Toolbar toolbar;
@@ -67,6 +71,12 @@ public abstract class UIActivity extends AppCompatActivity {
     @BindView(R.id.connect_btn)
     Button connectButton;
 
+    @BindView(R.id.image_view_back)
+    ImageView imageViewBack;
+
+    @BindView(R.id.text_view_connect)
+    TextView textViewConnect;
+
     private final Handler mUIHandler = new Handler(Looper.getMainLooper());
     private final Runnable mUIUpdateRunnable = new Runnable() {
         @Override
@@ -80,11 +90,20 @@ public abstract class UIActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeLanguage = new ChangeLanguage(this);
+        changeLanguage.loadLocale();
         setContentView(R.layout.activity_vpn);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIActivity.super.onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -191,8 +210,9 @@ public abstract class UIActivity extends AppCompatActivity {
 //                        connectBtnTextView.setEnabled(true);
 //                        connectBtnTextView.setText(R.string.connect);
 //                        connectionStateTextView.setText(R.string.disconnected);
-                        connectButton.setBackgroundResource(R.drawable.connect);
-                        hideConnectProgress();
+                        connectButton.setBackgroundResource(R.drawable.connect_icon);
+                        textViewConnect.setText(R.string.connect);
+//                        hideConnectProgress();
                         break;
                     }
                     case CONNECTED: {
@@ -200,17 +220,19 @@ public abstract class UIActivity extends AppCompatActivity {
 //                        connectBtnTextView.setText(R.string.disconnect);
 //                        connectionStateTextView.setText(R.string.connected);
                         connectButton.setBackgroundResource(R.drawable.disconnet);
-                        hideConnectProgress();
+                        textViewConnect.setText(R.string.connected);
+//                        hideConnectProgress();
                         break;
                     }
                     case CONNECTING_VPN:
                     case CONNECTING_CREDENTIALS:
                     case CONNECTING_PERMISSIONS: {
                         connectButton.setBackgroundResource(R.drawable.connecting);
+                        textViewConnect.setText(R.string.connecting);
 //                        connectButton.setText(R.string.connecting);
 //                        connectButton.setText(R.string.connecting);
 //                        connectButton.setEnabled(false);
-                        showConnectProgress();
+//                        showConnectProgress();
                         break;
                     }
                     case PAUSED: {

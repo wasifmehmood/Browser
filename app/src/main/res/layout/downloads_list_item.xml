@@ -11,7 +11,7 @@
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:src="@drawable/download"
+        android:src="@drawable/dwnload"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:layout_marginTop="@dimen/_2sdp"
         android:maxLength="18"
         android:paddingBottom="@dimen/_18sdp"
-        android:textColor="#ffffff"
+        android:textColor="#323639"
         android:textSize="@dimen/_20sdp"
         app:layout_constraintLeft_toRightOf="@id/downloads_image_view"
         app:layout_constraintTop_toTopOf="@id/downloads_image_view" />
@@ -32,7 +32,7 @@
         android:id="@+id/btn_remove"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
-        android:background="@android:drawable/ic_delete"
+        android:background="@drawable/ic_clear_green_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="@dimen/_45sdp"
+        android:layout_marginLeft="@dimen/_50sdp"
         android:layout_marginRight="8dp"
         android:background="#dadada"
         app:layout_constraintStart_toStartOf="parent"

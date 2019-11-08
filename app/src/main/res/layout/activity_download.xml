@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#282A38">
+    android:background="#ffffff">
 
-    <androidx.appcompat.widget.Toolbar
+    <Toolbar
         android:id="@+id/custom_action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,30 +20,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/shape_tv_one"
             android:fontFamily="@font/roboto_medium"
-            android:paddingStart="@dimen/_35sdp"
+            android:paddingStart="@dimen/_25sdp"
             android:paddingEnd="@dimen/_35sdp"
             android:paddingBottom="@dimen/_2sdp"
             android:text="@string/downloads"
-            android:textColor="#F45F61"
+            android:textColor="#ffffff"
             android:textSize="@dimen/_22sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent" />
-    </androidx.appcompat.widget.Toolbar>
+    </Toolbar>
 
     <ScrollView
+        android:id="@+id/scroll_view_downloads"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/custom_action_bar"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="@dimen/_370sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_action_bar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_downloads"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/custom_action_bar" />
     </ScrollView>
+
+    <Button
+        android:id="@+id/button_clear_downloads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_btn_three"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/clear_downloads"
+        android:textColor="#ffffff"
+        android:paddingEnd="@dimen/_8sdp"
+        android:paddingStart="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

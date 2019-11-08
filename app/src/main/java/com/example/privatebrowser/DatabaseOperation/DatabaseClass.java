@@ -2,6 +2,7 @@ package com.example.privatebrowser.DatabaseOperation;
 
 
 import android.content.Context;
+import android.widget.Toast;
 
 
 public class DatabaseClass {
@@ -21,10 +22,10 @@ public class DatabaseClass {
         this.context = context;
     }
 
-//    void deleteRecord() {
-//        DeleteClass deleteClass = new DeleteClass(context, downloadsDBName, DB_VERSION, TABLE_NAME);
-//        deleteClass.deleteAll();
-//    }
+    public void deleteRecord() {
+        DeleteClass deleteClass = new DeleteClass(context, downloadsDBName, DB_VERSION, TABLE_NAME);
+        deleteClass.deleteAll();
+    }
 
     public void insertRecord(String fileName, Boolean bool) {
         InsertClass insertClass = new InsertClass(context, downloadsDBName, DB_VERSION, TABLE_NAME);
@@ -87,6 +88,7 @@ public class DatabaseClass {
     }
 
     public void insertHistoryRecord(String url, String bookmark, Boolean bool) {
+//        Toast.makeText(context, ""+TABLE_NAME_HISTORY+" "+historyDBName+" "+DB_VERSION, Toast.LENGTH_SHORT).show();
         InsertClass insertClass = new InsertClass(context, historyDBName, DB_VERSION, TABLE_NAME_HISTORY);
         insertClass.saveRecord(url, bookmark, bool);
     }
@@ -104,7 +106,7 @@ public class DatabaseClass {
     public void readAllHistoryRecord() {
 
         SearchAllClass searchAllClass = new SearchAllClass(context, historyDBName, DB_VERSION, TABLE_NAME_HISTORY);
-        searchAllClass.searchAllBookmarkRecord();
+        searchAllClass.searchAllHistoryRecord();
     }
 
     public void updateHistoryRecord(String url, String fileName, Boolean bool) {

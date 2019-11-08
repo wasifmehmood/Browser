@@ -58,4 +58,25 @@ class SearchAllClass {
         Utils.nameUtils = names;
         Utils.bookmarkNameUtils = bookmarkName;
     }
+
+
+    public void searchAllHistoryRecord()
+    {
+        Cursor cursor = dbh.searchAll();
+
+        names = new ArrayList<>();
+        bool = new ArrayList<>();
+        id = new ArrayList<>();
+        bookmarkName = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            id.add(cursor.getString(0));
+            names.add(cursor.getString(1));
+            bookmarkName.add(cursor.getString(2));
+            bool.add(cursor.getString(3));
+        }
+        Utils.boolHistoryUtils = bool;
+        Utils.nameHistoryUtils = names;
+        Utils.bookmarkNameHistoryUtils = bookmarkName;
+    }
 }

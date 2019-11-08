@@ -8,8 +8,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.privatebrowser.Adapters.DownloadsAdapter;
+import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
 import com.example.privatebrowser.R;
 import com.example.privatebrowser.utils.Utils;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 
 import static com.example.privatebrowser.Adapters.DownloadsAdapter.mFileName;
 
-public class DownloadActivity extends AppCompatActivity implements
+public class DownloadActivity extends AppCompatActivity implements View.OnClickListener,
         DownloadsAdapter.DownloadsAdapterOnClickHandler, DownloadsAdapter.adapterListener {
 
     private RecyclerView mRecyclerView;
@@ -27,10 +29,14 @@ public class DownloadActivity extends AppCompatActivity implements
     private ArrayList<String> fileNames;
     private DatabaseClass databaseClass;
     private final File folder = new File(Environment.getExternalStorageDirectory() + "/PrivateBrowser");
+    private Button clearDownloads;
+    ChangeLanguage changeLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        changeLanguage = new ChangeLanguage(this);
+        changeLanguage.loadLocale();
         setContentView(R.layout.activity_download);
 
         databaseClass = new DatabaseClass(this);
@@ -43,12 +49,25 @@ public class DownloadActivity extends AppCompatActivity implements
         inItUi();
 
         setRecyclerView();
+
+        registerListeners();
+
+        if(fileNames.isEmpty())
+        {
+            clearDownloads.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void registerListeners() {
+
+        clearDownloads.setOnClickListener(this);
     }
 
 
     private void inItUi() {
-        mRecyclerView = findViewById(R.id.recycler_view_downloads);
 
+        mRecyclerView = findViewById(R.id.recycler_view_downloads);
+        clearDownloads = findViewById(R.id.button_clear_downloads);
     }
 
     private void setRecyclerView() {
@@ -74,28 +93,29 @@ public class DownloadActivity extends AppCompatActivity implements
 
         fileNames = new ArrayList<>();
         int x = 0;
-        for (final File fileEntry : folder.listFiles()) {
-            {
-                if (fileEntry.isDirectory()) {
-                    listFilesForFolder(fileEntry);
-                } else {
+        if (folder.listFiles() != null) {
+            for (final File fileEntry : folder.listFiles()) {
+                {
+                    if (fileEntry.isDirectory()) {
+                        listFilesForFolder(fileEntry);
+                    } else {
 
-                    databaseClass.readRecord();
+                        databaseClass.readRecord();
 
-                    try {
-                        if (!Utils.boolUtils.get(x).equals("false")) {
-                            fileNames.add(fileEntry.getName());
+                        try {
+                            if (!Utils.boolUtils.get(x).equals("false")) {
+                                fileNames.add(fileEntry.getName());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
+                    }
                 }
+                x++;
             }
-            x++;
         }
     }
-
 
     @Override
     public void onClick(String fileName) {
@@ -112,6 +132,18 @@ public class DownloadActivity extends AppCompatActivity implements
         mFileName.remove(position);
 
         mDownloadsVariable.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v.getId() == R.id.button_clear_downloads) {
+            databaseClass.deleteRecord();
+            mFileName.clear();
+            mDownloadsVariable.notifyDataSetChanged();
+            clearDownloads.setVisibility(View.INVISIBLE);
+        }
 
     }
 }
