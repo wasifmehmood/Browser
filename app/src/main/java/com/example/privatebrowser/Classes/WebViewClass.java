@@ -22,6 +22,7 @@ import com.example.privatebrowser.IncognitoActivities.SearchActivity;
 import com.example.privatebrowser.R;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class WebViewClass {
 
@@ -57,7 +58,7 @@ public class WebViewClass {
     private ImageView imageView;
 
     public void startWebView(String url, WebView webView, final Context context, Activity activity,
-                             ProgressBar progressBar) {
+                             ProgressBar progressBar, SwipeRefreshLayout swipe) {
 
         //Create new webView Client to show progress dialog
         //When opening a url or click on link
@@ -80,6 +81,13 @@ public class WebViewClass {
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
 
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+
+                    swipe.setRefreshing(false);
                 }
             });
 

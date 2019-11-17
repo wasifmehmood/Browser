@@ -11,7 +11,7 @@
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:src="@drawable/menu_history"
+        android:src="@drawable/history_new"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,18 +21,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_2sdp"
-        android:maxLength="18"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
         android:paddingBottom="@dimen/_18sdp"
         android:textColor="#323639"
-        android:textSize="@dimen/_20sdp"
+        android:textSize="@dimen/_15sdp"
         app:layout_constraintLeft_toRightOf="@id/history_image_view"
-        app:layout_constraintTop_toTopOf="@id/history_image_view" />
+        app:layout_constraintTop_toTopOf="@id/history_image_view"
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/btn_history_remove"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
-        android:background="@drawable/ic_clear_green_24dp"
+        android:background="@drawable/ic_clear_blue_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

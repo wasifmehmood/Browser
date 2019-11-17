@@ -28,6 +28,7 @@ public class CustomEditText extends EditText {
     public CustomEditText (Context context, AttributeSet attrs) {
         super(context, attrs);
         // this Contructure required when you are using this view in xml
+
     }
 
     public CustomEditText(Context context, AttributeSet attrs, int defStyle) {

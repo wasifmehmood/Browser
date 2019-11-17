@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/bookmarks"
-        android:icon="@drawable/menu_bookmark"
+        android:icon="@drawable/menu_bookmark_incog"
         android:title="@string/bookmarks"
         app:showAsAction="always" />
 
@@ -25,9 +25,9 @@
     <!--        android:id="@+id/history"-->
     <!--        android:title="@string/history" />-->
     <item
-        android:id="@+id/downloads"
-        android:icon="@drawable/menu_download"
-        android:title="@string/downloads"
+        android:id="@+id/item_home"
+        android:icon="@drawable/menu_home_incog"
+        android:title="@string/home"
         app:showAsAction="always" />
 
     <item
@@ -35,9 +35,10 @@
         android:enabled="false"
         android:title=""
         app:showAsAction="always" />
+
     <item
         android:id="@+id/menu_vpn"
-        android:icon="@drawable/menu_vpn"
+        android:icon="@drawable/menu_vpn_incog"
         android:title="@string/vpn"
         app:showAsAction="always" />
 
@@ -49,14 +50,20 @@
 
     <item
         android:id="@+id/action_more"
-        android:icon="@drawable/setting_icon"
+        android:icon="@drawable/menu_settings_incog"
         android:title=""
         app:showAsAction="always">
 
         <menu>
 
             <item
+                android:id="@+id/downloads"
+                android:icon="@drawable/menu_downloads_incog"
+                android:title="@string/downloads" />
+
+            <item
                 android:id="@+id/exit"
+                android:icon="@drawable/ic_clear_white_24dp"
                 android:title="@string/exit" />
 
         </menu>

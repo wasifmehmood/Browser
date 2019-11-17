@@ -20,7 +20,7 @@
 
     <item
         android:id="@+id/bookmarks"
-        android:icon="@drawable/menu_bookmark"
+        android:icon="@drawable/menu_bookmark_new"
         android:title="@string/bookmarks"
         app:showAsAction="always" />
 
@@ -31,9 +31,9 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/downloads"
-        android:icon="@drawable/menu_download"
-        android:title="@string/downloads"
+        android:id="@+id/item_home"
+        android:icon="@drawable/home_new"
+        android:title="@string/home"
         app:showAsAction="always" />
 
     <item
@@ -43,7 +43,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_vpn"
-        android:icon="@drawable/menu_vpn"
+        android:icon="@drawable/menu_vpn_new"
         android:title="@string/vpn"
         app:showAsAction="always" />
 
@@ -56,7 +56,7 @@
 
     <item
         android:id="@+id/action_more"
-        android:icon="@drawable/setting_icon"
+        android:icon="@drawable/settings_menu_icon"
         android:title=""
         app:showAsAction="always">
 
@@ -64,18 +64,22 @@
 
             <item
                 android:id="@+id/incognito"
-                android:icon="@drawable/menu_incognito"
+                android:icon="@drawable/menu_incognito_new"
                 android:title="@string/incognito" />
 
             <item
                 android:id="@+id/history"
-                android:icon="@drawable/menu_history"
+                android:icon="@drawable/history_new"
                 android:title="@string/history" />
 
-
+            <item
+                android:id="@+id/downloads"
+                android:icon="@drawable/menu_downloads_new"
+                android:title="@string/downloads" />
 
             <item
                 android:id="@+id/exit"
+                android:icon="@drawable/ic_clear_blue_24dp"
                 android:title="@string/exit" />
 
         </menu>

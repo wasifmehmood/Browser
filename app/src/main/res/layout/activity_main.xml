@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main_constraint_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,16 +13,19 @@
 
     <EditText
         android:id="@+id/toolbar_et"
-        android:layout_width="@dimen/_220sdp"
+        android:layout_width="0dp"
         android:layout_height="@dimen/_25sdp"
-        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_6sdp"
-        android:background="@drawable/shape_tv"
-
+        android:background="@drawable/shape_tv_four"
+        android:textColor="@color/grey"
+        android:layout_marginEnd="@dimen/_15sdp"
         android:inputType="textWebEditText"
         android:paddingStart="@dimen/_6sdp"
+        android:imeOptions="actionGo"
         android:paddingEnd="@dimen/_6sdp"
         android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toStartOf="@+id/button_vpn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,9 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_6sdp"
-        android:background="@drawable/menu_vpn"
+        android:background="@drawable/menu_vpn_new"
         android:text="@string/vpn"
         app:layout_constraintBottom_toTopOf="@id/progress_bar"
+        app:layout_constraintStart_toEndOf="@+id/toolbar_et"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,20 +60,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/progress_bar" />
 
-    <WebView
-        android:id="@+id/webkit"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_4sdp"
         app:layout_constraintBottom_toTopOf="@id/custom_action_bar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progress_bar" />
+        app:layout_constraintTop_toBottomOf="@id/progress_bar">
+
+        <WebView
+            android:id="@+id/webkit"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/custom_action_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/progress_bar" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/custom_action_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#CFCFCE"
+        android:background="#f6f6f6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

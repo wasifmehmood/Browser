@@ -73,4 +73,7 @@
     <string name="language_prompt">adasdasf</string>
 
     <string name="now_you_can_browse_privately_and_other_people_who_use_this_device_won_t_see_your_activity_however_downloads_and_bookmarks_will_be_saved_learn_more_n_n_browser_won_t_save_the_following_information_n_your_browsing_history_n_cookies_and_site_data_n_information_entered_in_forms_n">Vous pouvez maintenant naviguer en privé et les autres utilisateurs de cet appareil ne verront pas votre activité. Cependant, les téléchargements et les favoris seront enregistrés.\n\n En savoir plus Le navigateur n\'\enregistre pas les informations suivantes: \nVotre historique de navigation \nCookies et données de site \nInformations saisies dans des formulaires</string>
+    <string name="urls">URL:</string>
+    <string name="fullscreen">Fullscreen</string>
+    <string name="exit_fullscreen">Exit Fullscreen</string>
 </resources>

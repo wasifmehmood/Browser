@@ -15,7 +15,7 @@
             android:id="@+id/image_view_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/header"
+            android:background="@drawable/header_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

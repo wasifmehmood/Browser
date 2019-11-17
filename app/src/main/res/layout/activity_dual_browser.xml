@@ -10,7 +10,280 @@
     android:weightSum="2"
     tools:context=".DualBrowserActivities.DualBrowserActivity">
 
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/fullscreen_constraint_layout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:visibility="gone">-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/fullscreen_action_back_dual"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginStart="@dimen/_4sdp"-->
+    <!--            android:src="@drawable/ic_arrow_back_blue_24dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@id/fullscreen_et_search_dual_browser"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="@id/fullscreen_et_search_dual_browser" />-->
+
+    <!--        <View-->
+    <!--            android:id="@+id/fullscreen_view_dual_browser"-->
+    <!--            android:layout_width="@dimen/_6sdp"-->
+    <!--            android:layout_height="@dimen/_2sdp"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:visibility="invisible"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_action_back_dual"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/fullscreen_action_forward_dual"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginEnd="@dimen/_4sdp"-->
+    <!--            android:src="@drawable/ic_arrow_forward_blue_24dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@+id/fullscreen_action_back_dual"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_view_dual_browser"-->
+    <!--            app:layout_constraintTop_toTopOf="fullscreen_action_back_dual" />-->
+
+
+    <!--        <com.example.privatebrowser.CustomWidgets.CustomEditText-->
+    <!--            android:id="@+id/fullscreen_et_search_dual_browser"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="@dimen/_10sdp"-->
+    <!--            android:layout_marginTop="@dimen/_2sdp"-->
+    <!--            android:layout_marginBottom="@dimen/_2sdp"-->
+    <!--            android:background="@drawable/shape_tv"-->
+    <!--            android:drawableRight="@drawable/search_new"-->
+    <!--            android:fontFamily="@font/roboto_medium"-->
+    <!--            android:hint="@string/search_or_type_web_address"-->
+    <!--            android:imeOptions="actionGo"-->
+    <!--            android:inputType="textWebEditText"-->
+    <!--            android:paddingStart="@dimen/_10sdp"-->
+    <!--            android:paddingTop="@dimen/_5sdp"-->
+    <!--            android:paddingEnd="@dimen/_10sdp"-->
+    <!--            android:paddingBottom="@dimen/_5sdp"-->
+    <!--            android:textColor="#323639"-->
+    <!--            android:textColorHint="#323639"-->
+    <!--            android:textSize="@dimen/_12sdp"-->
+    <!--            app:layout_constraintEnd_toStartOf="@+id/fullscreen_linear_layout_option"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_action_forward_dual"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/fullscreen_linear_layout_option"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@+id/fullscreen_et_search_dual_browser"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_et_search_dual_browser"-->
+    <!--            app:layout_constraintTop_toTopOf="@+id/fullscreen_et_search_dual_browser">-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/fullscreen_option_menu_dual_browser"-->
+    <!--                android:layout_width="@dimen/_10sdp"-->
+    <!--                android:layout_height="@dimen/_16sdp"-->
+    <!--                android:layout_marginStart="@dimen/_15sdp"-->
+    <!--                android:layout_marginEnd="@dimen/_15sdp"-->
+    <!--                android:src="@drawable/settings_menu" />-->
+    <!--        </LinearLayout>-->
+
+
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+    <!--    &lt;!&ndash;    visibility = invisible&ndash;&gt;-->
+
+    <!--    <ProgressBar-->
+    <!--        android:id="@+id/fullscreen_progress_bar_dual"-->
+    <!--        style="?android:attr/progressBarStyleHorizontal"-->
+    <!--        android:layout_width="fill_parent"-->
+    <!--        android:layout_height="@dimen/_3sdp"-->
+    <!--        android:layout_marginTop="@dimen/_2sdp"-->
+    <!--        android:background="#CFCFCE"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/fullscreen_constraint_layout">-->
+
+    <!--    </ProgressBar>-->
+
+    <!--    &lt;!&ndash;    visibility = invisible&ndash;&gt;-->
+
+    <!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+    <!--        android:id="@+id/fullscreen_swipe_refresh_layout_dual"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="2"-->
+    <!--        android:visibility="gone">-->
+
+    <!--        <WebView-->
+    <!--            android:id="@+id/fullscreen_webView_dual_browser"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="0dp" />-->
+
+    <!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
+
+    <!--    &lt;!&ndash;    visibility = visible&ndash;&gt;-->
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/fullscreen_incognito_bar_constraint_layout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="#323639"-->
+    <!--        android:visibility="gone">-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/fullscreen_action_back_dual_incognito"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginStart="@dimen/_4sdp"-->
+    <!--            android:src="@drawable/ic_arrow_back_white_24dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <View-->
+    <!--            android:id="@+id/fullscreen_view_dual_incognito"-->
+    <!--            android:layout_width="@dimen/_6sdp"-->
+    <!--            android:layout_height="@dimen/_2sdp"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:visibility="invisible"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_action_back_dual_incognito"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/fullscreen_action_forward_dual_incognito"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginEnd="@dimen/_4sdp"-->
+    <!--            android:src="@drawable/ic_arrow_forward_white_24dp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_view_dual_incognito"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <com.example.privatebrowser.CustomWidgets.CustomEditText-->
+    <!--            android:id="@+id/fullscreen_et_search_dual_incognito"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="@dimen/_10sdp"-->
+    <!--            android:layout_marginTop="@dimen/_2sdp"-->
+    <!--            android:layout_marginBottom="@dimen/_2sdp"-->
+    <!--            android:background="@drawable/shape_tv"-->
+    <!--            android:drawableRight="@drawable/insearch"-->
+    <!--            android:fontFamily="@font/roboto_medium"-->
+    <!--            android:hint="@string/search_or_type_web_address"-->
+    <!--            android:imeOptions="actionGo"-->
+    <!--            android:inputType="textWebEditText"-->
+    <!--            android:paddingStart="@dimen/_10sdp"-->
+    <!--            android:paddingTop="@dimen/_5sdp"-->
+    <!--            android:paddingEnd="@dimen/_10sdp"-->
+    <!--            android:paddingBottom="@dimen/_5sdp"-->
+    <!--            android:textColor="#323639"-->
+    <!--            android:textColorHint="#323639"-->
+    <!--            android:textSize="@dimen/_12sdp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toStartOf="@+id/fullscreen_linear_layout_incognito_option"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_action_forward_dual_incognito"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/fullscreen_linear_layout_incognito_option"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_et_search_dual_incognito"-->
+    <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/fullscreen_option_menu_dual_incognito"-->
+    <!--                android:layout_width="@dimen/_10sdp"-->
+    <!--                android:layout_height="@dimen/_16sdp"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:layout_marginStart="@dimen/_15sdp"-->
+    <!--                android:layout_marginEnd="@dimen/_15sdp"-->
+    <!--                android:src="@drawable/settings_menu_incog"-->
+    <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toEndOf="@+id/fullscreen_et_search_dual_incognito"-->
+    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+    <!--        </LinearLayout>-->
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:id="@+id/fullscreen_layout_progress_bar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/_3sdp"-->
+    <!--        android:background="#CFCFCE"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/button_vpn">-->
+
+    <!--        <ProgressBar-->
+    <!--            android:id="@+id/fullscreen_progress_bar_dual_incognito"-->
+    <!--            style="?android:attr/progressBarStyleHorizontal"-->
+    <!--            android:layout_width="fill_parent"-->
+    <!--            android:layout_height="@dimen/_3sdp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--        </ProgressBar>-->
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--    &lt;!&ndash;    visibility = visible&ndash;&gt;-->
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/fullscreen_dual_incognito_linear_layout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="2"-->
+    <!--        android:background="#323639"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:visibility="gone">-->
+
+    <!--        <ImageView-->
+    <!--            android:id="@+id/fullscreen_incognito_dual_image_view"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginTop="@dimen/_30sdp"-->
+    <!--            android:background="@drawable/incognito_icon" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/fullscreen_text_view_gone_incognito"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginTop="@dimen/_12sdp"-->
+    <!--            android:text="@string/you_ve_gone_incognito"-->
+    <!--            android:textColor="#CFCFCE"-->
+    <!--            android:textSize="@dimen/_14sdp" />-->
+
+    <!--        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+    <!--            android:id="@+id/fullscreen_swipe_refresh_layout_dual_incognito"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
+
+    <!--            <WebView-->
+    <!--                android:id="@+id/fullscreen_webView_dual_incognito"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="match_parent" />-->
+    <!--        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    <!--    </LinearLayout>-->
+
+
+    <!--    visibility = visible-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dual_constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#CFCFCE">
@@ -21,7 +294,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_4sdp"
-            android:src="@drawable/ic_arrow_back_green_24dp"
+            android:src="@drawable/ic_arrow_back_blue_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +315,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/_4sdp"
-            android:src="@drawable/ic_arrow_forward_green_24dp"
+            android:src="@drawable/ic_arrow_forward_blue_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view_dual_browser"
             app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +329,7 @@
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginBottom="@dimen/_2sdp"
             android:background="@drawable/shape_tv"
-            android:drawableRight="@drawable/searchh"
+            android:drawableRight="@drawable/search_new"
             android:fontFamily="@font/roboto_medium"
             android:hint="@string/search_or_type_web_address"
             android:imeOptions="actionGo"
@@ -76,7 +349,8 @@
         <LinearLayout
             android:id="@+id/linear_layout_option"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/et_search_dual_browser"
@@ -88,11 +362,12 @@
                 android:layout_height="@dimen/_16sdp"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:src="@drawable/setting" />
+                android:src="@drawable/settings_menu" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!--    visibility = invisible-->
     <ProgressBar
         android:id="@+id/progress_bar_dual"
         style="?android:attr/progressBarStyleHorizontal"
@@ -106,17 +381,33 @@
 
     </ProgressBar>
 
-    <WebView
-        android:id="@+id/webView_dual_browser"
+    <!--    visibility = invisible-->
+
+    <LinearLayout
+        android:id="@+id/linear_layout_dual"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="invisible" />
+        android:layout_weight="1">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout_dual"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <WebView
+                android:id="@+id/webView_dual_browser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+    <!--    visibility = visible-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/incognito_bar_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#323639">
+        android:background="#323639"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/action_back_dual_incognito"
@@ -178,7 +469,7 @@
         <LinearLayout
             android:id="@+id/linear_layout_incognito_option"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/et_search_dual_incognito"
@@ -191,7 +482,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_15sdp"
-                android:src="@drawable/setting"
+                android:src="@drawable/menu_settings_incog"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/et_search_dual_incognito"
@@ -221,12 +512,16 @@
         </ProgressBar>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!--    visibility = visible-->
+
     <LinearLayout
+        android:id="@+id/dual_incognito_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#323639"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/incognito_dual_image_view"
@@ -246,10 +541,23 @@
             android:textColor="#CFCFCE"
             android:textSize="@dimen/_14sdp" />
 
-        <WebView
-            android:id="@+id/webView_dual_incognito"
+        <LinearLayout
+            android:id="@+id/linear_layout_incognito"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone" />
+            android:visibility="gone">
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_layout_dual_incognito"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <WebView
+                    android:id="@+id/webView_dual_incognito"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

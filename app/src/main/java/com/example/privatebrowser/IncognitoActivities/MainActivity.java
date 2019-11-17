@@ -4,6 +4,8 @@ package com.example.privatebrowser.IncognitoActivities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.app.DownloadManager;
@@ -11,10 +13,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,8 +43,11 @@ import android.widget.Toast;
 import com.example.privatebrowser.BrowserActivities.HistoryActivity;
 import com.example.privatebrowser.Classes.BrowserWebViewClass;
 import com.example.privatebrowser.Classes.ChangeLanguage;
+import com.example.privatebrowser.CustomWidgets.CustomEditText;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
 
+import com.example.privatebrowser.HomeActivity;
+import com.example.privatebrowser.Interfaces.DrawableClickListener;
 import com.example.privatebrowser.Interfaces.FeaturesInterface;
 import com.example.privatebrowser.R;
 import com.example.privatebrowser.Classes.WebViewClass;
@@ -49,9 +58,11 @@ import com.example.privatebrowser.utils.Utils;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements FeaturesInterface, DownloadListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements FeaturesInterface, DownloadListener,
+        View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnKeyListener {
 
     private WebView webView;
     private WebViewClass webViewClass;
@@ -61,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     private final File folder = new File(Environment.getExternalStorageDirectory() + "/PrivateBrowser");
     private DatabaseClass databaseClass;
     private String browser;
+    private EditText searchEditText;
     private EditText bookmarkNameEt;
     private EditText bookmarkUrlEt;
     private String bookmarkNameStr;
@@ -68,9 +80,17 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     private ImageButton vpnButton;
     private ChangeLanguage changeLanguage;
     private ProgressBar progressBar;
+    SwipeRefreshLayout swipe;
+    ConstraintLayout constraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        browser = getIntent().getStringExtra("browser");
+        if (browser.equals("main")) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.IncognitoTheme);
+        }
         super.onCreate(savedInstanceState);
         changeLanguage = new ChangeLanguage(this);
         changeLanguage.loadLocale();
@@ -83,15 +103,16 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         inItUi();
         setCustomActionBar();
 
-        browser = getIntent().getStringExtra("browser");
 
         if (browser.equals("main")) {
-
             browserWebViewClass.setBrowserWebView(webView);
 
         } else if (browser.equals("incognito")) {
             webViewClass.setWebView(webView);
+            constraintLayout.setBackgroundColor(getResources().getColor(R.color.grey));
+            toolbar.setBackgroundColor(getResources().getColor(R.color.grey));
         }
+
         urlCheck();
         myRegisterReciever();
         registerListeners();
@@ -101,6 +122,68 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
             webView.restoreState(savedInstanceState);
         }
 
+        registerForContextMenu(webView);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        if (webView.getHitTestResult().getType() == WebView.HitTestResult.IMAGE_TYPE ||
+                webView.getHitTestResult().getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
+
+            if (webView.getHitTestResult().getExtra().contains("http")) {
+                Toast.makeText(this, "" + webView.getHitTestResult().getExtra(), Toast.LENGTH_SHORT).show();
+                menu.setHeaderTitle(R.string.downloads);
+
+                menu.add(0, v.getId(), 0, "Download image");
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+
+
+        String url = webView.getHitTestResult().getExtra();
+        String url2 = webView.getUrl();
+
+        Toast.makeText(this, "" + url, Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(this, DownloadActivity.class);
+//        intent.putExtra("url", url);
+//        startActivity(intent);
+//        Toast.makeText(this, "" + url, Toast.LENGTH_SHORT).show();
+        downloadFile(url, "/PrivateBrowser");
+
+        return super.onContextItemSelected(item);
+    }
+
+    private void downloadFile(String url, String directoryPictures) {
+        if (url != null) {
+            Uri uri = Uri.parse(url);
+
+            String guessFileName = URLUtil.guessFileName(url, null, null);
+
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+
+            request.setDestinationInExternalPublicDir(directoryPictures, guessFileName);
+            request.setTitle(guessFileName);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+            DownloadManager manager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+
+            if (manager != null) {
+                manager.enqueue(request);
+                databaseClass.insertRecord(guessFileName, true);
+            }
+
+            Toast.makeText(this, "Downloading", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -113,6 +196,9 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     private void registerListeners() {
         webView.setDownloadListener(this);
         vpnButton.setOnClickListener(this);
+        swipe.setOnRefreshListener(this);
+        searchEditText.setOnKeyListener(this);
+
     }
 
     /**
@@ -126,7 +212,6 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
      */
     private void listFilesForFolder(final File folder) {
 
-
         if (folder.listFiles() != null) {
             for (final File fileEntry : folder.listFiles()) {
                 {
@@ -138,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
                         if (Utils.boolUtils.size() != folder.length()) {
                             if (databaseClass.searchRecord(fileEntry.getName()).equals("Empty")) {
                                 databaseClass.insertRecord(fileEntry.getName(), true);
-
                             }
                         }
                     }
@@ -159,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
             //Checking if the received broadcast is for our enqueued download by matching download id
             if (downloadID == id) {
                 Toast.makeText(MainActivity.this, "Download Completed", Toast.LENGTH_SHORT).show();
-                listFilesForFolder(folder);
+//                listFilesForFolder(folder);
             }
         }
     };
@@ -175,6 +259,10 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         browserWebViewClass = new BrowserWebViewClass(this);
         progressBar = findViewById(R.id.progress_bar);
         vpnButton = findViewById(R.id.button_vpn);
+        searchEditText = findViewById(R.id.toolbar_et);
+        constraintLayout = findViewById(R.id.main_constraint_layout);
+
+        swipe = findViewById(R.id.swipe_refresh_layout);
     }
 
 
@@ -197,15 +285,27 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
 
         if (url != null && browser.equals("main")) {
 
-            browserWebViewClass.startBrowserWebView(url, webView, MainActivity.this, this, progressBar);
+            browserWebViewClass.startBrowserWebView(url, webView, MainActivity.this, this,
+                    progressBar, swipe);
 //            Toast.makeText(this, "main", Toast.LENGTH_SHORT).show();
 
         } else if (url != null && browser.equals("incognito")) {
-            webViewClass.startWebView(url, webView, MainActivity.this, this, progressBar);
-
+            webViewClass.startWebView(url, webView, MainActivity.this, this, progressBar, swipe);
         }
     }
 
+    private void urlCheck2(String url) {
+
+        if (url != null && browser.equals("main")) {
+
+            browserWebViewClass.startBrowserWebView(url, webView, MainActivity.this, this,
+                    progressBar, swipe);
+//            Toast.makeText(this, "main", Toast.LENGTH_SHORT).show();
+
+        } else if (url != null && browser.equals("incognito")) {
+            webViewClass.startWebView(url, webView, MainActivity.this, this, progressBar, swipe);
+        }
+    }
 
     /**
      * Override method for creating/inflating an option menu
@@ -216,8 +316,10 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         MenuInflater inflater = getMenuInflater();
         if (browser.equals("main")) {
             inflater.inflate(R.menu.my_web_option_menu, menu);
+            vpnButton.setBackgroundResource(R.drawable.menu_vpn_new);
         } else if (browser.equals("incognito")) {
             inflater.inflate(R.menu.incognito_option_menu, menu);
+            vpnButton.setBackgroundResource(R.drawable.menu_vpn_incog);
         }
         return true;
     }
@@ -225,7 +327,6 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     /**
      * override method for what happens when an item is selected in the option menu
      */
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -239,6 +340,9 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
             case R.id.action_forward:
                 if (webView.canGoForward())
                     webView.goForward();
+                return true;
+            case R.id.item_home:
+                startHomeActivity();
                 return true;
             case R.id.bookmarks:
                 showBookmarks();
@@ -260,6 +364,14 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         }
     }
 
+    private void startHomeActivity() {
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
     private void addToBookmarks() {
 
         customDialog(webView.getUrl());
@@ -270,7 +382,6 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
-
 
     //DIALOG
     private void customDialog(String url) {
@@ -322,6 +433,94 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         });
 
         dialog.show();
+    }
+
+
+    /**
+     * This checks whether the url has a top level domain, if yes returns true.
+     *
+     * @return
+     */
+
+    private boolean checkDomain() {
+
+        ArrayList<String> checkUrl = new ArrayList<>();
+        checkUrl.add(".com");
+        checkUrl.add(".net");
+        checkUrl.add(".org");
+        checkUrl.add(".edu");
+        checkUrl.add(".int");
+        checkUrl.add(".gov");
+        checkUrl.add(".mil");
+        boolean checkDomain = false;
+
+        for (int i=0; i<checkUrl.size(); i++) {
+            checkDomain = searchEditText.getText().toString().contains(checkUrl.get(i));
+
+            if (checkDomain)
+            {
+                break;
+            }
+        }
+        return checkDomain;
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    /**
+     * Override method for what happens when user clicks a button on the keyboard
+     *
+     * @param v       retrieves the view
+     * @param keyCode has the key code of keyboard
+     * @param event   has the value of the key which is pressed
+     */
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        // If the event is a key-down event on the "enter" button
+        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            // Perform action on key press
+            if (isNetworkAvailable()) {
+
+                String url;
+
+                if(URLUtil.isValidUrl(searchEditText.getText().toString()) && checkDomain())
+                {
+                    url = searchEditText.getText().toString();
+                    Toast.makeText(MainActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                else if (URLUtil.isValidUrl("http://"+searchEditText.getText().toString()) && checkDomain())
+                {
+                    url = "http://"+searchEditText.getText().toString();
+                    Toast.makeText(MainActivity.this, "http", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    url = "https://www.google.com/#q=" + searchEditText.getText().toString();
+                }
+
+                Toast.makeText(this, ""+url, Toast.LENGTH_SHORT).show();
+
+                urlCheck2(url);
+
+            } else {
+                Toast.makeText(this, "Internet Not Connected", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -401,7 +600,8 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
         DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         if (dm != null) {
             DownloadCompleteReciever.downloadID = dm.enqueue(request);
-            downloadID = dm.enqueue(request);
+            databaseClass.insertRecord(URLUtil.guessFileName(url, contentDisposition, mimeType), true);
+//            downloadID = dm.enqueue(request);
         }
         Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
     }
@@ -409,11 +609,21 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case R.id.button_vpn:
-                Intent intent = new Intent(this, VpnActivity.class);
-                startActivity(intent);
-                break;
+        if (v.getId() == R.id.button_vpn) {
+            Intent intent = new Intent(this, VpnActivity.class);
+            startActivity(intent);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+
+        swipe.setRefreshing(true);
+        ReloadWebView(webView.getUrl());
+    }
+
+    private void ReloadWebView(String url) {
+
+        webView.loadUrl(url);
     }
 }

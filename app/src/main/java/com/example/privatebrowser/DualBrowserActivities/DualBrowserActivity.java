@@ -1,19 +1,28 @@
 package com.example.privatebrowser.DualBrowserActivities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,21 +31,27 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.privatebrowser.BrowserActivities.BrowserSearchActivity;
 import com.example.privatebrowser.BrowserActivities.HistoryActivity;
 import com.example.privatebrowser.Classes.BrowserWebViewClass;
 import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.Classes.WebViewClass;
 import com.example.privatebrowser.CustomWidgets.CustomEditText;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
+import com.example.privatebrowser.HomeActivity;
 import com.example.privatebrowser.IncognitoActivities.BookmarksActivity;
 import com.example.privatebrowser.IncognitoActivities.DownloadActivity;
+import com.example.privatebrowser.IncognitoActivities.MainActivity;
+import com.example.privatebrowser.IncognitoActivities.SearchActivity;
 import com.example.privatebrowser.Interfaces.DrawableClickListener;
 import com.example.privatebrowser.R;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class DualBrowserActivity extends AppCompatActivity implements View.OnClickListener {
+public class DualBrowserActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener,
+        SwipeRefreshLayout.OnRefreshListener {
 
     WebView webViewDualBrowser, webViewDualIncognito;
     ImageView actionBackDual, actionForwardDual, optionMenuDualBrowser, optionMenuDualIncognito,
@@ -50,6 +65,10 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
     ImageView imageViewIncognitoDual;
     TextView textViewGoneIncognito;
     ConstraintLayout layoutProgressBar;
+    SwipeRefreshLayout swipeDual, swipeIncognito;
+    String savedUrlBrowser, savedUrlIncognito;
+    String getUrlBrowser, getUrlIncognito;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +89,75 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         inItWebPopIncognito();
         registerListeners();
 
+        browser = getIntent().getStringExtra("browser");
+        url2 = getIntent().getStringExtra("url");
+        getUrlBrowser = getIntent().getStringExtra("saved_url_browser");
+        getUrlIncognito = getIntent().getStringExtra("saved_url_incognito");
+
+        if (browser.equals("dual_browser")) {
+            webViewDualBrowser.setVisibility(View.VISIBLE);
+            swipeDual.setVisibility(View.VISIBLE);
+            progressBarDual.setVisibility(View.VISIBLE);
+
+            browserWebViewClass.setBrowserWebView(webViewDualBrowser);
+            browserWebViewClass.startBrowserWebView(url2, webViewDualBrowser,
+                    DualBrowserActivity.this, DualBrowserActivity.this, progressBarDual,
+                    swipeDual);
+
+            if (getUrlIncognito != null) {
+
+                if (getUrlIncognito.length() > 0) {
+                    swipeIncognito.setVisibility(View.VISIBLE);
+                    imageViewIncognitoDual.setVisibility(View.GONE);
+                    webViewDualIncognito.setVisibility(View.VISIBLE);
+                    layoutProgressBar.setVisibility(View.VISIBLE);
+                    textViewGoneIncognito.setVisibility(View.GONE);
+//
+                    incognitoWebViewClass.hideProgressBar(layoutProgressBar);
+                    incognitoWebViewClass.setWebView(webViewDualIncognito);
+                    incognitoWebViewClass.startWebView(getUrlIncognito, webViewDualIncognito,
+                            DualBrowserActivity.this, DualBrowserActivity.this, progressBarIncognito,
+                            swipeIncognito);
+
+//                webViewDualIncognito.restoreState(getIntent().getParcelableExtra("incognito_state"));
+//
+//                Toast.makeText(this, "things"+getIntent().getBundleExtra("incognito_state") , Toast.LENGTH_SHORT).show();
+                }
+            }
+            savedUrlBrowser = url2;
+        } else if (browser.equals("dual_incognito")) {
+
+            swipeIncognito.setVisibility(View.VISIBLE);
+            imageViewIncognitoDual.setVisibility(View.GONE);
+            webViewDualIncognito.setVisibility(View.VISIBLE);
+            layoutProgressBar.setVisibility(View.VISIBLE);
+            textViewGoneIncognito.setVisibility(View.GONE);
+
+            incognitoWebViewClass.hideProgressBar(layoutProgressBar);
+            incognitoWebViewClass.setWebView(webViewDualIncognito);
+            incognitoWebViewClass.startWebView(url2, webViewDualIncognito,
+                    DualBrowserActivity.this, DualBrowserActivity.this, progressBarIncognito,
+                    swipeIncognito);
+
+            if (getUrlBrowser != null) {
+
+                if (getUrlBrowser.length() > 0) {
+                    webViewDualBrowser.setVisibility(View.VISIBLE);
+                    swipeDual.setVisibility(View.VISIBLE);
+                    progressBarDual.setVisibility(View.VISIBLE);
+
+                    browserWebViewClass.setBrowserWebView(webViewDualBrowser);
+                    browserWebViewClass.startBrowserWebView(getUrlBrowser, webViewDualBrowser,
+                            DualBrowserActivity.this, DualBrowserActivity.this, progressBarDual,
+                            swipeDual);
+
+//                webViewDualBrowser.restoreState(getIntent().getBundleExtra("browser_state"));
+
+                }
+            }
+            savedUrlBrowser = url2;
+
+        }
 //        Drawable image = this.getResources().getDrawable( R.drawable.search );
 //        int h = image.getIntrinsicHeight();
 //        int w = image.getIntrinsicWidth();
@@ -82,6 +170,172 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
 //                Bitmap.createScaledBitmap(searchIcon, 45, 45, true));
 //
 //        searchEditTextDualBrowser.setCompoundDrawables(null,null, d, null);
+    }
+
+    String browser;
+    String url2;
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+        new AlertDialog.Builder(this)
+                .setTitle("Exit")
+                .setMessage("Are you sure you want to exit dual browser?")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        finish();
+                    }
+                })
+
+                // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    /**
+     * Override method for what happens when user clicks a button on the keyboard
+     *
+     * @param v       retrieves the view
+     * @param keyCode has the key code of keyboard
+     * @param event   has the value of the key which is pressed
+     */
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        // If the event is a key-down event on the "enter" button
+        if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            // Perform action on key press
+            if (isNetworkAvailable()) {
+
+//                imageViewIncognitoDual.setVisibility(View.GONE);
+//                webViewDualIncognito.setVisibility(View.VISIBLE);
+//                swipeIncognito.setVisibility(View.VISIBLE);
+//                layoutProgressBar.setVisibility(View.VISIBLE);
+//                textViewGoneIncognito.setVisibility(View.GONE);
+//
+                if (v.getId() == R.id.et_search_dual_browser) {
+
+//                    webViewDualBrowser.setVisibility(View.VISIBLE);
+//                    swipeDual.setVisibility(View.VISIBLE);
+//                    progressBarDual.setVisibility(View.VISIBLE);
+//
+//                    url = "https://www.google.com/#q=" + searchEditTextDualBrowser.getText().toString();
+//
+//                    browserWebViewClass.setBrowserWebView(webViewDualBrowser);
+//                    browserWebViewClass.startBrowserWebView(url, webViewDualBrowser,
+//                            DualBrowserActivity.this, DualBrowserActivity.this, progressBarDual,
+//                            swipeDual);
+
+                    webViewDualBrowser.setVisibility(View.VISIBLE);
+                    swipeDual.setVisibility(View.VISIBLE);
+                    progressBarDual.setVisibility(View.VISIBLE);
+
+                    String url;
+
+                    if (URLUtil.isValidUrl(searchEditTextDualBrowser.getText().toString()) && checkDomain("main")) {
+                        url = searchEditTextDualBrowser.getText().toString();
+                        Toast.makeText(DualBrowserActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                    }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                    else if (URLUtil.isValidUrl("http://" + searchEditTextDualBrowser.getText().toString()) && checkDomain("main")) {
+                        url = "http://" + searchEditTextDualBrowser.getText().toString();
+                        Toast.makeText(DualBrowserActivity.this, "http", Toast.LENGTH_SHORT).show();
+                    } else {
+                        url = "https://www.google.com/#q=" + searchEditTextDualBrowser.getText().toString();
+                    }
+
+//                        String url = "https://www.google.com/#q=" + searchEditTextDualBrowser.getText().toString();
+
+                    browserWebViewClass.setBrowserWebView(webViewDualBrowser);
+                    browserWebViewClass.startBrowserWebView(url, webViewDualBrowser,
+                            DualBrowserActivity.this, DualBrowserActivity.this, progressBarDual,
+                            swipeDual);
+
+                } else if (v.getId() == R.id.et_search_dual_incognito) {
+//                    imageViewIncognitoDual.setVisibility(View.GONE);
+//                    webViewDualIncognito.setVisibility(View.VISIBLE);
+//                    layoutProgressBar.setVisibility(View.VISIBLE);
+//                    textViewGoneIncognito.setVisibility(View.GONE);
+//
+//                    url = "https://www.google.com/#q=" + searchEditTextDualIncognito.getText().toString();
+//
+//                    incognitoWebViewClass.hideProgressBar(layoutProgressBar);
+//                    incognitoWebViewClass.setWebView(webViewDualIncognito);
+//                    incognitoWebViewClass.startWebView(url, webViewDualIncognito,
+//                            DualBrowserActivity.this, DualBrowserActivity.this, progressBarIncognito,
+//                            swipeIncognito);
+
+                    imageViewIncognitoDual.setVisibility(View.GONE);
+                    webViewDualIncognito.setVisibility(View.VISIBLE);
+                    swipeIncognito.setVisibility(View.VISIBLE);
+                    layoutProgressBar.setVisibility(View.VISIBLE);
+                    textViewGoneIncognito.setVisibility(View.GONE);
+                    incognitoLinearLayout.setVisibility(View.VISIBLE);
+
+                    String url;
+
+                    if (URLUtil.isValidUrl(searchEditTextDualIncognito.getText().toString()) && checkDomain("incognito")) {
+                        url = searchEditTextDualIncognito.getText().toString();
+                        Toast.makeText(DualBrowserActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                    }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                    else if (URLUtil.isValidUrl("http://" + searchEditTextDualIncognito.getText().toString()) && checkDomain("incognito")) {
+                        url = "http://" + searchEditTextDualIncognito.getText().toString();
+                        Toast.makeText(DualBrowserActivity.this, "http Incognito", Toast.LENGTH_SHORT).show();
+                    } else {
+                        url = "https://www.google.com/#q=" + searchEditTextDualIncognito.getText().toString();
+                    }
+
+//                        String url = "https://www.google.com/#q=" + searchEditTextDualIncognito.getText().toString();
+
+                    incognitoWebViewClass.hideProgressBar(layoutProgressBar);
+                    incognitoWebViewClass.setWebView(webViewDualIncognito);
+                    incognitoWebViewClass.startWebView(url, webViewDualIncognito,
+                            DualBrowserActivity.this, DualBrowserActivity.this, progressBarIncognito,
+                            swipeIncognito);
+                }
+
+
+//                Intent intent = new Intent(DualBrowserActivity.this, MainActivity.class);
+//                String url, url2;
+//
+//                if (v.getId() == R.id.et_search_dual_browser) {
+//                    url = "https://www.google.com/#q=" + searchEditTextDualBrowser.getText().toString();
+//                    intent.putExtra("url", url);
+//                } else if (v.getId() == R.id.et_search_dual_incognito) {
+//                    url2 = "https://www.google.com/#q=" + searchEditTextDualIncognito.getText().toString();
+//                    intent.putExtra("url", url2);
+//                }
+//                Toast.makeText(this, "TEST", Toast.LENGTH_SHORT).show();
+//
+//                intent.putExtra("browser", "incognito");
+//                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Internet Not Connected", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -105,7 +359,17 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         actionForwardDualIncognito.setOnClickListener(this);
         optionMenuDualIncognito.setOnClickListener(this);
         linearLayout.setOnClickListener(this);
+        incognitoLinearLayoutOption.setOnClickListener(this);
+
+        searchEditTextDualBrowser.setOnKeyListener(this);
+        searchEditTextDualIncognito.setOnKeyListener(this);
+
+        swipeDual.setOnRefreshListener(this);
+        swipeIncognito.setOnRefreshListener(this);
     }
+
+    LinearLayout incognitoLinearLayout;
+    LinearLayout incognitoLinearLayoutOption;
 
     private void inItUi() {
 
@@ -132,12 +396,30 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         textViewGoneIncognito = findViewById(R.id.text_view_gone_incognito);
 
         linearLayout = findViewById(R.id.linear_layout_option);
+
+        swipeDual = findViewById(R.id.swipe_refresh_layout_dual);
+        swipeIncognito = findViewById(R.id.swipe_refresh_layout_dual_incognito);
+
+        incognitoBarConstraintLayout = findViewById(R.id.incognito_bar_constraint_layout);
+        dualIncognitoLinearLayout = findViewById(R.id.dual_incognito_linear_layout);
+
+        incognitoLinearLayout = findViewById(R.id.linear_layout_incognito);
+        incognitoLinearLayoutOption = findViewById(R.id.linear_layout_incognito_option);
     }
+
+    /**
+     * Checks if internet is connected or not
+     *
+     * @return true if yes, false if not available
+     */
 
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo activeNetworkInfo = null;
+        if (connectivityManager != null) {
+            activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        }
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
@@ -147,61 +429,94 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         searchEditTextDualBrowser.setDrawableClickListener(new DrawableClickListener() {
 
             public void onClick(DrawableClickListener.DrawablePosition target) {
-                switch (target) {
-                    case RIGHT:
-                        //Do something here
-                        if (isNetworkAvailable()) {
+                if (target == DrawablePosition.RIGHT) {//Do something here
+                    if (isNetworkAvailable()) {
 
-                            webViewDualBrowser.setVisibility(View.VISIBLE);
-                            progressBarDual.setVisibility(View.VISIBLE);
+                        webViewDualBrowser.setVisibility(View.VISIBLE);
+                        swipeDual.setVisibility(View.VISIBLE);
+                        progressBarDual.setVisibility(View.VISIBLE);
 
-                            String url = "https://www.google.com/#q=" + searchEditTextDualBrowser.getText().toString();
+                        String url;
 
-                            browserWebViewClass.setBrowserWebView(webViewDualBrowser);
-                            browserWebViewClass.startBrowserWebView(url, webViewDualBrowser,
-                                    DualBrowserActivity.this, DualBrowserActivity.this, progressBarDual);
+                        if (URLUtil.isValidUrl(searchEditTextDualBrowser.getText().toString()) && checkDomain("main")) {
+                            url = searchEditTextDualBrowser.getText().toString();
+                            Toast.makeText(DualBrowserActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                        }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                        else if (URLUtil.isValidUrl("http://" + searchEditTextDualBrowser.getText().toString()) && checkDomain("main")) {
+                            url = "http://" + searchEditTextDualBrowser.getText().toString();
+                            Toast.makeText(DualBrowserActivity.this, "http", Toast.LENGTH_SHORT).show();
+                        } else {
+                            url = "https://www.google.com/#q=" + searchEditTextDualBrowser.getText().toString();
+                        }
+
+//                        String url = "https://www.google.com/#q=" + searchEditTextDualBrowser.getText().toString();
+
+                        browserWebViewClass.setBrowserWebView(webViewDualBrowser);
+                        browserWebViewClass.startBrowserWebView(url, webViewDualBrowser,
+                                DualBrowserActivity.this, DualBrowserActivity.this, progressBarDual,
+                                swipeDual);
 
 //                            Intent intent = new Intent(DualBrowserActivity.this, MainActivity.class);
 //                            String url = "https://www.google.com/#q=" + searchEditTextDualBrowser.getText().toString();
 //                            intent.putExtra("url", url);
 //                            intent.putExtra("browser", "incognito");
 //                            startActivity(intent);
-                        } else {
-                            Toast.makeText(DualBrowserActivity.this, "Internet Not connected", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-
-                    default:
-                        break;
+                    } else {
+                        Toast.makeText(DualBrowserActivity.this, "Internet Not connected", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
         });
     }
 
-
-
     private void searchEditTextIncognitoClickListener() {
 
         searchEditTextDualIncognito.setDrawableClickListener(new DrawableClickListener() {
 
             public void onClick(DrawableClickListener.DrawablePosition target) {
-                switch (target) {
-                    case RIGHT:
-                        //Do something here
-                        if (isNetworkAvailable()) {
+                if (target == DrawablePosition.RIGHT) {//Do something here
+                    if (isNetworkAvailable()) {
 
-                            imageViewIncognitoDual.setVisibility(View.GONE);
-                            webViewDualIncognito.setVisibility(View.VISIBLE);
-                            layoutProgressBar.setVisibility(View.VISIBLE);
-                            textViewGoneIncognito.setVisibility(View.GONE);
+                        imageViewIncognitoDual.setVisibility(View.GONE);
+                        webViewDualIncognito.setVisibility(View.VISIBLE);
+                        swipeIncognito.setVisibility(View.VISIBLE);
+                        layoutProgressBar.setVisibility(View.VISIBLE);
+                        textViewGoneIncognito.setVisibility(View.GONE);
+                        incognitoLinearLayout.setVisibility(View.VISIBLE);
 
-                            String url = "https://www.google.com/#q=" + searchEditTextDualIncognito.getText().toString();
+                        String url;
 
-                            incognitoWebViewClass.hideProgressBar(layoutProgressBar);
-                            incognitoWebViewClass.setWebView(webViewDualIncognito);
-                            incognitoWebViewClass.startWebView(url, webViewDualIncognito,
-                                    DualBrowserActivity.this, DualBrowserActivity.this, progressBarIncognito);
+                        if (URLUtil.isValidUrl(searchEditTextDualIncognito.getText().toString()) && checkDomain("incognito")) {
+                            url = searchEditTextDualIncognito.getText().toString();
+                            Toast.makeText(DualBrowserActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                        }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                        else if (URLUtil.isValidUrl("http://" + searchEditTextDualIncognito.getText().toString()) && checkDomain("incognito")) {
+                            url = "http://" + searchEditTextDualIncognito.getText().toString();
+                            Toast.makeText(DualBrowserActivity.this, "http Incognito", Toast.LENGTH_SHORT).show();
+                        } else {
+                            url = "https://www.google.com/#q=" + searchEditTextDualIncognito.getText().toString();
+                        }
+
+//                        String url = "https://www.google.com/#q=" + searchEditTextDualIncognito.getText().toString();
+
+                        incognitoWebViewClass.hideProgressBar(layoutProgressBar);
+                        incognitoWebViewClass.setWebView(webViewDualIncognito);
+                        incognitoWebViewClass.startWebView(url, webViewDualIncognito,
+                                DualBrowserActivity.this, DualBrowserActivity.this, progressBarIncognito,
+                                swipeIncognito);
 
 
 //                            Intent intent = new Intent(DualBrowserActivity.this, MainActivity.class);
@@ -209,17 +524,44 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
 //                            intent.putExtra("url", url);
 //                            intent.putExtra("browser", "incognito");
 //                            startActivity(intent);
-                        } else {
-                            Toast.makeText(DualBrowserActivity.this, "Internet Not connected", Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-
-                    default:
-                        break;
+                    } else {
+                        Toast.makeText(DualBrowserActivity.this, "Internet Not connected", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
         });
+    }
+
+    /**
+     * This checks whether the url has a top level domain, if yes returns true.
+     *
+     * @return
+     */
+    private boolean checkDomain(String browser) {
+
+        ArrayList<String> checkUrl = new ArrayList<>();
+        checkUrl.add(".com");
+        checkUrl.add(".net");
+        checkUrl.add(".org");
+        checkUrl.add(".edu");
+        checkUrl.add(".int");
+        checkUrl.add(".gov");
+        checkUrl.add(".mil");
+        boolean checkDomain = false;
+
+        for (int i = 0; i < checkUrl.size(); i++) {
+            if (browser.equals("main")) {
+                checkDomain = searchEditTextDualBrowser.getText().toString().contains(checkUrl.get(i));
+            } else if (browser.equals("incognito")) {
+                checkDomain = searchEditTextDualIncognito.getText().toString().contains(checkUrl.get(i));
+            }
+
+            if (checkDomain) {
+                break;
+            }
+        }
+        return checkDomain;
     }
 
     @Override
@@ -257,12 +599,17 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
 //                Toast.makeText(this, "master", Toast.LENGTH_SHORT).show();
                 mWebPopUpIncognito.showAsDropDown(v, v.getWidth() / 2 - mWebPopUpIncognito.getContentView().getWidth() / 2, 0);
                 break;
+            case  R.id.linear_layout_incognito_option:
+                mWebPopUpIncognito.showAsDropDown(v, v.getWidth() / 2 - mWebPopUpIncognito.getContentView().getWidth() / 2, 0);
+                break;
         }
     }
 
     private String url;
     private String title;
     private DatabaseClass databaseClass;
+    ConstraintLayout incognitoBarConstraintLayout;
+    LinearLayout dualIncognitoLinearLayout;
 
     private void inItWebPop() {
         View view = LayoutInflater.from(this).inflate(R.layout.web_popup_menu, null);
@@ -273,13 +620,41 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         TextView addToBookmark = view.findViewById(R.id.add_to_book);
         TextView downloads = view.findViewById(R.id.downloads_dual_browser);
         TextView history = view.findViewById(R.id.history_dual_browser);
+        TextView fullscreen = view.findViewById(R.id.fullscreen_dual_browser);
+
+
+        fullscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                dualIncognitoLinearLayout.setVisibility(View.GONE);
+//                incognitoBarConstraintLayout.setVisibility(View.GONE);
+//
+//                swipeDual.setLayoutParams();
+                if (isFullscreen) {
+                    fullscreen.setText(getString(R.string.fullscreen));
+                    fullscreen.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.fullscreen2), null, null, null);
+                    exitFullscreenBrowser();
+                    mWebPopUpBrowser.dismiss();
+
+                } else {
+                    fullscreen.setText(getString(R.string.exit_fullscreen));
+                    fullscreen.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.exitscreen), null, null, null);
+                    fullScreenBrowser();
+                    mWebPopUpBrowser.dismiss();
+                }
+            }
+        });
+
 
         downloads.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(DualBrowserActivity.this, DownloadActivity.class);
+                mWebPopUpBrowser.dismiss();
                 startActivity(intent);
+
             }
         });
 
@@ -287,6 +662,7 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DualBrowserActivity.this, HistoryActivity.class);
+                mWebPopUpBrowser.dismiss();
                 startActivity(intent);
             }
         });
@@ -294,6 +670,8 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         addToBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                mWebPopUpBrowser.dismiss();
 
                 url = webViewDualBrowser.getUrl();
                 title = webViewDualBrowser.getTitle();
@@ -322,6 +700,7 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mWebPopUpBrowser.dismiss();
                 finishAffinity();
             }
         });
@@ -329,7 +708,27 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         tv_show_bookmarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(DualBrowserActivity.this, BookmarksActivity.class);
+                intent.putExtra("browser", "dual_browser");
+                mWebPopUpBrowser.dismiss();
+
+                savedUrlBrowser = searchEditTextDualBrowser.getText().toString();
+                savedUrlIncognito = searchEditTextDualIncognito.getText().toString();
+
+//                Bundle browserState = new Bundle();
+//                webViewDualBrowser.saveState(browserState);
+//                Bundle incognitoState = new Bundle();
+//                webViewDualIncognito.saveState(incognitoState);
+//
+//                intent.putExtra("browser_state", browserState);
+//                intent.putExtra("incognito_state", incognitoState);
+
+                intent.putExtra("saved_url_browser", savedUrlBrowser);
+                intent.putExtra("saved_url_incognito", savedUrlIncognito);
+                intent.putExtra("activity", String.valueOf(this));
+//                Toast.makeText(DualBrowserActivity.this, ""+this, Toast.LENGTH_SHORT).show();
+
                 startActivity(intent);
             }
         });
@@ -340,6 +739,86 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         mWebPopUpBrowser.setOutsideTouchable(false);
     }
 
+    LinearLayout linearLayoutDual, linearLayoutIncognito, linearLayoutDualIncognito;
+
+    ConstraintLayout fullscreenConstraint, fullscreenConstraintIncognito, fullscreenConstraintProgressBar,
+            dualConstraint, incognitoConstraint, incognitoConstraintProgressBar;
+    SwipeRefreshLayout fullscreenSwipeLayout, swipeRefreshLayoutDual;
+    ProgressBar fullscreenProgressBar, dualProgressBar;
+
+    //    LinearLayout fullscreenLinearIncognito, linearLayoutIncognito;
+//
+    void initUi2() {
+        linearLayoutDual = findViewById(R.id.linear_layout_dual);
+        linearLayoutIncognito = findViewById(R.id.linear_layout_incognito);
+
+//        fullscreenConstraint = findViewById(R.id.fullscreen_constraint_layout);
+//        fullscreenConstraintIncognito = findViewById(R.id.fullscreen_incognito_bar_constraint_layout);
+//        fullscreenConstraintProgressBar = findViewById(R.id.fullscreen_layout_progress_bar);
+        dualConstraint = findViewById(R.id.dual_constraint);
+        incognitoConstraint = findViewById(R.id.incognito_bar_constraint_layout);
+        incognitoConstraintProgressBar = findViewById(R.id.layout_progress_bar);
+
+//        fullscreenSwipeLayout = findViewById(R.id.fullscreen_swipe_refresh_layout_dual);
+//        swipeRefreshLayoutDual = findViewById(R.id.fullscreen_swipe_refresh_layout_dual_incognito);
+//
+//        fullscreenProgressBar = findViewById(R.id.fullscreen_progress_bar_dual);
+        dualProgressBar = findViewById(R.id.progress_bar_dual);
+//
+//        fullscreenLinearIncognito = findViewById(R.id.fullscreen_dual_incognito_linear_layout);
+        linearLayoutDualIncognito = findViewById(R.id.dual_incognito_linear_layout);
+
+    }
+
+    boolean isFullscreen = false;
+    LinearLayout.LayoutParams param, paramIncognito;
+
+    void fullScreenBrowser() {
+        isFullscreen = true;
+        initUi2();
+
+        param = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                2.0f
+        );
+        linearLayoutDual.setLayoutParams(param);
+
+        incognitoConstraint.setVisibility(View.GONE);
+        incognitoConstraintProgressBar.setVisibility(View.GONE);
+        linearLayoutDualIncognito.setVisibility(View.GONE);
+
+//        fullscreenConstraint.setVisibility(View.VISIBLE);
+//        fullscreenConstraintIncognito.setVisibility(View.VISIBLE);
+//        fullscreenConstraintProgressBar.setVisibility(View.VISIBLE);
+//
+//        dualConstraint.setVisibility(View.GONE);
+//        incognitoConstraint.setVisibility(View.GONE);
+//        incognitoConstraintProgressBar.setVisibility(View.GONE);
+//
+//        fullscreenSwipeLayout.setVisibility(View.VISIBLE);
+//        fullscreenProgressBar.setVisibility(View.VISIBLE);
+
+//        LinearLayout.LayoutParams layoutParams
+    }
+
+    private void exitFullscreenBrowser() {
+        isFullscreen = false;
+
+        param = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                0,
+                1.0f
+        );
+        linearLayoutDual.setLayoutParams(param);
+
+        incognitoConstraint.setVisibility(View.VISIBLE);
+        incognitoConstraintProgressBar.setVisibility(View.VISIBLE);
+        linearLayoutDualIncognito.setVisibility(View.VISIBLE);
+        progressBarDual.setVisibility(View.GONE);
+
+    }
+
     private void inItWebPopIncognito() {
         View view = LayoutInflater.from(this).inflate(R.layout.web_popup_menu_incognito, null);
         mWebPopUpIncognito = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -348,12 +827,37 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
 
         TextView addToBookmark = view.findViewById(R.id.add_to_book_incognito);
         TextView downloads = view.findViewById(R.id.downloads_dual_incognito);
+        TextView fullscreen = view.findViewById(R.id.fullscreen_dual_incognito);
 
+
+        fullscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                dualIncognitoLinearLayout.setVisibility(View.GONE);
+//                incognitoBarConstraintLayout.setVisibility(View.GONE);
+//
+//                swipeDual.setLayoutParams();
+                if (isFullscreenIncognito) {
+                    fullscreen.setText(getString(R.string.fullscreen));
+                    fullscreen.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.fullscreen1), null, null, null);
+                    exitFullscreenIncognito();
+                    mWebPopUpIncognito.dismiss();
+                } else {
+                    fullscreen.setText(getString(R.string.exit_fullscreen));
+                    fullscreen.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.exitscreen2), null, null, null);
+                    fullScreenIncognito();
+                    mWebPopUpIncognito.dismiss();
+
+                }
+            }
+        });
         downloads.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(DualBrowserActivity.this, DownloadActivity.class);
+                mWebPopUpIncognito.dismiss();
                 startActivity(intent);
             }
         });
@@ -362,17 +866,19 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View view) {
 
-                url = webViewDualBrowser.getUrl();
-                title = webViewDualBrowser.getTitle();
+                mWebPopUpIncognito.dismiss();
+
+                url = webViewDualIncognito.getUrl();
+                title = webViewDualIncognito.getTitle();
 //                    Intent intent = new Intent(myMainActivity.this, Dual_incognoTabsActivity.class);
                 String urlToHost;
 
                 try {
-                    URL url = new URL(webViewDualBrowser.getUrl());
+                    URL url = new URL(webViewDualIncognito.getUrl());
                     urlToHost = url.getHost();
 
                     if (databaseClass.searchBookmarkRecord(url.toString()).equals("Empty")) {
-                        databaseClass.insertBookmarkRecord(webViewDualBrowser.getUrl(), urlToHost, true);
+                        databaseClass.insertBookmarkRecord(webViewDualIncognito.getUrl(), urlToHost, true);
                         Toast.makeText(DualBrowserActivity.this, "Bookmark Saved", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(DualBrowserActivity.this, "Bookmark Already Exists", Toast.LENGTH_SHORT).show();
@@ -389,6 +895,8 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mWebPopUpIncognito.dismiss();
+
                 finishAffinity();
             }
         });
@@ -396,7 +904,25 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         tv_show_bookmarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                savedUrlIncognito = searchEditTextDualBrowser.getText().toString();
+
                 Intent intent = new Intent(DualBrowserActivity.this, BookmarksActivity.class);
+                intent.putExtra("browser", "dual_incognito");
+
+                mWebPopUpIncognito.dismiss();
+
+//                Bundle browserState = new Bundle();
+//                webViewDualBrowser.saveState(browserState);
+//                Bundle incognitoState = new Bundle();
+//                webViewDualIncognito.saveState(incognitoState);
+//
+//                intent.putExtra("browser_state", browserState);
+//                intent.putExtra("incognito_state", incognitoState);
+
+                intent.putExtra("saved_url_browser", savedUrlBrowser);
+                intent.putExtra("saved_url_incognito", savedUrlIncognito);
+                intent.putExtra("activity", String.valueOf(this));
+
                 startActivity(intent);
             }
         });
@@ -407,4 +933,68 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         mWebPopUpIncognito.setOutsideTouchable(false);
     }
 
+    boolean isFullscreenIncognito = false;
+
+    private void fullScreenIncognito() {
+
+        isFullscreenIncognito = true;
+        initUi2();
+
+        paramIncognito = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                2.0f
+        );
+        linearLayoutDualIncognito.setLayoutParams(paramIncognito);
+
+        dualConstraint.setVisibility(View.GONE);
+        dualProgressBar.setVisibility(View.GONE);
+        if (linearLayoutDual.getVisibility() == View.VISIBLE) {
+            linearLayoutDual.setVisibility(View.GONE);
+        } else {
+            linearLayoutIncognito.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void exitFullscreenIncognito() {
+
+        isFullscreenIncognito = false;
+
+        paramIncognito = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                0,
+                1.0f
+        );
+        linearLayoutDualIncognito.setLayoutParams(paramIncognito);
+
+        dualConstraint.setVisibility(View.VISIBLE);
+        dualProgressBar.setVisibility(View.VISIBLE);
+        if (linearLayoutDual.getVisibility() == View.GONE) {
+            linearLayoutDual.setVisibility(View.VISIBLE);
+        } else {
+            linearLayoutIncognito.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        if (swipeDual.isRefreshing()) {
+            swipeDual.setRefreshing(true);
+            ReloadWebView(webViewDualBrowser.getUrl());
+        } else {
+            swipeIncognito.setRefreshing(true);
+            ReloadWebViewIncognito(webViewDualIncognito.getUrl());
+        }
+    }
+
+    private void ReloadWebViewIncognito(String url) {
+
+        webViewDualIncognito.loadUrl(url);
+    }
+
+    private void ReloadWebView(String url) {
+
+        webViewDualBrowser.loadUrl(url);
+
+    }
 }

@@ -71,6 +71,10 @@
     <string name="you_ve_gone_incognito">You’ve gone incognito</string>
     <string name="connect">Connect</string>
     <string name="connected">Connected</string>
+    <string name="urls">URL:</string>
+    <string name="home">Home</string>
+    <string name="fullscreen">Fullscreen</string>
+    <string name="exit_fullscreen">Exit Fullscreen</string>
 
     <string-array name="language_arrays">
         <item>en</item>

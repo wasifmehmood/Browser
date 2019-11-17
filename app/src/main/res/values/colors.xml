@@ -4,10 +4,11 @@
 <!--    <color name="colorPrimaryDark">#00574B</color>-->
 <!--    <color name="colorAccent">#D81B60</color>-->
 
-    <color name="colorPrimary">#62C2A0</color>
-    <color name="colorPrimaryDark">#146E4C</color>
+    <color name="colorPrimary">#486DB5</color>
+    <color name="colorPrimaryDark">#21407E</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="grey">#323639</color>
 
     <color name="bg_slider_screen1">#f4b241</color>
     <color name="bg_slider_screen2">#16bc7d</color>

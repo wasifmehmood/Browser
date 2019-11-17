@@ -91,13 +91,12 @@ public class MyChromeIncognito extends WebChromeClient {
 
             toolbarEditText.setCompoundDrawables(d, null, null, null);
             toolbarEditText.setCompoundDrawablePadding(10);
+
         }
     }
 
     @Override
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
-
-
     }
 }

@@ -76,4 +76,7 @@
     <string name="language_prompt">Выбрать язык</string>
 
     <string name="now_you_can_browse_privately_and_other_people_who_use_this_device_won_t_see_your_activity_however_downloads_and_bookmarks_will_be_saved_learn_more_n_n_browser_won_t_save_the_following_information_n_your_browsing_history_n_cookies_and_site_data_n_information_entered_in_forms_n">Теперь вы можете просматривать в частном порядке, и другие люди, которые используют это устройство, не увидят вашу активность. Тем не менее, загрузки и закладки будут сохранены.\n\n Подробнее Браузер не сохранит следующую информацию: \nВаша история просмотра Файлы \ncookie и данные сайта \nИнформация, введенная в формы</string>
+    <string name="urls">URL:</string>
+    <string name="fullscreen">Fullscreen</string>
+    <string name="exit_fullscreen">Exit Fullscreen</string>
 </resources>

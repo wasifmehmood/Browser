@@ -20,15 +20,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
 import com.example.privatebrowser.Adapters.SearchBookmarksAdapter;
+import com.example.privatebrowser.BrowserActivities.BrowserSearchActivity;
 import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.CustomWidgets.CustomEditText;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
+import com.example.privatebrowser.HomeActivity;
 import com.example.privatebrowser.Interfaces.DrawableClickListener;
 import com.example.privatebrowser.Interfaces.FeaturesInterface;
 import com.example.privatebrowser.R;
@@ -104,8 +107,32 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                     case RIGHT:
                         //Do something here
                         if (isNetworkAvailable()) {
+
+                            String url;
+
                             Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                            String url = "https://www.google.com/#q=" + editText.getText().toString();
+
+                            if(URLUtil.isValidUrl(editText.getText().toString()) && checkDomain())
+                            {
+                                url = editText.getText().toString();
+                                Toast.makeText(SearchActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                            }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                            else if (URLUtil.isValidUrl("http://"+editText.getText().toString()) && checkDomain())
+                            {
+                                url = "http://"+editText.getText().toString();
+                                Toast.makeText(SearchActivity.this, "http", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                url = "https://www.google.com/#q=" + editText.getText().toString();
+                            }
+
+//                            String url = "https://www.google.com/#q=" + editText.getText().toString();
                             intent.putExtra("url", url);
                             intent.putExtra("browser", "incognito");
                             startActivity(intent);
@@ -120,6 +147,35 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             }
 
         });
+    }
+
+    /**
+     * This checks whether the url has a top level domain, if yes returns true.
+     *
+     * @return
+     */
+
+    private boolean checkDomain() {
+
+        ArrayList<String> checkUrl = new ArrayList<>();
+        checkUrl.add(".com");
+        checkUrl.add(".net");
+        checkUrl.add(".org");
+        checkUrl.add(".edu");
+        checkUrl.add(".int");
+        checkUrl.add(".gov");
+        checkUrl.add(".mil");
+        boolean checkDomain = false;
+
+        for (int i=0; i<checkUrl.size(); i++) {
+            checkDomain = editText.getText().toString().contains(checkUrl.get(i));
+
+            if (checkDomain)
+            {
+                break;
+            }
+        }
+        return checkDomain;
     }
 
 //    private void setRecyclerView() {
@@ -216,6 +272,9 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.bookmarks:
                 showBookmarks();
                 return true;
+            case R.id.item_home:
+                startHomeActivity();
+                return true;
             case R.id.downloads:
                 showDownloads();
                 return true;
@@ -229,6 +288,15 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void startHomeActivity() {
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void startVpn() {
 
@@ -347,8 +415,32 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
                 (keyCode == KeyEvent.KEYCODE_ENTER)) {
             // Perform action on key press
             if (isNetworkAvailable()) {
+
+                String url;
+
                 Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                String url = "https://www.google.com/#q=" + editText.getText().toString();
+
+                if(URLUtil.isValidUrl(editText.getText().toString()) && checkDomain())
+                {
+                    url = editText.getText().toString();
+                    Toast.makeText(SearchActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                else if (URLUtil.isValidUrl("http://"+editText.getText().toString()) && checkDomain())
+                {
+                    url = "http://"+editText.getText().toString();
+                    Toast.makeText(SearchActivity.this, "http", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    url = "https://www.google.com/#q=" + editText.getText().toString();
+                }
+
+//                String url = "https://www.google.com/#q=" + editText.getText().toString();
                 intent.putExtra("url", url);
                 intent.putExtra("browser", "incognito");
                 startActivity(intent);
@@ -381,6 +473,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("url", bookmarkUrlName.get(position));
+        intent.putExtra("browser", "incognito");
         startActivity(intent);
     }
 }

@@ -21,7 +21,7 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.Down
     final private DownloadsAdapterOnClickHandler mClickHandler;
 
     public interface DownloadsAdapterOnClickHandler {
-        void onClick(String fileName);
+        void onClick(String fileName, View view, int position);
     }
 
     //region Interface adapter listener
@@ -64,7 +64,6 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.Down
             public void onClick(View v) {
 
                 onClickListener.btnOnClick(v, position);
-
             }
         });
     }
@@ -101,10 +100,8 @@ public class DownloadsAdapter extends RecyclerView.Adapter<DownloadsAdapter.Down
             int adapterPosition = getAdapterPosition();
             String clickedFileName = mFileName.get(adapterPosition);
 
-            mClickHandler.onClick(clickedFileName);
-
+            mClickHandler.onClick(clickedFileName, v, adapterPosition);
         }
     }
-
 
 }

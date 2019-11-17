@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/action_back"
-        android:icon="@drawable/ic_arrow_back_green_24dp"
+        android:icon="@drawable/ic_arrow_back_white_24dp"
         android:title="@string/action_back"
         app:showAsAction="always" />
 
@@ -19,7 +19,7 @@
 
     <item
         android:id="@+id/action_forward"
-        android:icon="@drawable/ic_arrow_forward_green_24dp"
+        android:icon="@drawable/ic_arrow_forward_white_24dp"
         android:title="@string/action_forward"
         app:showAsAction="always" />
 
@@ -30,9 +30,9 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/bookmarks"
-        android:icon="@drawable/menu_bookmark"
-        android:title="@string/bookmarks"
+        android:id="@+id/item_home"
+        android:icon="@drawable/menu_home_incog"
+        android:title="@string/home"
         app:showAsAction="always" />
 
     <item
@@ -44,7 +44,7 @@
 
     <item
         android:id="@+id/action_more"
-        android:icon="@drawable/setting_icon"
+        android:icon="@drawable/menu_settings_incog"
         android:title=""
         app:showAsAction="always">
 
@@ -53,16 +53,22 @@
             <item
                 android:id="@+id/bookmarkThis"
                 android:title="@string/bookmark_this_page"
-                android:icon="@drawable/menu_addbookmrk"/>
+                android:icon="@drawable/menu_bookmarkpge_incog"/>
+
+            <item
+                android:id="@+id/bookmarks"
+                android:icon="@drawable/menu_bookmark_incog"
+                android:title="@string/bookmarks" />
 
             <item
                 android:id="@+id/downloads"
-                android:icon="@drawable/menu_download"
+                android:icon="@drawable/menu_downloads_incog"
                 android:title="@string/downloads" />
 
 
             <item
                 android:id="@+id/exit"
+                android:icon="@drawable/ic_clear_white_24dp"
                 android:title="@string/exit" />
 
 

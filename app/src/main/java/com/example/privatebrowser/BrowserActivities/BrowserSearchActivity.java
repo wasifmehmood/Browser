@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.example.privatebrowser.Adapters.SearchBookmarksAdapter;
 import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.CustomWidgets.CustomEditText;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
+import com.example.privatebrowser.HomeActivity;
 import com.example.privatebrowser.IncognitoActivities.BookmarksActivity;
 import com.example.privatebrowser.IncognitoActivities.DownloadActivity;
 import com.example.privatebrowser.IncognitoActivities.MainActivity;
@@ -43,8 +45,13 @@ import com.example.privatebrowser.utils.Utils;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BrowserSearchActivity extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener,
         SearchBookmarksAdapter.SearchBookmarkButtonAdapterListener {
@@ -159,9 +166,30 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
                 switch (target) {
                     case RIGHT:
                         //Do something here
+                        String url;
+
                         if (isNetworkAvailable()) {
                             Intent intent = new Intent(BrowserSearchActivity.this, MainActivity.class);
-                            String url = "https://www.google.com/#q=" + searchEditText.getText().toString();
+                            if(URLUtil.isValidUrl(searchEditText.getText().toString()) && checkDomain())
+                            {
+                                url = searchEditText.getText().toString();
+                                Toast.makeText(BrowserSearchActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                            }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                            else if (URLUtil.isValidUrl("http://"+searchEditText.getText().toString()) && checkDomain())
+                            {
+                                url = "http://"+searchEditText.getText().toString();
+                                Toast.makeText(BrowserSearchActivity.this, "http", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                url = "https://www.google.com/#q=" + searchEditText.getText().toString();
+                            }
+
                             intent.putExtra("url", url);
                             intent.putExtra("browser", "main");
                             startActivity(intent);
@@ -174,8 +202,37 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
                         break;
                 }
             }
-
         });
+    }
+
+    boolean thread(String url)
+    {
+        final boolean[] checkProtocol = {false};
+
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+
+                try {
+                checkProtocol[0] = usesHttps(url);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+
+        return checkProtocol[0];
+    }
+
+    static boolean usesHttps(final String urlWithoutProtocol) throws IOException {
+        try {
+            Jsoup.connect("http://" + urlWithoutProtocol).get();
+            return false;
+        } catch (final IOException e) {
+            Jsoup.connect("https://" + urlWithoutProtocol).get();
+            return true;
+        }
     }
 
     private void addBookmark() {
@@ -193,8 +250,28 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
 
             if (isNetworkAvailable()) {
 
+                String url;
+
                 Intent intent = new Intent(BrowserSearchActivity.this, MainActivity.class);
-                String url = "https://www.google.com/#q=" + searchEditText.getText().toString();
+                if(URLUtil.isValidUrl(searchEditText.getText().toString()) && checkDomain())
+                {
+                    url = searchEditText.getText().toString();
+                    Toast.makeText(BrowserSearchActivity.this, "empty", Toast.LENGTH_SHORT).show();
+                }
+//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
+//                            {
+//                                url = "https://"+searchEditText.getText().toString();
+//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
+//
+//                            }
+                else if (URLUtil.isValidUrl("http://"+searchEditText.getText().toString()) && checkDomain())
+                {
+                    url = "http://"+searchEditText.getText().toString();
+                    Toast.makeText(BrowserSearchActivity.this, "http", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    url = "https://www.google.com/#q=" + searchEditText.getText().toString();
+                }
                 intent.putExtra("url", url);
                 intent.putExtra("browser", "main");
                 startActivity(intent);
@@ -205,6 +282,35 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
         }
 
         return false;
+    }
+
+    /**
+     * This checks whether the url has a top level domain, if yes returns true.
+     *
+     * @return
+     */
+
+    private boolean checkDomain() {
+
+        ArrayList<String> checkUrl = new ArrayList<>();
+        checkUrl.add(".com");
+        checkUrl.add(".net");
+        checkUrl.add(".org");
+        checkUrl.add(".edu");
+        checkUrl.add(".int");
+        checkUrl.add(".gov");
+        checkUrl.add(".mil");
+        boolean checkDomain = false;
+
+        for (int i=0; i<checkUrl.size(); i++) {
+            checkDomain = searchEditText.getText().toString().contains(checkUrl.get(i));
+
+            if (checkDomain)
+            {
+                break;
+            }
+        }
+        return checkDomain;
     }
 
     public boolean isNetworkAvailable() {
@@ -253,6 +359,9 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
             case R.id.bookmarks:
                 showBookmarks();
                 return true;
+            case R.id.item_home:
+                startHomeActivity();
+                return true;
             case R.id.history:
                 showHistory();
                 return true;
@@ -269,6 +378,14 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
                 return super.onOptionsItemSelected(item);
         }
     }
+
+        private void startHomeActivity() {
+
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
 
     private void startVpn() {
 

@@ -60,12 +60,14 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".IncognitoActivities.SearchActivity" />
+        <activity android:name=".IncognitoActivities.SearchActivity"
+            android:theme="@style/IncognitoTheme"/>
         <activity
             android:name=".IncognitoActivities.StartActivity"
             android:theme="@style/StartTheme" />
         <activity android:name=".IncognitoActivities.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:theme="@style/IncognitoTheme"
             />
     </application>
 

@@ -2,6 +2,7 @@ package com.example.privatebrowser.DatabaseOperation;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.widget.Toast;
 
 import com.example.privatebrowser.DatabaseHelper.DatabaseHelper;
 import com.example.privatebrowser.utils.Utils;
@@ -14,11 +15,13 @@ class SearchAllClass {
     private ArrayList<String> bool;
     private ArrayList<String> id;
 
+    Context context;
     private final DatabaseHelper dbh;
 
     public SearchAllClass(Context context, String DB_NAME, int DB_VERSION, String TABLE_NAME)
     {
         dbh = new DatabaseHelper(context, DB_NAME, DB_VERSION, TABLE_NAME);
+        this.context = context;
     }
 
     public void searchAllRecord()
@@ -29,15 +32,19 @@ class SearchAllClass {
         bool = new ArrayList<>();
         id = new ArrayList<>();
 
+//        int i = 0;
         while (cursor.moveToNext()) {
             id.add(cursor.getString(0));
             names.add(cursor.getString(1));
             bool.add(cursor.getString(2));
+
+//            Toast.makeText(context, "Name: "+ names.get(i++) +" Bool: "+bool, Toast.LENGTH_SHORT).show();
         }
+        Utils.idUtils = id;
         Utils.boolUtils = bool;
         Utils.nameUtils = names;
-
     }
+
     ArrayList<String> bookmarkName;
     public void searchAllBookmarkRecord()
     {

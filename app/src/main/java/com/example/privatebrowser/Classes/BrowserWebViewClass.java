@@ -25,6 +25,8 @@ import android.widget.Toast;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
 import com.example.privatebrowser.R;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 public class BrowserWebViewClass {
 
 
@@ -69,7 +71,7 @@ public class BrowserWebViewClass {
     private ImageView imageView;
 
     public void startBrowserWebView(String url, WebView webView, final Context context,
-                                    Activity activity, ProgressBar progressBar) {
+                                    Activity activity, ProgressBar progressBar, SwipeRefreshLayout swipe) {
 
         //Create new webView Client to show progress dialog
         //When opening a url or click on link
@@ -93,6 +95,13 @@ public class BrowserWebViewClass {
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
 
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+
+                    swipe.setRefreshing(false);
                 }
             });
 

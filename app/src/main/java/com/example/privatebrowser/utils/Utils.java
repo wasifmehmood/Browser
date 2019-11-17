@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Utils {
 
+    public static ArrayList<String> idUtils;
     public static ArrayList<String> boolUtils;
     public static ArrayList<String> nameUtils;
     public static ArrayList<String> bookmarkNameUtils;

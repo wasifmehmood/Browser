@@ -152,9 +152,9 @@ public abstract class UIActivity extends AppCompatActivity {
             public void success(@NonNull Boolean aBoolean) {
                 if (aBoolean) {
                     disconnectFromVpn();
-//                    if(isLoggedIn()) {
-//                        logOutFromVpn();
-//                    }
+                    if(isLoggedIn()) {
+                        logOutFromVpn();
+                    }
                 } else {
 //                    if(!isLoggedIn()) {
 //                        loginToVpn();
@@ -210,7 +210,7 @@ public abstract class UIActivity extends AppCompatActivity {
 //                        connectBtnTextView.setEnabled(true);
 //                        connectBtnTextView.setText(R.string.connect);
 //                        connectionStateTextView.setText(R.string.disconnected);
-                        connectButton.setBackgroundResource(R.drawable.connect_icon);
+                        connectButton.setBackgroundResource(R.drawable.connect_new);
                         textViewConnect.setText(R.string.connect);
 //                        hideConnectProgress();
                         break;
@@ -219,7 +219,7 @@ public abstract class UIActivity extends AppCompatActivity {
 //                        connectBtnTextView.setEnabled(true);
 //                        connectBtnTextView.setText(R.string.disconnect);
 //                        connectionStateTextView.setText(R.string.connected);
-                        connectButton.setBackgroundResource(R.drawable.disconnet);
+                        connectButton.setBackgroundResource(R.drawable.disconnect_new);
                         textViewConnect.setText(R.string.connected);
 //                        hideConnectProgress();
                         break;
@@ -227,7 +227,7 @@ public abstract class UIActivity extends AppCompatActivity {
                     case CONNECTING_VPN:
                     case CONNECTING_CREDENTIALS:
                     case CONNECTING_PERMISSIONS: {
-                        connectButton.setBackgroundResource(R.drawable.connecting);
+                        connectButton.setBackgroundResource(R.drawable.connecting_new);
                         textViewConnect.setText(R.string.connecting);
 //                        connectButton.setText(R.string.connecting);
 //                        connectButton.setText(R.string.connecting);

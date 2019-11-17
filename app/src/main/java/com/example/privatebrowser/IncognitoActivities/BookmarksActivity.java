@@ -4,15 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.privatebrowser.Adapters.BookmarksAdapter;
 import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
 
+import com.example.privatebrowser.DualBrowserActivities.DualBrowserActivity;
 import com.example.privatebrowser.R;
 import com.example.privatebrowser.utils.Utils;
 
@@ -31,7 +35,11 @@ public class BookmarksActivity extends AppCompatActivity implements View.OnClick
     private DatabaseClass databaseClass;
     private Button clearBookmarks;
     ChangeLanguage changeLanguage;
-    String browser;
+    private String browser;
+    private String savedUrlBrowser, savedUrlIncognito;
+    Bundle browserState, incognitoState;
+    String activityStr;
+    Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +48,36 @@ public class BookmarksActivity extends AppCompatActivity implements View.OnClick
         changeLanguage.loadLocale();
         setContentView(R.layout.activity_bookmarks);
 
+        browserState = new Bundle();
+        incognitoState = new Bundle();
+
         databaseClass = new DatabaseClass(this);
         getBookmarksFromSQLite();
 
         browser = getIntent().getStringExtra("browser");
+        savedUrlBrowser = getIntent().getStringExtra("saved_url_browser");
+        savedUrlIncognito = getIntent().getStringExtra("saved_url_incognito");
+
+        browserState = getIntent().getParcelableExtra("browser_state");
+        incognitoState = getIntent().getParcelableExtra("incognito_state");
+
+        activityStr = getIntent().getStringExtra("activity");
+        Toast.makeText(this, "Str"+activityStr, Toast.LENGTH_SHORT).show();
+
+        try {
+            Class<?> aclass = Class.forName("com.example.privatebrowser.DualBrowserActivities.DualBrowserActivity");
+            activity = (Activity) aclass.newInstance();
+            Toast.makeText(this, "try"+activity, Toast.LENGTH_SHORT).show();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
+
+//        Toast.makeText(this, ""+incognitoState, Toast.LENGTH_SHORT).show();
 
         inItUi();
 
@@ -51,8 +85,7 @@ public class BookmarksActivity extends AppCompatActivity implements View.OnClick
 
         registerListeners();
 
-        if(bookmarkName.isEmpty())
-        {
+        if (bookmarkName.isEmpty()) {
             clearBookmarks.setVisibility(View.INVISIBLE);
         }
     }
@@ -61,7 +94,6 @@ public class BookmarksActivity extends AppCompatActivity implements View.OnClick
 
         clearBookmarks.setOnClickListener(this);
     }
-
 
     private void inItUi() {
 
@@ -110,7 +142,7 @@ public class BookmarksActivity extends AppCompatActivity implements View.OnClick
     }
 
     /**
-     * When the list item is clicked in recyclerview the following link would open.
+     * When the bookmark list item is clicked in recyclerView the following link would open.
      *
      * @param bookmarksStr
      */
@@ -118,10 +150,38 @@ public class BookmarksActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(String bookmarksStr) {
 
-        Intent intent = new Intent(BookmarksActivity.this, MainActivity.class);
-        intent.putExtra("browser", browser);
-        intent.putExtra("url", bookmarksStr);
-        startActivity(intent);
+        if (browser.equals("main") || browser.equals("incognito")) {
+            Intent intent = new Intent(BookmarksActivity.this, MainActivity.class);
+            intent.putExtra("browser", browser);
+            intent.putExtra("url", bookmarksStr);
+            startActivity(intent);
+        }
+        else if(browser.equals("dual_incognito"))
+        {
+            Intent intent = new Intent(BookmarksActivity.this, DualBrowserActivity.class);
+            intent.putExtra("browser", browser);
+            intent.putExtra("url", bookmarksStr);
+            intent.putExtra("saved_url_browser", savedUrlBrowser);
+            intent.putExtra("saved_url_incognito", savedUrlIncognito);
+            intent.putExtra("browser_state", browserState);
+            intent.putExtra("incognito_state", incognitoState);
+            startActivity(intent);
+            activity.finish();
+            finish();
+        }
+        else if(browser.equals("dual_browser"))
+        {
+            Intent intent = new Intent(BookmarksActivity.this, DualBrowserActivity.class);
+            intent.putExtra("browser", browser);
+            intent.putExtra("url", bookmarksStr);
+            intent.putExtra("saved_url_browser", savedUrlBrowser);
+            intent.putExtra("saved_url_incognito", savedUrlIncognito);
+            intent.putExtra("browser_state", browserState);
+            intent.putExtra("incognito_state", incognitoState);
+            startActivity(intent);
+            activity.finish();
+            finish();
+        }
     }
 
     /**
@@ -146,8 +206,7 @@ public class BookmarksActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == R.id.button_clear_bookmarks)
-        {
+        if (v.getId() == R.id.button_clear_bookmarks) {
             databaseClass.deleteBookmarkRecord();
             bookmarksList.clear();
             bookmarksUrlList.clear();

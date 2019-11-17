@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#CFCFCE">
 
     <TextView
         android:id="@+id/bookmarkNameTv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_20sdp"
         android:text="@string/name"
         android:textColor="#323639"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/bookmarkNameEt"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_240sdp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:layout_toEndOf="@+id/bookmarkNameTv1"
-        android:singleLine="true"
-        android:textAlignment="center"
         android:textColor="#323639"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/bookmarkNameTv1"
+        app:layout_constraintTop_toBottomOf="@id/bookmarkNameTv1" />
 
     <TextView
         android:id="@+id/bookmarkUrlTv1"
@@ -43,27 +44,28 @@
         android:layout_marginTop="@dimen/_32sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:paddingEnd="@dimen/_25sdp"
-        android:text="@string/url"
+        android:text="@string/urls"
         android:textColor="#323639"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/bookmarkNameEt"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
     <EditText
         android:id="@+id/bookmarkUrlEt"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_240sdp"
         android:layout_height="wrap_content"
         android:layout_below="@id/bookmarkNameEt"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:layout_toEndOf="@+id/bookmarkUrlTv1"
         android:inputType="text"
-        android:textAlignment="center"
         android:textColor="#323639"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/bookmarkUrlTv1"
+        app:layout_constraintStart_toStartOf="@+id/bookmarkUrlTv1"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
     <Button
@@ -72,11 +74,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/bookmarkUrlEt"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/_121sdp"
+        android:paddingStart="@dimen/_6sdp"
+        android:paddingEnd="@dimen/_6sdp"
         android:layout_marginTop="@dimen/_34sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/shape_btn_two"
-        android:text="@string/add_to_bookmarks" />
+        android:text="@string/add_to_bookmarks"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/bookmarkUrlEt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

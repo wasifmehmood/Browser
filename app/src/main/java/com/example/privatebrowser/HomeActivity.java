@@ -11,6 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -78,7 +80,6 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         vpnButton.setOnClickListener(this);
 
         permissionCheck();
-
     }
 
     private void permissionCheck() {
@@ -127,10 +128,16 @@ public class HomeActivity extends Activity implements View.OnClickListener {
             startActivity(intent);
         } else if (v.getId() == R.id.btn_dual_browser) {
             Intent intent = new Intent(this, DualBrowserActivity.class);
+            intent.putExtra("browser", "dual");
             startActivity(intent);
         } else if (v.getId() == R.id.btn_vpn) {
             Intent intent = new Intent(this, VpnActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 }

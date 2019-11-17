@@ -116,6 +116,7 @@ public class SearchBookmarksAdapter extends RecyclerView.Adapter<SearchBookmarks
 
             searchBookmarkTextView = itemView.findViewById(R.id.tv_search_bookmark);
             searchBookmarkTextView1 = itemView.findViewById(R.id.tv_one_search_bookmark);
+            searchBookmarkTextView1.setSelected(true);
 
             itemView.setOnClickListener(this);
         }

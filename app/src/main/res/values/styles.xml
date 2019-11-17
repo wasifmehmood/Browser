@@ -8,11 +8,26 @@
         <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimaryDark</item>
         <item name="android:windowEnableSplitTouch">false</item>
-<!--        <item name="android:textColorSecondary">#ffffff</item>-->
+        <item name="android:itemBackground">#f6f6f6</item>
+        <!--        <item name="android:textColorSecondary">#ffffff</item>-->
 <!--        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>-->
     </style>
 
-<!--    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">-->
+    <style name="IncognitoTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#323236</item>
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:itemBackground">@color/grey</item>
+        <item name="android:textColorPrimary">#ffffff</item>
+        <!--        <item name="android:textColorSecondary">#ffffff</item>-->
+        <!--        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>-->
+    </style>
+
+
+    <!--    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">-->
 <!--        <item name="android:src">@drawable/ic_more_vert_black_24dp</item>-->
 <!--        <item name="android:background">?android:attr/actionBarItemBackground</item>-->
 <!--        <item name="android:contentDescription">"Lala"</item>-->

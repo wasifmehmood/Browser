@@ -34,8 +34,10 @@
     <ScrollView
         android:id="@+id/scroll_view_history"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_370sdp"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        app:layout_constraintBottom_toTopOf="@id/button_clear_browsing"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/custom_action_bar">
 
@@ -51,6 +53,10 @@
         android:id="@+id/button_clear_browsing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/_8sdp"
+        android:paddingStart="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:background="@drawable/shape_btn_three"
         android:fontFamily="@font/roboto_medium"
         android:text="@string/clear_browsing_data"

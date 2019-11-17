@@ -8,6 +8,7 @@ import com.anchorfree.hydrasdk.callbacks.VpnStateListener;
 //import com.example.privatebrowser.dialog.LoginDialog;
 import com.example.privatebrowser.VpnDialog.RegionChooserDialog;
 
+import android.app.ProgressDialog;
 import android.util.Log;
 
 import com.anchorfree.hydrasdk.SessionConfig;
@@ -42,7 +43,10 @@ public class VpnActivity extends UIActivity implements TrafficListener, VpnState
         super.onStart();
         HydraSdk.addTrafficListener(this);
         HydraSdk.addVpnListener(this);
-        loginToVpn();
+        if(!HydraSdk.isLoggedIn())
+        {
+            loginToVpn();
+        }
     }
 
     @Override
@@ -78,12 +82,21 @@ public class VpnActivity extends UIActivity implements TrafficListener, VpnState
     @Override
     protected void loginToVpn() {
 //        showLoginProgress();
+        ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Signing In");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setProgress(0);
+        progressDialog.show();
+
         AuthMethod authMethod = AuthMethod.anonymous();
         HydraSdk.login(authMethod, new Callback<User>() {
             @Override
             public void success(@NonNull User user) {
 //                hideLoginProgress();
                 updateUI();
+                progressDialog.dismiss();
 //                connectToVpn();
             }
 
