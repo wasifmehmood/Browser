@@ -45,6 +45,10 @@ import com.example.privatebrowser.IncognitoActivities.MainActivity;
 import com.example.privatebrowser.IncognitoActivities.SearchActivity;
 import com.example.privatebrowser.Interfaces.DrawableClickListener;
 import com.example.privatebrowser.R;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -53,28 +57,28 @@ import java.util.ArrayList;
 public class DualBrowserActivity extends AppCompatActivity implements View.OnClickListener, View.OnKeyListener,
         SwipeRefreshLayout.OnRefreshListener {
 
-    WebView webViewDualBrowser, webViewDualIncognito;
-    ImageView actionBackDual, actionForwardDual, optionMenuDualBrowser, optionMenuDualIncognito,
+    private WebView webViewDualBrowser, webViewDualIncognito;
+    private ImageView actionBackDual, actionForwardDual, optionMenuDualBrowser, optionMenuDualIncognito,
             actionBackDualIncognito, actionForwardDualIncognito;
-    CustomEditText searchEditTextDualBrowser, searchEditTextDualIncognito;
+    private CustomEditText searchEditTextDualBrowser, searchEditTextDualIncognito;
     private PopupWindow mWebPopUpBrowser, mWebPopUpIncognito;
-    BrowserWebViewClass browserWebViewClass;
-    WebViewClass incognitoWebViewClass;
-    ProgressBar progressBarDual, progressBarIncognito;
-    ChangeLanguage changeLanguage;
-    ImageView imageViewIncognitoDual;
-    TextView textViewGoneIncognito;
-    ConstraintLayout layoutProgressBar;
-    SwipeRefreshLayout swipeDual, swipeIncognito;
-    String savedUrlBrowser, savedUrlIncognito;
-    String getUrlBrowser, getUrlIncognito;
-
+    private BrowserWebViewClass browserWebViewClass;
+    private WebViewClass incognitoWebViewClass;
+    private ProgressBar progressBarDual, progressBarIncognito;
+    private ChangeLanguage changeLanguage;
+    private ImageView imageViewIncognitoDual;
+    private TextView textViewGoneIncognito;
+    private ConstraintLayout layoutProgressBar;
+    private SwipeRefreshLayout swipeDual, swipeIncognito;
+    private String savedUrlBrowser, savedUrlIncognito;
+    private String getUrlBrowser, getUrlIncognito;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        changeLanguage = new ChangeLanguage();
-//        changeLanguage.setAppLocale("ru", this);
+        changeLanguage = new ChangeLanguage(this);
+        changeLanguage.loadLocale();
         setContentView(R.layout.activity_dual_browser);
 
         databaseClass = new DatabaseClass(this);
@@ -119,9 +123,6 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
                             DualBrowserActivity.this, DualBrowserActivity.this, progressBarIncognito,
                             swipeIncognito);
 
-//                webViewDualIncognito.restoreState(getIntent().getParcelableExtra("incognito_state"));
-//
-//                Toast.makeText(this, "things"+getIntent().getBundleExtra("incognito_state") , Toast.LENGTH_SHORT).show();
                 }
             }
             savedUrlBrowser = url2;
@@ -132,6 +133,7 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
             webViewDualIncognito.setVisibility(View.VISIBLE);
             layoutProgressBar.setVisibility(View.VISIBLE);
             textViewGoneIncognito.setVisibility(View.GONE);
+            incognitoLinearLayout.setVisibility(View.VISIBLE);
 
             incognitoWebViewClass.hideProgressBar(layoutProgressBar);
             incognitoWebViewClass.setWebView(webViewDualIncognito);
@@ -151,25 +153,13 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
                             DualBrowserActivity.this, DualBrowserActivity.this, progressBarDual,
                             swipeDual);
 
-//                webViewDualBrowser.restoreState(getIntent().getBundleExtra("browser_state"));
-
                 }
             }
             savedUrlBrowser = url2;
 
         }
-//        Drawable image = this.getResources().getDrawable( R.drawable.search );
-//        int h = image.getIntrinsicHeight();
-//        int w = image.getIntrinsicWidth();
-//        image.setBounds( 0, 0, w, h );
-//        button.setCompoundDrawables( image, null, null, null );
-//
-//        Bitmap searchIcon = BitmapFactory.decodeResource(getResources(), R.drawable.search);
-//
-//        Drawable d = new BitmapDrawable(this.getResources(),
-//                Bitmap.createScaledBitmap(searchIcon, 45, 45, true));
-//
-//        searchEditTextDualBrowser.setCompoundDrawables(null,null, d, null);
+
+        MobileAds.initialize(this,getResources().getString(R.string.app_id));
     }
 
     String browser;
@@ -216,12 +206,6 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
             // Perform action on key press
             if (isNetworkAvailable()) {
 
-//                imageViewIncognitoDual.setVisibility(View.GONE);
-//                webViewDualIncognito.setVisibility(View.VISIBLE);
-//                swipeIncognito.setVisibility(View.VISIBLE);
-//                layoutProgressBar.setVisibility(View.VISIBLE);
-//                textViewGoneIncognito.setVisibility(View.GONE);
-//
                 if (v.getId() == R.id.et_search_dual_browser) {
 
 //                    webViewDualBrowser.setVisibility(View.VISIBLE);
@@ -292,12 +276,6 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
                         url = searchEditTextDualIncognito.getText().toString();
                         Toast.makeText(DualBrowserActivity.this, "empty", Toast.LENGTH_SHORT).show();
                     }
-//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
-//                            {
-//                                url = "https://"+searchEditText.getText().toString();
-//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
-//
-//                            }
                     else if (URLUtil.isValidUrl("http://" + searchEditTextDualIncognito.getText().toString()) && checkDomain("incognito")) {
                         url = "http://" + searchEditTextDualIncognito.getText().toString();
                         Toast.makeText(DualBrowserActivity.this, "http Incognito", Toast.LENGTH_SHORT).show();
@@ -716,18 +694,9 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
                 savedUrlBrowser = searchEditTextDualBrowser.getText().toString();
                 savedUrlIncognito = searchEditTextDualIncognito.getText().toString();
 
-//                Bundle browserState = new Bundle();
-//                webViewDualBrowser.saveState(browserState);
-//                Bundle incognitoState = new Bundle();
-//                webViewDualIncognito.saveState(incognitoState);
-//
-//                intent.putExtra("browser_state", browserState);
-//                intent.putExtra("incognito_state", incognitoState);
-
                 intent.putExtra("saved_url_browser", savedUrlBrowser);
                 intent.putExtra("saved_url_incognito", savedUrlIncognito);
                 intent.putExtra("activity", String.valueOf(this));
-//                Toast.makeText(DualBrowserActivity.this, ""+this, Toast.LENGTH_SHORT).show();
 
                 startActivity(intent);
             }
@@ -741,31 +710,20 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
 
     LinearLayout linearLayoutDual, linearLayoutIncognito, linearLayoutDualIncognito;
 
-    ConstraintLayout fullscreenConstraint, fullscreenConstraintIncognito, fullscreenConstraintProgressBar,
-            dualConstraint, incognitoConstraint, incognitoConstraintProgressBar;
-    SwipeRefreshLayout fullscreenSwipeLayout, swipeRefreshLayoutDual;
-    ProgressBar fullscreenProgressBar, dualProgressBar;
+    ConstraintLayout dualConstraint, incognitoConstraint, incognitoConstraintProgressBar;
+    ProgressBar dualProgressBar;
 
-    //    LinearLayout fullscreenLinearIncognito, linearLayoutIncognito;
-//
     void initUi2() {
         linearLayoutDual = findViewById(R.id.linear_layout_dual);
         linearLayoutIncognito = findViewById(R.id.linear_layout_incognito);
 
-//        fullscreenConstraint = findViewById(R.id.fullscreen_constraint_layout);
-//        fullscreenConstraintIncognito = findViewById(R.id.fullscreen_incognito_bar_constraint_layout);
-//        fullscreenConstraintProgressBar = findViewById(R.id.fullscreen_layout_progress_bar);
+
         dualConstraint = findViewById(R.id.dual_constraint);
         incognitoConstraint = findViewById(R.id.incognito_bar_constraint_layout);
         incognitoConstraintProgressBar = findViewById(R.id.layout_progress_bar);
 
-//        fullscreenSwipeLayout = findViewById(R.id.fullscreen_swipe_refresh_layout_dual);
-//        swipeRefreshLayoutDual = findViewById(R.id.fullscreen_swipe_refresh_layout_dual_incognito);
-//
-//        fullscreenProgressBar = findViewById(R.id.fullscreen_progress_bar_dual);
         dualProgressBar = findViewById(R.id.progress_bar_dual);
-//
-//        fullscreenLinearIncognito = findViewById(R.id.fullscreen_dual_incognito_linear_layout);
+
         linearLayoutDualIncognito = findViewById(R.id.dual_incognito_linear_layout);
 
     }
@@ -774,32 +732,46 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
     LinearLayout.LayoutParams param, paramIncognito;
 
     void fullScreenBrowser() {
-        isFullscreen = true;
-        initUi2();
 
-        param = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                2.0f
-        );
-        linearLayoutDual.setLayoutParams(param);
+        if (interstitialAd.isLoaded() && interstitialAd != null) {
+            interstitialAd.show();
+        } else {
+            isFullscreen = true;
+            initUi2();
 
-        incognitoConstraint.setVisibility(View.GONE);
-        incognitoConstraintProgressBar.setVisibility(View.GONE);
-        linearLayoutDualIncognito.setVisibility(View.GONE);
+            param = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    2.0f
+            );
+            linearLayoutDual.setLayoutParams(param);
 
-//        fullscreenConstraint.setVisibility(View.VISIBLE);
-//        fullscreenConstraintIncognito.setVisibility(View.VISIBLE);
-//        fullscreenConstraintProgressBar.setVisibility(View.VISIBLE);
-//
-//        dualConstraint.setVisibility(View.GONE);
-//        incognitoConstraint.setVisibility(View.GONE);
-//        incognitoConstraintProgressBar.setVisibility(View.GONE);
-//
-//        fullscreenSwipeLayout.setVisibility(View.VISIBLE);
-//        fullscreenProgressBar.setVisibility(View.VISIBLE);
+            incognitoConstraint.setVisibility(View.GONE);
+            incognitoConstraintProgressBar.setVisibility(View.GONE);
+            linearLayoutDualIncognito.setVisibility(View.GONE);
+            reqNewInterstitial();
+        }
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                reqNewInterstitial();
+                isFullscreen = true;
+                initUi2();
 
-//        LinearLayout.LayoutParams layoutParams
+                param = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        2.0f
+                );
+                linearLayoutDual.setLayoutParams(param);
+
+                incognitoConstraint.setVisibility(View.GONE);
+                incognitoConstraintProgressBar.setVisibility(View.GONE);
+                linearLayoutDualIncognito.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     private void exitFullscreenBrowser() {
@@ -823,8 +795,6 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
         View view = LayoutInflater.from(this).inflate(R.layout.web_popup_menu_incognito, null);
         mWebPopUpIncognito = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        //final TextView setting = alert.findViewById(R.id.setting_btn);
-
         TextView addToBookmark = view.findViewById(R.id.add_to_book_incognito);
         TextView downloads = view.findViewById(R.id.downloads_dual_incognito);
         TextView fullscreen = view.findViewById(R.id.fullscreen_dual_incognito);
@@ -834,10 +804,7 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onClick(View v) {
 
-//                dualIncognitoLinearLayout.setVisibility(View.GONE);
-//                incognitoBarConstraintLayout.setVisibility(View.GONE);
-//
-//                swipeDual.setLayoutParams();
+
                 if (isFullscreenIncognito) {
                     fullscreen.setText(getString(R.string.fullscreen));
                     fullscreen.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.fullscreen1), null, null, null);
@@ -870,7 +837,6 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
 
                 url = webViewDualIncognito.getUrl();
                 title = webViewDualIncognito.getTitle();
-//                    Intent intent = new Intent(myMainActivity.this, Dual_incognoTabsActivity.class);
                 String urlToHost;
 
                 try {
@@ -889,7 +855,6 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
-        //TextView upsideDown = alert.findViewById(R.id.upside_btn);
         TextView exit = view.findViewById(R.id.exit_btn_incognito);
         TextView tv_show_bookmarks = view.findViewById(R.id.tv_show_bookmark_incognito);
         exit.setOnClickListener(new View.OnClickListener() {
@@ -911,14 +876,6 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
 
                 mWebPopUpIncognito.dismiss();
 
-//                Bundle browserState = new Bundle();
-//                webViewDualBrowser.saveState(browserState);
-//                Bundle incognitoState = new Bundle();
-//                webViewDualIncognito.saveState(incognitoState);
-//
-//                intent.putExtra("browser_state", browserState);
-//                intent.putExtra("incognito_state", incognitoState);
-
                 intent.putExtra("saved_url_browser", savedUrlBrowser);
                 intent.putExtra("saved_url_incognito", savedUrlIncognito);
                 intent.putExtra("activity", String.valueOf(this));
@@ -937,23 +894,54 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
 
     private void fullScreenIncognito() {
 
-        isFullscreenIncognito = true;
-        initUi2();
-
-        paramIncognito = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                2.0f
-        );
-        linearLayoutDualIncognito.setLayoutParams(paramIncognito);
-
-        dualConstraint.setVisibility(View.GONE);
-        dualProgressBar.setVisibility(View.GONE);
-        if (linearLayoutDual.getVisibility() == View.VISIBLE) {
-            linearLayoutDual.setVisibility(View.GONE);
+        if (interstitialAd.isLoaded() && interstitialAd != null) {
+            interstitialAd.show();
         } else {
-            linearLayoutIncognito.setVisibility(View.VISIBLE);
+            isFullscreenIncognito = true;
+            initUi2();
+
+            paramIncognito = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    2.0f
+            );
+            linearLayoutDualIncognito.setLayoutParams(paramIncognito);
+
+            dualConstraint.setVisibility(View.GONE);
+            dualProgressBar.setVisibility(View.GONE);
+            if (linearLayoutDual.getVisibility() == View.VISIBLE) {
+                linearLayoutDual.setVisibility(View.GONE);
+            } else {
+                linearLayoutIncognito.setVisibility(View.VISIBLE);
+            }
+            reqNewInterstitial();
         }
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                reqNewInterstitial();
+                isFullscreenIncognito = true;
+                initUi2();
+
+                paramIncognito = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        2.0f
+                );
+                linearLayoutDualIncognito.setLayoutParams(paramIncognito);
+
+                dualConstraint.setVisibility(View.GONE);
+                dualProgressBar.setVisibility(View.GONE);
+                if (linearLayoutDual.getVisibility() == View.VISIBLE) {
+                    linearLayoutDual.setVisibility(View.GONE);
+                } else {
+                    linearLayoutIncognito.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+
     }
 
     private void exitFullscreenIncognito() {
@@ -995,6 +983,14 @@ public class DualBrowserActivity extends AppCompatActivity implements View.OnCli
     private void ReloadWebView(String url) {
 
         webViewDualBrowser.loadUrl(url);
+    }
 
+    /**
+     * Method for initializing and loading the interstitial ad
+     */
+    public void reqNewInterstitial() {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.Interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
     }
 }

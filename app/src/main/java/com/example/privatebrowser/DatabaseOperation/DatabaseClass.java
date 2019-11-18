@@ -1,9 +1,6 @@
 package com.example.privatebrowser.DatabaseOperation;
 
-
 import android.content.Context;
-import android.widget.Toast;
-
 
 public class DatabaseClass {
 

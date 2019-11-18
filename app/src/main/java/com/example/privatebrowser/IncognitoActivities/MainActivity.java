@@ -54,6 +54,7 @@ import com.example.privatebrowser.Classes.WebViewClass;
 import com.example.privatebrowser.Reciever.DownloadCompleteReciever;
 import com.example.privatebrowser.Vpn.VpnActivity;
 import com.example.privatebrowser.utils.Utils;
+import com.google.android.gms.ads.MobileAds;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -80,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements FeaturesInterface
     private ImageButton vpnButton;
     private ChangeLanguage changeLanguage;
     private ProgressBar progressBar;
-    SwipeRefreshLayout swipe;
-    ConstraintLayout constraintLayout;
+    private SwipeRefreshLayout swipe;
+    private ConstraintLayout constraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

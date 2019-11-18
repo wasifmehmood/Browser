@@ -163,6 +163,8 @@ public abstract class UIActivity extends AppCompatActivity {
                 }
             }
 
+
+
             @Override
             public void failure(@NonNull HydraException e) {
 

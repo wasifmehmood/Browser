@@ -59,4 +59,6 @@ dependencies {
 
     implementation 'org.jsoup:jsoup:1.12.1'
 
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+
 }

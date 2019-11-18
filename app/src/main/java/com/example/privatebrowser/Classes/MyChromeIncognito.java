@@ -26,16 +26,16 @@ public class MyChromeIncognito extends WebChromeClient {
     private int mOriginalOrientation;
     private int mOriginalSystemUiVisibility;
 
-    String url;
-    WebView webView;
-    Context context;
-    Activity activity;
-    ProgressBar progressBar;
-    ConstraintLayout layoutProgressBar;
+    private String url;
+    private WebView webView;
+    private Context context;
+    private Activity activity;
+    private ProgressBar progressBar;
+    private ConstraintLayout layoutProgressBar;
 
     private EditText toolbarEditText, incognitoEditText;
     private ImageView imageView;
-    DatabaseClass databaseClass;
+    private DatabaseClass databaseClass;
 
     MyChromeIncognito(String url, WebView webView, final Context context, Activity activity, ProgressBar progressBar, ConstraintLayout layoutProgressBar) {
         this.url = url;

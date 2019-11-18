@@ -28,7 +28,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryAdapter
 
     private HistoryAdapter historyAdapter;
     private RecyclerView mRecyclerView;
-    ArrayList<String> historyItem;
     private DatabaseClass databaseClass;
     private ArrayList<String> historyTitle;
     private ArrayList<String> historyUrls;
@@ -94,8 +93,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryAdapter
 
 
     private void getBookmarksFromSQLite() {
-
-//        databaseClass.deleteHistoryRecord();
 
         historyTitle = new ArrayList<>();
         historyUrls = new ArrayList<>();

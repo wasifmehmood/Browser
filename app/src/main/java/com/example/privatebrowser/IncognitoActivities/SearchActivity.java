@@ -37,6 +37,11 @@ import com.example.privatebrowser.Interfaces.FeaturesInterface;
 import com.example.privatebrowser.R;
 import com.example.privatebrowser.Vpn.VpnActivity;
 import com.example.privatebrowser.utils.Utils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -47,17 +52,14 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     private Toolbar toolbar;
     private CustomEditText editText;
-    //    private SearchBookmarksAdapter searchBookmarksAdapter;
     private ArrayList<String> bookmarkName;
     private ArrayList<String> bookmarkUrlName;
-    //    private FloatingActionButton addBookmarkBtn;
-//    RecyclerView mRecyclerView;
+
     private DatabaseClass databaseClass;
-    private EditText bookmarkNameEt;
-    private EditText bookmarkUrlEt;
-    private String bookmarkNameStr;
-    private String bookmarkUrlStr;
     ChangeLanguage changeLanguage;
+    AdView adView;
+    InterstitialAd interstitialAd;
+
 
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -84,6 +86,11 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         registerListeners();
 
+        bannerAd();
+
+        reqNewInterstitial();
+
+        MobileAds.initialize(this,getResources().getString(R.string.app_id));
 
     }
 
@@ -112,27 +119,16 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
                             Intent intent = new Intent(SearchActivity.this, MainActivity.class);
 
-                            if(URLUtil.isValidUrl(editText.getText().toString()) && checkDomain())
-                            {
+                            if (URLUtil.isValidUrl(editText.getText().toString()) && checkDomain()) {
                                 url = editText.getText().toString();
                                 Toast.makeText(SearchActivity.this, "empty", Toast.LENGTH_SHORT).show();
                             }
-//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
-//                            {
-//                                url = "https://"+searchEditText.getText().toString();
-//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
-//
-//                            }
-                            else if (URLUtil.isValidUrl("http://"+editText.getText().toString()) && checkDomain())
-                            {
-                                url = "http://"+editText.getText().toString();
+                            else if (URLUtil.isValidUrl("http://" + editText.getText().toString()) && checkDomain()) {
+                                url = "http://" + editText.getText().toString();
                                 Toast.makeText(SearchActivity.this, "http", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
+                            } else {
                                 url = "https://www.google.com/#q=" + editText.getText().toString();
                             }
-
-//                            String url = "https://www.google.com/#q=" + editText.getText().toString();
                             intent.putExtra("url", url);
                             intent.putExtra("browser", "incognito");
                             startActivity(intent);
@@ -167,39 +163,21 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         checkUrl.add(".mil");
         boolean checkDomain = false;
 
-        for (int i=0; i<checkUrl.size(); i++) {
+        for (int i = 0; i < checkUrl.size(); i++) {
             checkDomain = editText.getText().toString().contains(checkUrl.get(i));
 
-            if (checkDomain)
-            {
+            if (checkDomain) {
                 break;
             }
         }
         return checkDomain;
     }
 
-//    private void setRecyclerView() {
-//
-//        mRecyclerView.setHasFixedSize(true);
-//
-//        mRecyclerView.setAdapter(searchBookmarksAdapter);
-//
-//        setListsInRecyclerAdapter();
-//
-//    }
-
-//    void setListsInRecyclerAdapter() {
-//        searchBookmarksAdapter.setSearchBookmarksUrlList(bookmarkUrlName);
-//        searchBookmarksAdapter.setSearchBookmarksNameList(bookmarkName);
-//    }
-
 
     /**
      * Retrieve data from database where value of bookmark is true it adds that bookmark to
      * list.
      */
-
-
     private void getBookmarksFromSQLite() {
 
         bookmarkName = new ArrayList<>();
@@ -225,7 +203,7 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
         editText.setOnKeyListener(this);
         editText.setOnClickListener(this);
-//        addBookmarkBtn.setOnClickListener(this);
+
     }
 
     /**
@@ -243,11 +221,8 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
      */
     private void inItUI() {
 
-//        mRecyclerView = findViewById(R.id.search_recycler_view);
-//        searchBookmarksAdapter = new SearchBookmarksAdapter(this, this);
         toolbar = findViewById(R.id.custom_action_bar);
         editText = findViewById(R.id.et_search);
-//        addBookmarkBtn = findViewById(R.id.add_bookmark_btn);
     }
 
     /**
@@ -305,70 +280,10 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    /**
-     * Override method for what happens when a widget is clicked. When button is clicked another
-     * activity of webView is started with passing the entered url to the webView
-     */
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.add_bookmark_btn) {
-//            addBookmark();
-        }
     }
-
-//    private void addBookmark() {
-//
-//        customDialog();
-//    }
-//
-//    private void customDialog() {
-//
-//        // custom dialog
-//        final Dialog dialog = new Dialog(this);
-//        dialog.setContentView(R.layout.custom_dialog);
-//        dialog.setTitle("Title...");
-//
-//
-//        // set the custom dialog components - text, image and button
-//        bookmarkNameEt = dialog.findViewById(R.id.bookmarkNameEt);
-//        bookmarkUrlEt = dialog.findViewById(R.id.bookmarkUrlEt);
-//
-//
-//        Button addBookmarkBtn = dialog.findViewById(R.id.addBookmarkBtn);
-//
-//        addBookmarkBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                bookmarkNameStr = bookmarkNameEt.getText().toString();
-//                bookmarkUrlStr = bookmarkUrlEt.getText().toString();
-//
-//
-//                if (databaseClass.searchBookmarkRecord(bookmarkUrlStr).equals("Empty")) {
-//
-//                    if (!(bookmarkNameStr.equals("") && bookmarkUrlStr.equals(""))) {
-//
-//                        if (bookmarkUrlStr.contains("https://")) {
-//                            databaseClass.insertBookmarkRecord(bookmarkUrlStr, bookmarkNameStr, true);
-//                        } else if (!bookmarkUrlStr.contains("https://")) {
-//                            databaseClass.insertBookmarkRecord("https://" + bookmarkUrlStr, bookmarkNameStr, true);
-//                        }
-//
-//                    } else {
-//                        Toast.makeText(SearchActivity.this, "Enter the fields", Toast.LENGTH_SHORT).show();
-//                    }
-//                    getBookmarksFromSQLite();
-////                    setListsInRecyclerAdapter();
-////                    searchBookmarksAdapter.notifyDataSetChanged();
-//                }
-//
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        dialog.show();
-//    }
 
     /**
      * Override method for what happens when user touches on the screen
@@ -420,27 +335,16 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
                 Intent intent = new Intent(SearchActivity.this, MainActivity.class);
 
-                if(URLUtil.isValidUrl(editText.getText().toString()) && checkDomain())
-                {
+                if (URLUtil.isValidUrl(editText.getText().toString()) && checkDomain()) {
                     url = editText.getText().toString();
                     Toast.makeText(SearchActivity.this, "empty", Toast.LENGTH_SHORT).show();
                 }
-//                            else if(URLUtil.isValidUrl("https://"+searchEditText.getText().toString()) && bool)
-//                            {
-//                                url = "https://"+searchEditText.getText().toString();
-//                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
-//
-//                            }
-                else if (URLUtil.isValidUrl("http://"+editText.getText().toString()) && checkDomain())
-                {
-                    url = "http://"+editText.getText().toString();
+                else if (URLUtil.isValidUrl("http://" + editText.getText().toString()) && checkDomain()) {
+                    url = "http://" + editText.getText().toString();
                     Toast.makeText(SearchActivity.this, "http", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     url = "https://www.google.com/#q=" + editText.getText().toString();
                 }
-
-//                String url = "https://www.google.com/#q=" + editText.getText().toString();
                 intent.putExtra("url", url);
                 intent.putExtra("browser", "incognito");
                 startActivity(intent);
@@ -456,16 +360,47 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void showBookmarks() {
 
-        Intent intent = new Intent(this, BookmarksActivity.class);
-        intent.putExtra("browser", "incognito");
-        startActivity(intent);
+        if (interstitialAd.isLoaded() && interstitialAd != null) {
+            interstitialAd.show();
+        } else {
+            Intent intent = new Intent(this, BookmarksActivity.class);
+            intent.putExtra("browser", "incognito");
+            startActivity(intent);
+            reqNewInterstitial();
+        }
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                reqNewInterstitial();
+                Intent intent = new Intent(SearchActivity.this, BookmarksActivity.class);
+                intent.putExtra("browser", "incognito");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void showDownloads() {
 
-        Intent intent = new Intent(this, DownloadActivity.class);
-        startActivity(intent);
+        if (interstitialAd.isLoaded() && interstitialAd != null) {
+            interstitialAd.show();
+        } else {
+            Intent intent = new Intent(this, DownloadActivity.class);
+            startActivity(intent);
+            reqNewInterstitial();
+        }
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                reqNewInterstitial();
+                Intent intent = new Intent(SearchActivity.this, DownloadActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
@@ -475,5 +410,31 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         intent.putExtra("url", bookmarkUrlName.get(position));
         intent.putExtra("browser", "incognito");
         startActivity(intent);
+    }
+
+    private void bannerAd() {
+        adView = findViewById(R.id.banner_large_incognito);
+        AdRequest adrequest = new AdRequest.Builder()
+                .build();
+        adView.loadAd(adrequest);
+        adView.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdLoaded() {
+                adView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int error) {
+                adView.setVisibility(View.GONE);
+            }
+
+        });
+    }
+
+    public void reqNewInterstitial() {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.Interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
     }
 }

@@ -8,6 +8,20 @@
     android:focusableInTouchMode="true"
     tools:context=".BrowserActivities.BrowserSearchActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/et_browser_search"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/banner_large_browser"
+            layout="@layout/layout_banner_large" />
+
+    </LinearLayout>
+
 <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        android:id="@+id/custom_action_bar"-->
 <!--        android:layout_width="match_parent"-->

@@ -26,15 +26,15 @@ public class MyChrome extends WebChromeClient {
     private int mOriginalOrientation;
     private int mOriginalSystemUiVisibility;
 
-    String url;
-    WebView webView;
-    Context context;
-    Activity activity;
-    ProgressBar progressBar;
+    private String url;
+    private WebView webView;
+    private Context context;
+    private Activity activity;
+    private ProgressBar progressBar;
 
     private EditText toolbarEditText, dualEditText;
     private ImageView imageView;
-    DatabaseClass databaseClass;
+    private DatabaseClass databaseClass;
 
     MyChrome(String url, WebView webView, final Context context, Activity activity, ProgressBar progressBar)
     {

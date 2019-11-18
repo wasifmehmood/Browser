@@ -23,6 +23,7 @@ import com.example.privatebrowser.DatabaseOperation.DatabaseClass;
 import com.example.privatebrowser.FileFilter.AudioFileFilter;
 import com.example.privatebrowser.FileFilter.DocFileFilter;
 import com.example.privatebrowser.FileFilter.ImageFileFilter;
+import com.example.privatebrowser.FileFilter.VideoFileFilter;
 import com.example.privatebrowser.R;
 import com.example.privatebrowser.utils.Utils;
 
@@ -149,6 +150,7 @@ public class DownloadActivity extends AppCompatActivity implements View.OnClickL
         AudioFileFilter audioFileFilter = new AudioFileFilter(file);
         DocFileFilter docFileFilter = new DocFileFilter(file);
         ImageFileFilter imageFileFilter = new ImageFileFilter(file);
+        VideoFileFilter videoFileFilter = new VideoFileFilter(file);
 
         Uri parsedUri = Uri.parse(Environment.getExternalStorageDirectory() + "/PrivateBrowser/" + fileName);
         Intent intent = new Intent();
@@ -167,10 +169,10 @@ public class DownloadActivity extends AppCompatActivity implements View.OnClickL
         {
             intent.setDataAndType(selectedUri, "image/*");
         }
-//        intent.setDataAndType(selectedUri, "images/*");
-//        Toast.makeText(activity, "" + activity, Toast.LENGTH_SHORT).show();
-//        activity.startActivity(intent);
-
+        else if(videoFileFilter.accept(file))
+        {
+            intent.setDataAndType(selectedUri, "video/*");
+        }
         if (intent.resolveActivityInfo(activity.getPackageManager(), 0) != null) {
             activity.startActivity(intent);
         } else {

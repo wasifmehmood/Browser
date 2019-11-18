@@ -1,63 +1,41 @@
 package com.example.privatebrowser;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Application;
-import android.app.Dialog;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
+
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.privatebrowser.BrowserActivities.BrowserSearchActivity;
 import com.example.privatebrowser.Classes.ChangeLanguage;
 import com.example.privatebrowser.DualBrowserActivities.DualBrowserActivity;
-import com.example.privatebrowser.IncognitoActivities.MainActivity;
+
 import com.example.privatebrowser.IncognitoActivities.SearchActivity;
 import com.example.privatebrowser.Vpn.VpnActivity;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Locale;
 
 public class HomeActivity extends Activity implements View.OnClickListener {
 
-    ImageButton normalBrowserBtn, privateBrowserBtn, dualBrowserBtn, vpnButton;
+
+    private AdView adView;
+    private InterstitialAd interstitialAd;
+
+    private ImageButton normalBrowserBtn, privateBrowserBtn, dualBrowserBtn, vpnButton;
     private ChangeLanguage changeLanguage;
-
-//    public void setLocale(String localeStr){
-//
-//        Locale myLocale = new Locale(localeStr);
-//        Locale.setDefault(myLocale);
-//        Configuration config = new Configuration();
-//        config.setLocale(myLocale);
-//        Context context = this;
-//        context.getResources().updateConfiguration(config,
-//                context.getResources().getDisplayMetrics());
-//    }
-
-//    private static final String Locale_Preference = "Locale Preference";
-//    private static final String Locale_KeyValue = "Saved Locale";
-//
-//    //Get locale method in preferences
-//    public void loadLocale() {
-//
-//        changeLanguage = new ChangeLanguage(this);
-//        String language = ChangeLanguage.sharedPreferences.getString(Locale_KeyValue, "");
-//
-//        changeLanguage.setAppLocale(language);
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +46,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
             changeLanguage.customDialog();
         }
         setContentView(R.layout.activity_home);
+
+        MobileAds.initialize(this,getResources().getString(R.string.app_id));
 
         normalBrowserBtn = findViewById(R.id.btn_start_normal_browsing);
         privateBrowserBtn = findViewById(R.id.btn_start_private_browsing);
@@ -80,6 +60,10 @@ public class HomeActivity extends Activity implements View.OnClickListener {
         vpnButton.setOnClickListener(this);
 
         permissionCheck();
+        bannerAd();
+        reqNewInterstitial();
+
+        MobileAds.initialize(this,getResources().getString(R.string.app_id));
     }
 
     private void permissionCheck() {
@@ -121,18 +105,87 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
 
         if (v.getId() == R.id.btn_start_normal_browsing) {
-            Intent intent = new Intent(this, BrowserSearchActivity.class);
-            startActivity(intent);
-        } else if (v.getId() == R.id.btn_start_private_browsing) {
-            Intent intent = new Intent(this, SearchActivity.class);
-            startActivity(intent);
-        } else if (v.getId() == R.id.btn_dual_browser) {
-            Intent intent = new Intent(this, DualBrowserActivity.class);
-            intent.putExtra("browser", "dual");
-            startActivity(intent);
+
+            if (interstitialAd.isLoaded()&& interstitialAd!=null){
+                interstitialAd.show();
+            }else {
+                Intent intent = new Intent(this, BrowserSearchActivity.class);
+                startActivity(intent);
+                reqNewInterstitial();
+            }
+            interstitialAd.setAdListener(new AdListener(){
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    reqNewInterstitial();
+                    Intent intent = new Intent(HomeActivity.this, BrowserSearchActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        else if (v.getId() == R.id.btn_start_private_browsing) {
+            if (interstitialAd.isLoaded()&& interstitialAd!=null){
+                interstitialAd.show();
+            }else {
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+                reqNewInterstitial();
+            }
+            interstitialAd.setAdListener(new AdListener(){
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    reqNewInterstitial();
+                    Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                    startActivity(intent);
+
+                }
+            });
+
+        }
+
+        else if (v.getId() == R.id.btn_dual_browser) {
+
+            if (interstitialAd.isLoaded()&& interstitialAd!=null){
+                interstitialAd.show();
+            }else {
+                Intent intent = new Intent(this, DualBrowserActivity.class);
+                intent.putExtra("browser", "dual");
+                startActivity(intent);
+                reqNewInterstitial();
+            }
+            interstitialAd.setAdListener(new AdListener(){
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    reqNewInterstitial();
+                    Intent intent = new Intent(HomeActivity.this, DualBrowserActivity.class);
+                    intent.putExtra("browser", "dual");
+                    startActivity(intent);
+                }
+            });
+
+
         } else if (v.getId() == R.id.btn_vpn) {
-            Intent intent = new Intent(this, VpnActivity.class);
-            startActivity(intent);
+
+            if (interstitialAd.isLoaded()&& interstitialAd!=null){
+                interstitialAd.show();
+            }else {
+                Intent intent = new Intent(this, VpnActivity.class);
+                startActivity(intent);
+                reqNewInterstitial();
+            }
+            interstitialAd.setAdListener(new AdListener(){
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    reqNewInterstitial();
+                    Intent intent = new Intent(HomeActivity.this, VpnActivity.class);
+                    startActivity(intent);
+                }
+            });
+
         }
     }
 
@@ -140,4 +193,30 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     public void onBackPressed() {
         finishAffinity();
     }
+    public void reqNewInterstitial() {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.Interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
+    private void bannerAd() {
+        adView = findViewById(R.id.banner);
+        AdRequest adrequest = new AdRequest.Builder()
+                .build();
+        adView.loadAd(adrequest);
+        adView.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdLoaded() {
+                adView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int error) {
+                adView.setVisibility(View.GONE);
+            }
+
+        });
+    }
+
 }

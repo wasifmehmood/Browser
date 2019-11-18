@@ -37,11 +37,15 @@ import com.example.privatebrowser.IncognitoActivities.BookmarksActivity;
 import com.example.privatebrowser.IncognitoActivities.DownloadActivity;
 import com.example.privatebrowser.IncognitoActivities.MainActivity;
 import com.example.privatebrowser.IncognitoActivities.SearchActivity;
-import com.example.privatebrowser.IncognitoActivities.StartActivity;
 import com.example.privatebrowser.Interfaces.DrawableClickListener;
 import com.example.privatebrowser.R;
 import com.example.privatebrowser.Vpn.VpnActivity;
 import com.example.privatebrowser.utils.Utils;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -56,18 +60,22 @@ import java.util.logging.Logger;
 public class BrowserSearchActivity extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener,
         SearchBookmarksAdapter.SearchBookmarkButtonAdapterListener {
 
-    CustomEditText searchEditText;
-    Toolbar toolbar;
+    private CustomEditText searchEditText;
+    private Toolbar toolbar;
     private DatabaseClass databaseClass;
     private EditText bookmarkNameEt;
     private EditText bookmarkUrlEt;
     private String bookmarkNameStr;
     private String bookmarkUrlStr;
-    RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
     private SearchBookmarksAdapter searchBookmarksAdapter;
     private FloatingActionButton addBookmarkBtn;
-    ChangeLanguage changeLanguage;
-    TextView textViewBookmark;
+    private ChangeLanguage changeLanguage;
+    private TextView textViewBookmark;
+    private AdView adView;
+    private InterstitialAd interstitialAd;
+    private ArrayList<String> bookmarkName;
+    private ArrayList<String> bookmarkUrlName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +97,17 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
 
         registerListeners();
 
-//        Bitmap searchIcon = BitmapFactory.decodeResource(getResources(), R.drawable.search);
-//
-//        Drawable d = new BitmapDrawable(this.getResources(),
-//                Bitmap.createScaledBitmap(searchIcon, 34, 34, true));
-//
-//        searchEditText.setCompoundDrawables(null,null, d, null);
+        bannerAd();
+
+        reqNewInterstitial();
+
+        MobileAds.initialize(this,getResources().getString(R.string.app_id));
+
     }
+
+    /**
+     * This method registers all the listeners
+     */
 
     private void registerListeners() {
 
@@ -108,12 +120,9 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
 
         getBookmarksFromSQLite();
 
-        if(bookmarkName.isEmpty())
-        {
+        if (bookmarkName.isEmpty()) {
             textViewBookmark.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
+        } else {
             textViewBookmark.setVisibility(View.VISIBLE);
         }
 
@@ -125,6 +134,9 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
     }
 
 
+    /**
+     * Here all the views are initialized
+     */
     void inItUi() {
 
         mRecyclerView = findViewById(R.id.search_recycler_view);
@@ -136,11 +148,19 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
 
     }
 
+    /**
+     * Toolbar is set as a actionbar
+     */
+
     private void setCustomActionBar() {
 
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("");
     }
+
+    /**
+     * RecyclerView is set, its adapter and setting list in adapter method is called
+     */
 
     private void setRecyclerView() {
 
@@ -152,12 +172,24 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
 
     }
 
+    /**
+     * This method set the lists in the adapter
+     */
+
     void setListsInRecyclerAdapter() {
 
         searchBookmarksAdapter.setSearchBookmarksUrlList(bookmarkUrlName);
         searchBookmarksAdapter.setSearchBookmarksNameList(bookmarkName);
     }
 
+    /**
+     * Click Listener on the search drawable of the CUSTOM EDITTEXT. When the search
+     * drawable is clicked first the internet connectivity is checked if true then
+     * url is checked, if the url is a simple search on google it will be directed to
+     * google search, if the url is proper url of a website it will be redirected to
+     * the corresponding website. For checking if its a website url checkdomain method
+     * is used.
+     */
     private void searchEditTextClickListener() {
 
         searchEditText.setDrawableClickListener(new DrawableClickListener() {
@@ -170,8 +202,7 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
 
                         if (isNetworkAvailable()) {
                             Intent intent = new Intent(BrowserSearchActivity.this, MainActivity.class);
-                            if(URLUtil.isValidUrl(searchEditText.getText().toString()) && checkDomain())
-                            {
+                            if (URLUtil.isValidUrl(searchEditText.getText().toString()) && checkDomain()) {
                                 url = searchEditText.getText().toString();
                                 Toast.makeText(BrowserSearchActivity.this, "empty", Toast.LENGTH_SHORT).show();
                             }
@@ -181,12 +212,10 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
 //                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
 //
 //                            }
-                            else if (URLUtil.isValidUrl("http://"+searchEditText.getText().toString()) && checkDomain())
-                            {
-                                url = "http://"+searchEditText.getText().toString();
+                            else if (URLUtil.isValidUrl("http://" + searchEditText.getText().toString()) && checkDomain()) {
+                                url = "http://" + searchEditText.getText().toString();
                                 Toast.makeText(BrowserSearchActivity.this, "http", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
+                            } else {
                                 url = "https://www.google.com/#q=" + searchEditText.getText().toString();
                             }
 
@@ -205,40 +234,52 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
         });
     }
 
-    boolean thread(String url)
-    {
-        final boolean[] checkProtocol = {false};
-
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-
-                try {
-                checkProtocol[0] = usesHttps(url);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        thread.start();
-
-        return checkProtocol[0];
-    }
-
-    static boolean usesHttps(final String urlWithoutProtocol) throws IOException {
-        try {
-            Jsoup.connect("http://" + urlWithoutProtocol).get();
-            return false;
-        } catch (final IOException e) {
-            Jsoup.connect("https://" + urlWithoutProtocol).get();
-            return true;
-        }
-    }
+//    boolean thread(String url)
+//    {
+//        final boolean[] checkProtocol = {false};
+//
+//        Thread thread = new Thread(){
+//            @Override
+//            public void run() {
+//
+//                try {
+//                checkProtocol[0] = usesHttps(url);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        thread.start();
+//
+//        return checkProtocol[0];
+//    }
+//
+//    static boolean usesHttps(final String urlWithoutProtocol) throws IOException {
+//        try {
+//            Jsoup.connect("http://" + urlWithoutProtocol).get();
+//            return false;
+//        } catch (final IOException e) {
+//            Jsoup.connect("https://" + urlWithoutProtocol).get();
+//            return true;
+//        }
+//    }
 
     private void addBookmark() {
 
         customDialog();
     }
+
+    /**
+     * This method is a listener for GO button on the keyboard, if pressed first the internet
+     * connectivity is checked if true then url is checked, if the url is a simple search on
+     * google it will be directed to google search, if the url is proper url of a website it
+     * will be redirected to the corresponding website. For checking if its a website url
+     * checkdomain method is used.
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -253,8 +294,7 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
                 String url;
 
                 Intent intent = new Intent(BrowserSearchActivity.this, MainActivity.class);
-                if(URLUtil.isValidUrl(searchEditText.getText().toString()) && checkDomain())
-                {
+                if (URLUtil.isValidUrl(searchEditText.getText().toString()) && checkDomain()) {
                     url = searchEditText.getText().toString();
                     Toast.makeText(BrowserSearchActivity.this, "empty", Toast.LENGTH_SHORT).show();
                 }
@@ -264,12 +304,10 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
 //                                Toast.makeText(BrowserSearchActivity.this, "https", Toast.LENGTH_SHORT).show();
 //
 //                            }
-                else if (URLUtil.isValidUrl("http://"+searchEditText.getText().toString()) && checkDomain())
-                {
-                    url = "http://"+searchEditText.getText().toString();
+                else if (URLUtil.isValidUrl("http://" + searchEditText.getText().toString()) && checkDomain()) {
+                    url = "http://" + searchEditText.getText().toString();
                     Toast.makeText(BrowserSearchActivity.this, "http", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     url = "https://www.google.com/#q=" + searchEditText.getText().toString();
                 }
                 intent.putExtra("url", url);
@@ -302,16 +340,21 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
         checkUrl.add(".mil");
         boolean checkDomain = false;
 
-        for (int i=0; i<checkUrl.size(); i++) {
+        for (int i = 0; i < checkUrl.size(); i++) {
             checkDomain = searchEditText.getText().toString().contains(checkUrl.get(i));
 
-            if (checkDomain)
-            {
+            if (checkDomain) {
                 break;
             }
         }
         return checkDomain;
     }
+
+    /**
+     * This method checks if the network is available or not.
+     *
+     * @return
+     */
 
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -320,8 +363,12 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private ArrayList<String> bookmarkName;
-    private ArrayList<String> bookmarkUrlName;
+    /**
+     * This method reads the bookmark database and add the bookmarks to the arrayLists
+     * which are not cleared(cleared bookmarks are checked through bookmark bool).
+     * These lists will later on be passed to the recyclerView for loading
+     *
+     */
 
     private void getBookmarksFromSQLite() {
 
@@ -379,19 +426,36 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
         }
     }
 
-        private void startHomeActivity() {
+    /**
+     * This method starts the home activity when the home menu item is clicked
+     *
+     */
 
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-        }
+    private void startHomeActivity() {
+
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * This method starts the vpn activity when vpn menu item is clicked
+     *
+     */
 
     private void startVpn() {
 
         Intent intent = new Intent(this, VpnActivity.class);
         startActivity(intent);
     }
+
+    /**
+     *
+     * This method opens a customDialogBox when the floating action button is clicked
+     * to add a bookmark.
+     *
+     */
 
     private void customDialog() {
 
@@ -443,30 +507,102 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
         dialog.show();
     }
 
+    /**
+     *
+     * This method starts a bookmark activity when the bookmark menu item is clicked.
+     * Loads an interstitial add too if is loaded.
+     *
+     */
+
     private void showBookmarks() {
 
-        Intent intent = new Intent(this, BookmarksActivity.class);
-        intent.putExtra("browser", "main");
-        startActivity(intent);
+        if (interstitialAd.isLoaded() && interstitialAd != null) {
+            interstitialAd.show();
+        } else {
+            Intent intent = new Intent(this, BookmarksActivity.class);
+            intent.putExtra("browser", "main");
+            startActivity(intent);
+            reqNewInterstitial();
+        }
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                reqNewInterstitial();
+                Intent intent = new Intent(BrowserSearchActivity.this, BookmarksActivity.class);
+                intent.putExtra("browser", "main");
+                startActivity(intent);
+            }
+        });
+
+
     }
 
+    /**
+     * This method starts history activity if history menu item is clicked
+     */
     private void showHistory() {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * This method starts download activity if downloads menu item is clicked
+     * also loads interstitial ad
+     *
+     */
+
     private void showDownloads() {
 
-        Intent intent = new Intent(this, DownloadActivity.class);
-        startActivity(intent);
+        if (interstitialAd.isLoaded() && interstitialAd != null) {
+            interstitialAd.show();
+        } else {
+            Intent intent = new Intent(this, DownloadActivity.class);
+            startActivity(intent);
+            reqNewInterstitial();
+        }
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                reqNewInterstitial();
+                Intent intent = new Intent(BrowserSearchActivity.this, DownloadActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
+    /**
+     * This method starts incognito browser activity if incognito menu item is clicked
+     * and also loads interstitial ad if available
+     */
     private void startIncognitoBrowser() {
 
-        Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
+        if (interstitialAd.isLoaded() && interstitialAd != null) {
+            interstitialAd.show();
+        } else {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+            reqNewInterstitial();
+        }
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                reqNewInterstitial();
+                Intent intent = new Intent(BrowserSearchActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+    /**
+     * This method starts the browser MainActivity when a bookmark is clicked shown below the editText
+     * if available.
+     * @param v
+     * @param position
+     */
 
     @Override
     public void btnOnClick(View v, int position) {
@@ -484,5 +620,36 @@ public class BrowserSearchActivity extends AppCompatActivity implements View.OnK
         if (v.getId() == R.id.add_bookmark_btn) {
             addBookmark();
         }
+    }
+
+    /**
+     * Initialization and listener of banner ad
+     */
+    private void bannerAd() {
+        adView = findViewById(R.id.banner_large_browser);
+        AdRequest adrequest = new AdRequest.Builder()
+                .build();
+        adView.loadAd(adrequest);
+        adView.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdLoaded() {
+                adView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int error) {
+                adView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    /**
+     * Method for initializing and loading the interstitial ad
+     */
+    public void reqNewInterstitial() {
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(getResources().getString(R.string.Interstitial));
+        interstitialAd.loadAd(new AdRequest.Builder().build());
     }
 }

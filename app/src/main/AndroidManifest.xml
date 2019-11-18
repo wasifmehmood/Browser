@@ -17,6 +17,9 @@
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/app_id"/>
         <activity
             android:name=".DualBrowserActivities.DualBrowserActivity"
             android:windowSoftInputMode="adjustPan"
@@ -62,9 +65,6 @@
 
         <activity android:name=".IncognitoActivities.SearchActivity"
             android:theme="@style/IncognitoTheme"/>
-        <activity
-            android:name=".IncognitoActivities.StartActivity"
-            android:theme="@style/StartTheme" />
         <activity android:name=".IncognitoActivities.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/IncognitoTheme"

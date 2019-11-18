@@ -62,12 +62,12 @@ public class BookmarksActivity extends AppCompatActivity implements View.OnClick
         incognitoState = getIntent().getParcelableExtra("incognito_state");
 
         activityStr = getIntent().getStringExtra("activity");
-        Toast.makeText(this, "Str"+activityStr, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Str"+activityStr, Toast.LENGTH_SHORT).show();
 
         try {
             Class<?> aclass = Class.forName("com.example.privatebrowser.DualBrowserActivities.DualBrowserActivity");
             activity = (Activity) aclass.newInstance();
-            Toast.makeText(this, "try"+activity, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "try"+activity, Toast.LENGTH_SHORT).show();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

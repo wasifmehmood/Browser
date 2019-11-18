@@ -36,9 +36,9 @@ public class BrowserWebViewClass {
         databaseClass = new DatabaseClass(context);
     }
 
-    //    /**
-//     * webView is set as in an Incognito mode, History is not saved, cookies are cleared and cache is cleared
-//     */
+    /**
+     * webView is set as in an Incognito mode, History is not saved, cookies are cleared and cache is cleared
+     */
     public void setBrowserWebView(WebView webView) {
 
 
@@ -47,19 +47,6 @@ public class BrowserWebViewClass {
         webSettings.setGeolocationEnabled(true);
         webSettings.setSupportMultipleWindows(true); // This forces ChromeClient enabled.
         webSettings.setAllowFileAccess(true);
-
-////        Make sure no caching is done
-//        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        webView.getSettings().setAppCacheEnabled(false);
-//        webView.clearCache(true);
-//
-////        Make sure No cookies are created
-//        CookieManager.getInstance().removeAllCookies(null);
-//        CookieManager.getInstance().removeSessionCookies(null);
-//
-////        Make sure no autoFill for Forms/ user-name password happens for the app
-//        webView.getSettings().setSavePassword(false);
-//        webView.getSettings().setSaveFormData(false);
     }
 
     /**
@@ -67,16 +54,12 @@ public class BrowserWebViewClass {
      *
      * @param url has the url received from previous activity
      */
-    private EditText toolbarEditText;
-    private ImageView imageView;
 
     public void startBrowserWebView(String url, WebView webView, final Context context,
                                     Activity activity, ProgressBar progressBar, SwipeRefreshLayout swipe) {
 
         //Create new webView Client to show progress dialog
         //When opening a url or click on link
-
-
 
 
         if (URLUtil.isNetworkUrl(url)) {

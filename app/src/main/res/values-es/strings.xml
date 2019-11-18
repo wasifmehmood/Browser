@@ -80,8 +80,10 @@
         <item>ru</item>
     </string-array>
 
+    <string name="home">Casa</string>
+
     <string name="now_you_can_browse_privately_and_other_people_who_use_this_device_won_t_see_your_activity_however_downloads_and_bookmarks_will_be_saved_learn_more_n_n_browser_won_t_save_the_following_information_n_your_browsing_history_n_cookies_and_site_data_n_information_entered_in_forms_n">Ahora puede navegar en privado, y otras personas que usan este dispositivo no verán su actividad. Sin embargo, se guardarán las descargas y los marcadores.\n\n Más información El navegador no guardará la siguiente información: \nSu historial de navegación \nCookies y datos del sitio \nInformación ingresada en formularios</string>
     <string name="urls">URL:</string>
-    <string name="fullscreen">Fullscreen</string>
-    <string name="exit_fullscreen">Exit Fullscreen</string>
+    <string name="fullscreen">Pantalla completa</string>
+    <string name="exit_fullscreen">Salir de pantalla completa</string>
 </resources>

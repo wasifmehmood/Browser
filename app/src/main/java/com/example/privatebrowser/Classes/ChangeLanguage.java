@@ -26,7 +26,7 @@ public class ChangeLanguage {
     public static final String Locale_KeyValue = "Saved Locale";
     public static SharedPreferences sharedPreferences;
     public static SharedPreferences.Editor editor;
-
+    private String lang;
     private Activity activity;
 
     public ChangeLanguage(Activity activity) {
@@ -36,9 +36,11 @@ public class ChangeLanguage {
         editor = sharedPreferences.edit();
     }
 
-    private Spinner languageSpinner;
+    /**
+     * Custom dialog for showing the languages available in application. When pressed one
+     * the application language will be converted to that language.
+     */
 
-    //DIALOG
     public void customDialog() {
 
         // custom dialog
@@ -51,13 +53,10 @@ public class ChangeLanguage {
 
         // set the custom dialog components - text, image and button
 
-//        Button selectLanguage = dialog.findViewById(R.id.btn_select_language);
         Button englishLanguage = dialog.findViewById(R.id.button_english);
         Button frenchLanguage = dialog.findViewById(R.id.button_french);
         Button russianLanguage = dialog.findViewById(R.id.button_russian);
         Button spanishLanguage = dialog.findViewById(R.id.button_spanish);
-
-//        addListenerOnSpinnerItemSelection(dialog);
 
         englishLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,44 +104,15 @@ public class ChangeLanguage {
             }
         });
 
-//        selectLanguage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                setAppLocale(lang);
-//                loadLocale();
-//                activity.finish();
-//                activity.startActivity(activity.getIntent());
-//                dialog.dismiss();
-//            }
-//        });
-
         dialog.show();
         Window window = dialog.getWindow();
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-    private String lang;
-
-//    private void addListenerOnSpinnerItemSelection(Dialog dialog) {
-//
-//        languageSpinner = dialog.findViewById(R.id.language_spinner);
-////        Toast.makeText(getActivity(), "null"+emergencyDisasterSpinner, Toast.LENGTH_SHORT).show();
-//        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//                lang = parent.getItemAtPosition(position).toString();
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//
-//    }
+    /**
+     * Method for setting the application language
+     * @param localeCode
+     */
 
     public void setAppLocale(String localeCode) {
         Resources resources = activity.getResources();
