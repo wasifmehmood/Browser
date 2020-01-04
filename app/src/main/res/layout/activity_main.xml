@@ -9,7 +9,7 @@
     android:background="#CFCFCE "
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    tools:context=".IncognitoActivities.MainActivity">
+    tools:context="com.privatebrowser.dual.browsing.app.free.IncognitoActivities.MainActivity">
 
     <EditText
         android:id="@+id/toolbar_et"

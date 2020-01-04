@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.privatebrowser">
+    package="com.privatebrowser.dual.browsing.app.free">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".Vpn.MainApplication"
+        android:name="com.privatebrowser.dual.browsing.app.free.Vpn.MainApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/private_browser"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/private_browser"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:hardwareAccelerated="true"
@@ -21,11 +21,11 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/app_id"/>
         <activity
-            android:name=".DualBrowserActivities.DualBrowserActivity"
+            android:name="com.privatebrowser.dual.browsing.app.free.DualBrowserActivities.DualBrowserActivity"
             android:windowSoftInputMode="adjustPan"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
         <activity
-            android:name=".HomeActivity"
+            android:name="com.privatebrowser.dual.browsing.app.free.HomeActivity"
             android:theme="@style/StartTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,14 +33,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BrowserActivities.HistoryActivity" />
-        <activity android:name=".BrowserActivities.BrowserSearchActivity" />
+        <activity android:name="com.privatebrowser.dual.browsing.app.free.BrowserActivities.HistoryActivity" />
+        <activity android:name="com.privatebrowser.dual.browsing.app.free.BrowserActivities.BrowserSearchActivity" />
         <activity
-            android:name=".Vpn.VpnActivity"
+            android:name="com.privatebrowser.dual.browsing.app.free.Vpn.VpnActivity"
             android:theme="@style/AppTheme" />
 
         <receiver
-            android:name=".Reciever.DownloadCompleteReciever"
+            android:name="com.privatebrowser.dual.browsing.app.free.Reciever.DownloadCompleteReciever"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -50,10 +50,10 @@
         </receiver>
 
         <activity
-            android:name=".IncognitoActivities.DownloadActivity"
+            android:name="com.privatebrowser.dual.browsing.app.free.IncognitoActivities.DownloadActivity"
             android:theme="@style/BookmarkTheme" />
         <activity
-            android:name=".IncognitoActivities.BookmarksActivity"
+            android:name="com.privatebrowser.dual.browsing.app.free.IncognitoActivities.BookmarksActivity"
             android:theme="@style/BookmarkTheme" />
 
         <meta-data
@@ -63,9 +63,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".IncognitoActivities.SearchActivity"
+        <activity android:name="com.privatebrowser.dual.browsing.app.free.IncognitoActivities.SearchActivity"
             android:theme="@style/IncognitoTheme"/>
-        <activity android:name=".IncognitoActivities.MainActivity"
+        <activity android:name="com.privatebrowser.dual.browsing.app.free.IncognitoActivities.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:theme="@style/IncognitoTheme"
             />

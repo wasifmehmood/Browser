@@ -75,6 +75,7 @@
     <string name="home">Home</string>
     <string name="fullscreen">Fullscreen</string>
     <string name="exit_fullscreen">Exit Fullscreen</string>
+    <string name="are_you_sure">Are you sure?</string>
 
     <string-array name="language_arrays">
         <item>en</item>
@@ -82,15 +83,25 @@
         <item>ru</item>
     </string-array>
 
-<!--    <string name="app_id">ca-app-pub-3940256099942544~3347511713</string>-->
+<!--    TEST ADS -->
+
+<!--    <string name="app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>-->
 <!--    <string name="Banner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>-->
 <!--    <string name="Interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="native_id" translatable="false">ca-app-pub-3940256099942544/2247696110</string>  -->
+<!--    <string name="native_id" translatable="false">ca-app-pub-3940256099942544/2247696110</string>-->
 
-    <string name="app_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="Banner" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="Interstitial" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="native_id" translatable="false">ca-app-pub-3940256099942544/2247696110</string>
+<!--    ORIGNIAL ADS OLD-->
 
+<!--    <string name="app_id" translatable="false">ca-app-pub-4438814465354836~9443076689</string>-->
+<!--    <string name="Banner" translatable="false">ca-app-pub-4438814465354836/2877668334</string>-->
+<!--    <string name="Interstitial" translatable="false">ca-app-pub-4438814465354836/3726009280</string>-->
+<!--    <string name="native_id" translatable="false">ca-app-pub-4438814465354836/1955468909</string>-->
+
+<!--    ORIGINAL ADS NEW-->
+
+    <string name="app_id" translatable="false">ca-app-pub-8589419510089723~8689774933</string>
+    <string name="Banner" translatable="false">ca-app-pub-8589419510089723/3561092400</string>
+    <string name="Interstitial" translatable="false">ca-app-pub-8589419510089723/4970021777</string>
+    <string name="native_id" translatable="false">ca-app-pub-8589419510089723/7308765723</string>
 
 </resources>

@@ -78,4 +78,6 @@
     <string name="urls">URL:</string>
     <string name="fullscreen">Plein écran</string>
     <string name="exit_fullscreen">Quitter le mode plein écran</string>
+    <string name="are_you_sure">Êtes-vous sûr?</string>
+
 </resources>

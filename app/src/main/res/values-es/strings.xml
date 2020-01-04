@@ -86,4 +86,7 @@
     <string name="urls">URL:</string>
     <string name="fullscreen">Pantalla completa</string>
     <string name="exit_fullscreen">Salir de pantalla completa</string>
+
+    <string name="are_you_sure">Estás seguro?</string>
+
 </resources>

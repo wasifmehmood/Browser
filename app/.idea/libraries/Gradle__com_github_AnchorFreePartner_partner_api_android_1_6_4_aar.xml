@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.AnchorFreePartner:partner-api-android:1.6.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/79c4a545a015c203f7be616a4c0d56c7/partner-api-android-1.6.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/79c4a545a015c203f7be616a4c0d56c7/partner-api-android-1.6.4/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.AnchorFreePartner/partner-api-android/1.6.4/946ed96243f3d63107b8e52a45e0bd0e3905711a/partner-api-android-1.6.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.AnchorFreePartner/partner-api-android/1.6.4/ac17ee94686674caea18646c81b0921432849dda/partner-api-android-1.6.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

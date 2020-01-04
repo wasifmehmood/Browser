@@ -81,4 +81,7 @@
     <string name="urls">URL:</string>
     <string name="fullscreen">Полноэкранный</string>
     <string name="exit_fullscreen">Выход из полноэкранного режима</string>
+
+    <string name="are_you_sure">Вы уверены?</string>
+
 </resources>

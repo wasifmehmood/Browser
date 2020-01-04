@@ -1,4 +1,4 @@
-package com.example.privatebrowser;
+package com.privatebrowser.dual.browsing.app.free;
 
 import org.junit.Test;
 

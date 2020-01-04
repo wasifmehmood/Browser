@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.AnchorFreePartner.hydra-sdk-android:switcher:2.4.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/51c9496746ba39d32329e8be2489f9df/jetified-switcher-2.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/51c9496746ba39d32329e8be2489f9df/jetified-switcher-2.4.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

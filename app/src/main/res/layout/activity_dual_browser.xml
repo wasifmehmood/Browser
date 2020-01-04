@@ -8,7 +8,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:weightSum="2"
-    tools:context=".DualBrowserActivities.DualBrowserActivity">
+    tools:context="com.privatebrowser.dual.browsing.app.free.DualBrowserActivities.DualBrowserActivity">
 
     <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
     <!--        android:id="@+id/fullscreen_constraint_layout"-->
@@ -48,7 +48,7 @@
     <!--            app:layout_constraintTop_toTopOf="fullscreen_action_back_dual" />-->
 
 
-    <!--        <com.example.privatebrowser.CustomWidgets.CustomEditText-->
+    <!--        <com.privatebrowser.dual.browsing.app.free.CustomWidgets.CustomEditText-->
     <!--            android:id="@+id/fullscreen_et_search_dual_browser"-->
     <!--            android:layout_width="0dp"-->
     <!--            android:layout_height="wrap_content"-->
@@ -167,7 +167,7 @@
     <!--            app:layout_constraintStart_toEndOf="@+id/fullscreen_view_dual_incognito"-->
     <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-    <!--        <com.example.privatebrowser.CustomWidgets.CustomEditText-->
+    <!--        <com.privatebrowser.dual.browsing.app.free.CustomWidgets.CustomEditText-->
     <!--            android:id="@+id/fullscreen_et_search_dual_incognito"-->
     <!--            android:layout_width="0dp"-->
     <!--            android:layout_height="wrap_content"-->
@@ -321,7 +321,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.example.privatebrowser.CustomWidgets.CustomEditText
+        <com.privatebrowser.dual.browsing.app.free.CustomWidgets.CustomEditText
             android:id="@+id/et_search_dual_browser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -441,7 +441,7 @@
             app:layout_constraintStart_toEndOf="@+id/view_dual_incognito"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.privatebrowser.CustomWidgets.CustomEditText
+        <com.privatebrowser.dual.browsing.app.free.CustomWidgets.CustomEditText
             android:id="@+id/et_search_dual_incognito"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

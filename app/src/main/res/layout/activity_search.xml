@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#323639"
     android:focusableInTouchMode="true"
-    tools:context=".IncognitoActivities.SearchActivity">
+    tools:context="com.privatebrowser.dual.browsing.app.free.IncognitoActivities.SearchActivity">
 
     <!--    <androidx.appcompat.widget.Toolbar-->
     <!--        android:id="@+id/custom_action_bar"-->
@@ -37,7 +37,7 @@
     <!--    </androidx.appcompat.widget.Toolbar>-->
 
 
-    <com.example.privatebrowser.CustomWidgets.CustomEditText
+    <com.privatebrowser.dual.browsing.app.free.CustomWidgets.CustomEditText
         android:id="@+id/et_search"
         android:layout_width="@dimen/_260sdp"
         android:layout_height="wrap_content"

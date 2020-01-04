@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".IncognitoActivities.BookmarksActivity">
+    tools:context="com.privatebrowser.dual.browsing.app.free.IncognitoActivities.BookmarksActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/custom_action_bar"

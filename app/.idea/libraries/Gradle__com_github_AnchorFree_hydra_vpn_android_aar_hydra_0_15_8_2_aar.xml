@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.AnchorFree.hydra-vpn-android:aar-hydra:0.15.8.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e59d664709b4f532dcd6c3dc5ec4593c/jetified-aar-hydra-0.15.8.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e59d664709b4f532dcd6c3dc5ec4593c/jetified-aar-hydra-0.15.8.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
